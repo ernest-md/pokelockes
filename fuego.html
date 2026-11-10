@@ -588,13 +588,30 @@ ensureBoxes();render();
   "use strict";
   const CLOUD_RUN = "fuego";
   const CLOUD_URL = "https://bxcfirzcudwanttkqnfh.supabase.co/functions/v1/pokelocke-sync";
-  const token = new URLSearchParams(location.hash.replace(/^#/, "")).get("edit") || "";
+  const tokenKey = "pokelocke-edit-token:" + CLOUD_RUN;
+  const directToken = new URLSearchParams(location.hash.replace(/^#/, "")).get("edit") || "";
+  if (/^[a-f0-9]{64}$/.test(directToken)) { try { localStorage.setItem(tokenKey, directToken); } catch (_) {} }
+  let savedToken = "";
+  try { savedToken = localStorage.getItem(tokenKey) || ""; } catch (_) {}
+  const token = /^[a-f0-9]{64}$/.test(directToken) ? directToken : savedToken;
   const editor = /^[a-f0-9]{64}$/.test(token);
   const info = document.getElementById("cloudTitle");
   const subtitle = document.getElementById("cloudSubtitle");
   const uploadButton = document.getElementById("cloudPush");
   const pullButton = document.getElementById("cloudPull");
-  if (editor) uploadButton.hidden = false;
+  if (editor) {
+    uploadButton.hidden = false;
+    const forget = document.createElement("button");
+    forget.type = "button"; forget.textContent = "Salir del modo edición";
+    forget.title = "Olvida el enlace privado guardado en este navegador";
+    forget.onclick = () => {
+      if (confirm("¿Olvidar el permiso de edición de esta run en este navegador?")) {
+        try { localStorage.removeItem(tokenKey); } catch (_) {}
+        location.href = location.pathname;
+      }
+    };
+    document.querySelector("#cloudBox .cloud-actions").appendChild(forget);
+  }
 
   let ready = false, paused = false, version = 0, snapshot = null;
   let dirty = false, busy = false, scheduleTimer = null, pollBusy = false;
