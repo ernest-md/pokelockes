@@ -1,62 +1,120 @@
 <!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101625"><title>Pokelockes — Tres caminos, una aventura</title><style>
-:root{color-scheme:dark;font-family:system-ui,-apple-system,Segoe UI,sans-serif}*{box-sizing:border-box}body{margin:0;color:#eef5ff;background:radial-gradient(ellipse at 10% 0,#3d2541,transparent 45%),radial-gradient(ellipse at 95% 10%,#143f4d,transparent 40%),#0b111c}main{max-width:1180px;margin:auto;padding:50px 22px 80px}.eyebrow{letter-spacing:.2em;text-transform:uppercase;color:#9caac2;font-weight:800;font-size:12px}h1{font-size:clamp(40px,7vw,80px);margin:12px 0 8px;line-height:1.02;letter-spacing:-.05em}h1 span{color:#f9d27d}p{color:#acbdd0;line-height:1.6}.lead{font-size:18px;max-width:700px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:35px 0}.card{position:relative;border:1px solid #34445d;background:#141f30;border-radius:22px;overflow:hidden;min-width:0}.banner{height:185px;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,#58332d,#2a1e29)}.banner img{height:155px;max-width:90%;object-fit:contain;filter:drop-shadow(0 14px 15px #0006)}.planta .banner{background:radial-gradient(circle,#2e644b,#192d30)}.agua .banner{background:radial-gradient(circle,#275b85,#1a283d)}.body{padding:24px}.type{font-size:12px;text-transform:uppercase;letter-spacing:.14em;font-weight:900;color:#ffb58e}.planta .type{color:#80e6b0}.agua .type{color:#83c6ff}h2{font-size:29px;margin:7px 0}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:20px 0}.stat{border:1px solid #334357;background:#0f1928;padding:11px;border-radius:11px}.stat strong{display:block;font-size:23px}.stat small{color:#aab8c9;font-size:12px}.go{display:block;text-align:center;text-decoration:none;border-radius:12px;padding:13px;background:#f6a979;color:#1c1820;font-weight:900}.planta .go{background:#86deb1}.agua .go{background:#8bc9f5}.note{border:1px solid #334357;background:#141e2b;border-radius:16px;padding:18px 22px;margin-top:25px}.note strong{color:#f7d28b}footer{margin-top:38px;color:#8395a8;font-size:13px}@media(max-width:840px){.grid{grid-template-columns:1fr}.banner{height:145px}.banner img{height:125px}main{padding-top:32px}}</style><style id="cloud-home-style">.live-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:25px 0 5px}.live-stats>div{padding:14px;background:#172338;border:1px solid #3a4e67;border-radius:13px}.live-stats strong{display:block;font-size:25px}.live-label{font-size:10px;letter-spacing:.08em;font-weight:800;color:#9cb6d4}@media(max-width:600px){.live-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}</style></head><body><main><div class="eyebrow">Pokémon Escarlata · Monotype Challenge</div><h1>Tres tipos.<br><span>Tres leyendas.</span></h1><p class="lead">Fuego, Planta y Agua. Tres diarios independientes, tres aventuras por Paldea, Noroteo y el Biodomo. Entra en tu run y registra cada captura, victoria y baja.</p><section class="live-stats" id="liveStats" aria-live="polite"><div><span class="live-label">PARTIDAS EN LA NUBE</span><strong id="liveRuns">—</strong></div><div><span class="live-label">POKÉMON REGISTRADOS</span><strong id="liveMons">—</strong></div><div><span class="live-label">OBJETIVOS SUPERADOS</span><strong id="liveGoals">—</strong></div><div><span class="live-label">SHINIES</span><strong id="liveShiny">—</strong></div></section><div class="grid" id="runs"></div><div class="note"><strong>Sin cuentas, con enlaces de edición privados.</strong><p id="cloudHomeNote">☁️ Consultando el progreso de las tres runs en Supabase…</p><p>El progreso es público; las modificaciones requieren el enlace privado de edición de cada jugador. Compartid esos enlaces solo con quienes deban editar.</p></div><footer>Pokelockes · Diarios independientes · Sin cuentas</footer></main><script>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,Segoe UI,sans-serif}*{box-sizing:border-box}body{margin:0;color:#eef5ff;background:radial-gradient(ellipse at 10% 0,#3d2541,transparent 45%),radial-gradient(ellipse at 95% 10%,#143f4d,transparent 40%),#0b111c}main{max-width:1180px;margin:auto;padding:50px 22px 80px}.eyebrow{letter-spacing:.2em;text-transform:uppercase;color:#9caac2;font-weight:800;font-size:12px}h1{font-size:clamp(40px,7vw,80px);margin:12px 0 8px;line-height:1.02;letter-spacing:-.05em}h1 span{color:#f9d27d}p{color:#acbdd0;line-height:1.6}.lead{font-size:18px;max-width:700px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:35px 0}.card{position:relative;border:1px solid #34445d;background:#141f30;border-radius:22px;overflow:hidden;min-width:0}.banner{height:185px;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,#58332d,#2a1e29)}.banner img{height:155px;max-width:90%;object-fit:contain;filter:drop-shadow(0 14px 15px #0006)}.planta .banner{background:radial-gradient(circle,#2e644b,#192d30)}.agua .banner{background:radial-gradient(circle,#275b85,#1a283d)}.body{padding:24px}.type{font-size:12px;text-transform:uppercase;letter-spacing:.14em;font-weight:900;color:#ffb58e}.planta .type{color:#80e6b0}.agua .type{color:#83c6ff}h2{font-size:29px;margin:7px 0}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:20px 0}.stat{border:1px solid #334357;background:#0f1928;padding:11px;border-radius:11px}.stat strong{display:block;font-size:23px}.stat small{color:#aab8c9;font-size:12px}.go{display:block;text-align:center;text-decoration:none;border-radius:12px;padding:13px;background:#f6a979;color:#1c1820;font-weight:900}.planta .go{background:#86deb1}.agua .go{background:#8bc9f5}.note{border:1px solid #334357;background:#141e2b;border-radius:16px;padding:18px 22px;margin-top:25px}.note strong{color:#f7d28b}footer{margin-top:38px;color:#8395a8;font-size:13px}@media(max-width:840px){.grid{grid-template-columns:1fr}.banner{height:145px}.banner img{height:125px}main{padding-top:32px}}</style><style id="cloud-home-style">.live-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:25px 0 5px}.live-stats>div{padding:14px;background:#172338;border:1px solid #3a4e67;border-radius:13px}.live-stats strong{display:block;font-size:25px}.live-label{font-size:10px;letter-spacing:.08em;font-weight:800;color:#9cb6d4}@media(max-width:600px){.live-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}</style><style id="poke-access-css">
+html:not(.poke-authorized) body>.shell,html:not(.poke-authorized) body>main{visibility:hidden}
+#pokeGate{position:fixed;z-index:2147483647;inset:0;display:grid;place-items:center;background:linear-gradient(135deg,#08101ceF,#101c33fB);padding:18px;color:#f5f8ff;font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;overflow:auto}
+#pokeGate[hidden]{display:none!important}
+#pokeGate .pga-card{width:min(100%,440px);background:#18253b;border:1px solid #50698a;border-radius:22px;padding:30px 25px;box-shadow:0 20px 70px #0009}
+#pokeGate .pga-eyebrow{font-size:12px;letter-spacing:.18em;color:#9fc5fb;font-weight:900;text-transform:uppercase}
+#pokeGate h2{font-size:clamp(23px,5vw,31px);line-height:1.12;margin:9px 0 11px;color:#fff}
+#pokeGate p{color:#c4d1e4;font-size:14px;line-height:1.5;margin:0 0 20px}
+#pokeGate label{display:block;font-size:13px;font-weight:750;margin:0 0 7px}
+#pokeGate input{display:block;width:100%;border:1px solid #6a87ad;border-radius:11px;padding:14px 15px;color:#fff;background:#0a1427;font-size:18px;letter-spacing:.04em;outline:none;box-sizing:border-box}
+#pokeGate input:focus{border-color:#e6c677;box-shadow:0 0 0 3px #e6c67744}
+#pokeGate button{display:block;width:100%;margin-top:14px;padding:14px;border:0;border-radius:11px;background:#eac579;color:#1e1d20;font-weight:850;font-size:16px;cursor:pointer}
+#pokeGate button:disabled{opacity:.55;cursor:wait}
+#pokeGate .pga-error{color:#ffb1a6;font-size:13px;margin-top:11px;min-height:16px;line-height:1.3}
+#pokeGate .pga-footer{font-size:12px;color:#9fb0c9;margin-top:19px}
+</style></head><body><div id="pokeGate" role="dialog" aria-modal="true" aria-labelledby="pgaTitle"><div class="pga-card"><div class="pga-eyebrow">🔥 🌿 💧 &nbsp; PokéLockes</div><h2 id="pgaTitle">Código de acceso</h2><p>Introduce el código compartido para acceder a las tres aventuras y poder guardar cambios.</p><form id="pgaForm" autocomplete="off"><label for="pgaInput">Código</label><input id="pgaInput" type="password" placeholder="Introduce el código" required autocomplete="off" maxlength="80"><button id="pgaButton" type="submit">Entrar a PokéLockes →</button><div id="pgaError" class="pga-error" aria-live="polite"></div></form><div class="pga-footer">La sesión se mantiene mientras tengas abierto el navegador. Sin cuentas de usuario.</div></div></div><main><div class="eyebrow">Pokémon Escarlata · Monotype Challenge</div><h1>Tres tipos.<br><span>Tres leyendas.</span></h1><p class="lead">Fuego, Planta y Agua. Tres diarios independientes, tres aventuras por Paldea, Noroteo y el Biodomo. Entra en tu run y registra cada captura, victoria y baja.</p><section class="live-stats" id="liveStats" aria-live="polite"><div><span class="live-label">PARTIDAS EN LA NUBE</span><strong id="liveRuns">—</strong></div><div><span class="live-label">POKÉMON REGISTRADOS</span><strong id="liveMons">—</strong></div><div><span class="live-label">OBJETIVOS SUPERADOS</span><strong id="liveGoals">—</strong></div><div><span class="live-label">SHINIES</span><strong id="liveShiny">—</strong></div></section><div class="grid" id="runs"></div><div class="note"><strong>Acceso compartido con código</strong><p id="cloudHomeNote">☁️ Consultando el progreso de las tres runs en Supabase…</p><p>La portada y los tres diarios requieren el mismo código. Una vez dentro podréis editar las tres runs. Los cambios se guardan en Supabase.</p></div><footer>Pokelockes · Diarios independientes · Sin cuentas</footer></main><script>
 const runs=[{id:'fuego',name:'Fuego',starter:'Fuecoco',dex:909,key:'locke-fuego-purpura-individual-v1'},{id:'planta',name:'Planta',starter:'Sprigatito',dex:906,key:'locke-planta-escarlata-individual-v1'},{id:'agua',name:'Agua',starter:'Quaxly',dex:912,key:'locke-agua-escarlata-individual-v1'}];
 function summary(x){let s;try{s=JSON.parse(localStorage.getItem(x.key))}catch{}let r=s&&s[x.id];if(!r||!Array.isArray(r.mons))return null;return {captures:r.mons.length,shiny:r.mons.filter(m=>m.isShiny||m.shiny).length,losses:r.mons.filter(m=>m.status==='baja').length,goals:Array.isArray(r.bosses)?new Set(r.bosses).size:Object.values(r.bosses||{}).filter(v=>v===true||v&&v.done).length}}
 document.getElementById('runs').innerHTML=runs.map(x=>{const s=summary(x);const vals=s||{captures:'—',shiny:'—',losses:'—',goals:'—'};return '<article class="card '+x.id+'"><div class="banner"><img alt="'+x.starter+'" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/'+x.dex+'.png"></div><div class="body"><div class="type">Run '+x.name+'</div><h2>'+x.starter+'</h2><p>'+(s?'Progreso local detectado':'Sin progreso en este navegador')+'</p><div class="stats">'+[['Capturas',vals.captures],['Shinies',vals.shiny],['Bajas',vals.losses],['Objetivos',vals.goals]].map(v=>'<div class="stat"><strong>'+v[1]+'</strong><small>'+v[0]+'</small></div>').join('')+'</div><a class="go" href="'+x.id+'.html">Abrir diario '+x.name+' →</a></div></article>'}).join('');
-</script><script id="cloud-home-js">
+</script><script id="poke-access-js">
 (function(){
 "use strict";
-const api="https://bxcfirzcudwanttkqnfh.supabase.co/functions/v1/pokelocke-sync";
-const ids=["fuego","planta","agua"];
-ids.forEach(id => {
-  let token="";
-  try { token=localStorage.getItem("pokelocke-edit-token:"+id)||""; } catch (_) {}
-  if (/^[a-f0-9]{64}$/.test(token)) {
-    const link=document.querySelector(".card."+id+" .go");
-    if (link) {
-      link.href=id+".html#edit="+token;
-      link.textContent="✎ Editar diario "+id[0].toUpperCase()+id.slice(1)+" →";
-    }
-  }
-});
-const set=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=value};
-async function update(){
-  let success=0,runsWithData=0,mons=0,goals=0,shinies=0;
-  await Promise.all(ids.map(async id=>{
-    try{
-      const rsp=await fetch(api+"?run="+id,{cache:"no-store"});
-      if(!rsp.ok)throw new Error("HTTP "+rsp.status);
-      const body=await rsp.json();
-      success++;
-      const run=body.state;
-      const card=document.querySelector(".card."+id);
-      if(!card)return;
-      const figures=card.querySelectorAll(".stat strong");
-      const status=card.querySelector(".body > p");
-      if(!run||!Array.isArray(run.mons)){figures.forEach(el=>el.textContent="0");if(status)status.textContent="Partida aún sin publicar en la nube";return}
-      runsWithData++;
-      const all=run.mons||[];
-      const shiny=all.filter(m=>m.isShiny||m.shiny).length;
-      const dead=all.filter(m=>m.status==="baja").length;
-      const done=new Set((run.bosses||[]).filter(x=>x!==null&&x!==false)).size;
-      const nums=[all.length,shiny,dead,done];
-      figures.forEach((el,i)=>{if(i<4)el.textContent=String(nums[i])});
-      mons+=all.length;goals+=done;shinies+=shiny;
-      if(status)status.textContent="☁️ Progreso compartido · "+done+" de 39 objetivos";
-    }catch(_e){}
-  }));
-  if(success){
-    set("liveRuns",runsWithData+" / 3");set("liveMons",mons);set("liveGoals",goals);set("liveShiny",shinies);
-    const note=document.getElementById("cloudHomeNote");
-    if(note)note.textContent=success===3?"☁️ Resumen actualizado desde Supabase. Para editar cada run, abre su enlace privado de edición. Los botones públicos muestran el progreso en modo consulta.":"⚠️ No se han podido consultar todas las partidas. Algunos contadores pueden ser locales.";
-  }else{
-    const note=document.getElementById("cloudHomeNote");
-    if(note)note.textContent="⚠️ Sin conexión con Supabase: se muestran los últimos datos guardados en este navegador.";
-  }
+const ENDPOINT="https://bxcfirzcudwanttkqnfh.supabase.co/functions/v1/pokelocke-sync";
+const gate=document.getElementById("pokeGate");
+const input=document.getElementById("pgaInput");
+const form=document.getElementById("pgaForm");
+const errorBox=document.getElementById("pgaError");
+const button=document.getElementById("pgaButton");
+const content=document.querySelector("body > .shell")||document.querySelector("body > main");
+const storageKey="pokelockes-shared-access-session";
+if(content)content.inert=true;
+let accessCode="";
+let unlock;
+const ready=new Promise(r=>{unlock=r});
+async function raw(action,code,payload){
+  const resp=await fetch(ENDPOINT,{method:"POST",cache:"no-store",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({action,code},payload||{}))});
+  let body={};try{body=await resp.json()}catch(_){}
+  if(!resp.ok){const e=new Error(body.error||"No se pudo conectar con Supabase");e.code=body.code||String(resp.status);throw e}
+  return body;
 }
-window.addEventListener("pageshow",update);
-document.addEventListener("visibilitychange",()=>{if(!document.hidden)update()});
-setInterval(update,22000);
-update();
+async function authenticate(candidate){
+  button.disabled=true;button.textContent="Comprobando acceso…";errorBox.textContent="";
+  try{
+    await raw("auth",candidate);
+    accessCode=candidate;
+    try{sessionStorage.setItem(storageKey,candidate)}catch(_){}
+    document.documentElement.classList.add("poke-authorized");
+    if(content)content.inert=false;
+    gate.hidden=true;
+    if(location.hash.startsWith("#edit=")){history.replaceState(null,"",location.pathname+location.search)}
+    unlock();
+  }catch(e){
+    try{sessionStorage.removeItem(storageKey)}catch(_){}
+    errorBox.textContent=e.message;
+    input.value="";input.focus();
+  }finally{button.disabled=false;button.textContent="Entrar a PokéLockes →"}
+}
+form.addEventListener("submit",function(e){
+  e.preventDefault();
+  const value=input.value.trim();
+  if(!value){input.focus();return}
+  authenticate(value);
+});
+window.PokeAccess={
+ ready,
+ request:async(action,data)=>{await ready;return raw(action,accessCode,data||{})},
+ logout:()=>{
+   try{sessionStorage.removeItem(storageKey)}catch(_){}
+   location.reload();
+ },
+};
+let saved="";try{saved=sessionStorage.getItem(storageKey)||""}catch(_){}
+if(saved){authenticate(saved)}else{input.focus()}
+})();
+</script><script id="poke-shared-home-js">
+(function(){
+"use strict";
+const ids=["fuego","planta","agua"];
+const set=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=value};
+let active=false;
+async function update(){
+ if(active)return;active=true;
+ let ok=0,runsWithData=0,mons=0,goals=0,shinies=0;
+ await Promise.all(ids.map(async id=>{
+  try{
+   const result=await PokeAccess.request("read",{run:id});
+   ok++;
+   const run=result.state;
+   const card=document.querySelector(".card."+id);
+   if(!card)return;
+   const figures=card.querySelectorAll(".stat strong");
+   const status=card.querySelector(".body > p");
+   if(!run||!Array.isArray(run.mons)){
+     figures.forEach(el=>el.textContent="0");
+     if(status)status.textContent="Partida todavía sin publicar en la nube";
+     return;
+   }
+   runsWithData++;
+   const all=run.mons;
+   const shiny=all.filter(m=>m.isShiny||m.shiny).length;
+   const dead=all.filter(m=>m.status==="baja").length;
+   const done=new Set((run.bosses||[]).filter(x=>x!==null&&x!==false)).size;
+   [all.length,shiny,dead,done].forEach((v,i)=>{if(figures[i])figures[i].textContent=String(v)});
+   mons+=all.length;goals+=done;shinies+=shiny;
+   if(status)status.textContent="☁️ Progreso compartido · "+done+" de 39 objetivos";
+  }catch(_e){}
+ }));
+ if(ok){
+  set("liveRuns",runsWithData+" / 3");set("liveMons",mons);set("liveGoals",goals);set("liveShiny",shinies);
+  set("cloudHomeNote",ok===3?"☁️ Resumen compartido actualizado desde Supabase. Entra en una run para consultar y editar.":"⚠️ No se pudieron consultar todas las partidas.");
+ }else set("cloudHomeNote","⚠️ Sin conexión con Supabase. Vuelve a intentarlo en unos instantes.");
+ active=false;
+}
+PokeAccess.ready.then(update);
+window.addEventListener("pageshow",()=>{if(document.documentElement.classList.contains("poke-authorized"))update()});
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&document.documentElement.classList.contains("poke-authorized"))update()});
+setInterval(()=>{if(document.documentElement.classList.contains("poke-authorized"))update()},22000);
 })();
 </script></body></html>
