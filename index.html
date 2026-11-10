@@ -8,6 +8,17 @@ document.getElementById('runs').innerHTML=runs.map(x=>{const s=summary(x);const 
 "use strict";
 const api="https://bxcfirzcudwanttkqnfh.supabase.co/functions/v1/pokelocke-sync";
 const ids=["fuego","planta","agua"];
+ids.forEach(id => {
+  let token="";
+  try { token=localStorage.getItem("pokelocke-edit-token:"+id)||""; } catch (_) {}
+  if (/^[a-f0-9]{64}$/.test(token)) {
+    const link=document.querySelector(".card."+id+" .go");
+    if (link) {
+      link.href=id+".html#edit="+token;
+      link.textContent="✎ Editar diario "+id[0].toUpperCase()+id.slice(1)+" →";
+    }
+  }
+});
 const set=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=value};
 async function update(){
   let success=0,runsWithData=0,mons=0,goals=0,shinies=0;
