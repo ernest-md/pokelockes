@@ -6,7 +6,7 @@ if(!nav||typeof render!=="function"||typeof run!=="object"||typeof B==="undefine
 const escapeHtml=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const groups=[
  {id:"inicio",label:"⌂ Inicio",tabs:["inicio"]},
- {id:"capturas",label:"📍 Capturas",tabs:["mapa","zonas"]},
+ {id:"capturas",label:"📍 Capturas",tabs:["mapa","zonas","teracapturas"]},
  {id:"equipo",label:"⚔️ Equipo",tabs:["equipo"]},
  {id:"combates",label:"🏆 Combates",tabs:["objetivos"]},
  {id:"historia",label:"📖 Historia",tabs:["diario","album","logros","reglas"]}
