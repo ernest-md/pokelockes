@@ -132,9 +132,10 @@
       '<span>💎 '+c.available+' capturas extra disponibles</span>'+
       '<span>✅ '+(c.earned-c.available)+' usadas</span></div>'+
       (names.length?'<p>🔒 MVP bloqueado hasta otra victoria: '+safe(names.join(", "))+'</p>':'')+
-      '<p>Una captura extra por objetivo: puede ser de cualquier especie, pero debes confirmar que tiene <strong>teratipo '+safe(TYPE_NAME)+'</strong>. No consume el encuentro normal de una zona.</p>'+
+      '<p>Una captura extra por objetivo: se permite cualquier especie con <strong>teratipo '+safe(TYPE_NAME)+'</strong>, en cualquier zona de Paldea o los DLC, incluso en una zona ya utilizada. No consume la captura normal.</p>'+
       '<button type="button" id="registerTeraBonus" '+(!c.available?'disabled':'')+
-      '>＋ Registrar teracaptura extra'+(c.available?' ('+c.available+')':'')+'</button></div>';
+      '>＋ Registrar teracaptura extra'+(c.available?' ('+c.available+')':'')+'</button>'+ 
+      '<button type="button" id="openTeraGuide">🔎 Guía de teracristalizados salvajes</button></div>';
     return top;
   }
   function renderTeraPanel(){
@@ -169,7 +170,7 @@
         if(title==="Rotación tras jefe"){
           value.textContent="Al ganar un objetivo nuevo, debes seleccionar un MVP vivo del equipo. Se envía automáticamente a caja y no puede volver hasta vencer el siguiente objetivo. En los objetivos anteriores no se fuerza una rotación retroactiva.";
         }else if(title==="Capturas por zona"){
-          value.textContent="Una captura normal por zona y, adicionalmente, una captura con teratipo "+TYPE_NAME+" por cada objetivo superado. Cada bono se registra con su objetivo de origen y no consume la captura de zona.";
+          value.textContent="Una captura normal por zona y, adicionalmente y sin límite por zona, una captura con teratipo "+TYPE_NAME+" por cada objetivo superado. Cada bono se registra con su objetivo de origen y no consume la captura de zona.";
         }
       }
     }
@@ -186,13 +187,13 @@
     box.className="field full locke-tera-fields";box.id="lockeTeraDetails";
     const available=unused();
     box.innerHTML='<strong>💎 Captura adicional por objetivo</strong>'+
-      '<p>Este registro consume un bono obtenido al vencer un objetivo; no ocupa la captura normal de la zona.</p>'+
+      '<p>Este registro consume un bono obtenido al vencer un objetivo. No ocupa la captura normal, no bloquea zonas ya visitadas y no exige una localización concreta.</p>'+
       '<label for="lockeTeraBoss">Objetivo que permite la captura</label>'+
       '<select id="lockeTeraBoss">'+(available.length?available.map(id=>
         '<option value="'+id+'">'+safe(bossDisplay(id))+'</option>').join(""):
         '<option value="">No hay bonos disponibles</option>')+'</select>'+
       '<label class="locke-check"><input type="checkbox" id="lockeTeraConfirm">Confirmo que el Pokémon capturado tiene teratipo '+safe(TYPE_NAME)+'</label>'+
-      '<p>La especie puede tener otro tipo natural. El teratipo se guardará como '+safe(TYPE_NAME)+
+      '<p>La especie y la zona de origen son libres; confirma el teratipo en el juego. Se guardará como '+safe(TYPE_NAME)+
       ' y la victoria que permitió esta captura quedará registrada.</p>';
     const field=select.closest(".field") || select.parentElement;
     field.insertAdjacentElement("afterend",box);
