@@ -1,0 +1,17 @@
+.locke-rule-panel{border:1px solid #4f7894;background:linear-gradient(135deg,#142d44,#18263e);border-radius:14px;padding:14px 16px;margin:13px 0;color:#eaf3ff}
+.locke-rule-panel h3{font-size:15px;margin:0 0 7px}
+.locke-rule-panel p{color:#bfd5e8;font-size:12px;margin:5px 0 9px;line-height:1.5}
+.locke-rule-stats{display:flex;gap:9px;flex-wrap:wrap;margin:9px 0}
+.locke-rule-stats span{border:1px solid #52738d;background:#112438;border-radius:8px;padding:7px 10px;font-size:12px;font-weight:800}
+.locke-rule-panel button{border:0;background:#e7cc80;color:#171e2c;border-radius:9px;padding:9px 13px;font:inherit;font-size:12px;font-weight:900;cursor:pointer}
+.locke-rule-panel button:disabled{opacity:.5;cursor:not-allowed}
+.locke-tera-fields{padding:12px;border:1px solid #5c84a0;background:#152a43;border-radius:11px;margin:10px 0}
+.locke-tera-fields label{display:block;font-size:12px;font-weight:800;margin:9px 0 6px}
+.locke-tera-fields select{width:100%;background:#101e32;color:#fff;border:1px solid #6280a1;border-radius:9px;padding:9px;font:inherit}
+.locke-tera-fields p{font-size:12px;color:#c2d9ec;margin:8px 0;line-height:1.5}
+.locke-tera-fields .locke-check{display:flex;gap:9px;align-items:center;cursor:pointer}
+.locke-check input{width:17px;height:17px;flex:0 0 17px}
+.locke-locked{outline:2px solid #dbbc83 !important;outline-offset:-2px;position:relative}
+.locke-locked::after{content:"🔒";font-size:12px;position:absolute;right:3px;bottom:3px;pointer-events:none}
+.locke-bonus-label{color:#f4d993;font-weight:850;font-size:11px}
+.locke-mvp-alert{color:#f3db9d;font-weight:750;font-size:12px;margin:8px 0}
