@@ -152,30 +152,78 @@
 
   function openTrainerEditor(){
     const trainer=getTrainer();
-    let avatar=chosenAvatar();
-    openDialog("Tu tarjeta de entrenador","Personaliza el aspecto de esta run. Los cambios serán visibles para todos los jugadores con acceso.",
+    let avatar=chosenAvatar(),category="all",onlyFavorites=false,query="";
+    const favKey="pokelockes-avatar-favorites-v2",recentKey="pokelockes-avatar-recent-v2";
+    const readIds=key=>{try{const value=JSON.parse(localStorage.getItem(key)||"[]");return Array.isArray(value)?value.filter(x=>typeof x==="string"):[]}catch{return []}};
+    let favorites=readIds(favKey),recents=readIds(recentKey);
+    const groups=[{id:"all",name:"Todos"},{id:"trainer",name:"Entrenadores"},{id:"pokemon",name:"Pokémon"},{id:"meme",name:"Memes"}];
+    const selected=()=>getAvatar(avatar);
+    const image=(item)=>'<span class="poke-avatar-frame" style="'+avatarData.style(item)+'">'+
+      '<img src="'+safe(item.src)+'" data-avatar-image="'+safe(item.id)+'" alt="" loading="lazy" referrerpolicy="no-referrer">'+
+      (item.stamp?'<span class="poke-avatar-stamp">'+safe(item.stamp)+'</span>':'')+'</span>';
+    openDialog("Tu tarjeta de entrenador","Elige un rostro, un Pokémon de Paldea o un meme absurdo. El avatar y la frase se sincronizan en la nube.",
       '<form id="puTrainerForm">'+
       '<label for="puTrainerName">Nombre del entrenador</label>'+
       '<input id="puTrainerName" maxlength="40" placeholder="Ej.: Entrenador Escarlata" value="'+safe(trainer.name||"")+'">'+
       '<label for="puTrainerMotto">Frase de la aventura</label>'+
       '<textarea id="puTrainerMotto" maxlength="120" placeholder="¡A por la Liga Pokémon!">'+safe(trainer.motto||"")+'</textarea>'+
-      '<label>Elige un entrenador o un meme</label>'+
-      '<div class="poke-avatars" id="puTrainerAvatars">'+
-      [{category:"trainer",label:"🧑‍🏫 Entrenadores legendarios"},{category:"meme",label:"🎮 Memes del competitivo"}].map(group=>
-       '<div class="poke-avatar-group"><strong>'+safe(group.label)+'</strong>'+
-       '<div class="poke-avatar-grid">'+avatars.filter(x=>x.category===group.category).map(x=>
-         '<button type="button" class="poke-avatar-tile" data-pu-avatar="'+safe(x.id)+'"'+
-         ' aria-label="Elegir '+safe(x.label)+'" title="'+safe(x.label)+'" aria-pressed="'+(x.id===avatar?'true':'false')+'">'+
-         '<img src="'+safe(x.src)+'" loading="lazy" alt=""><span>'+safe(x.label)+'</span></button>'
-       ).join("")+'</div></div>'
-      ).join("")+'</div>'+
-      '<p class="poke-avatar-credits">Entrenadores: <a href="https://play.pokemonshowdown.com/sprites/trainers/" target="_blank" rel="noopener noreferrer">Pokémon Showdown (créditos de los artistas)</a>. Los memes incluyen imágenes de PokéAPI y referencias externas de sus creadores; se muestran sin modificar.</p>'+
+      '<div class="poke-avatar-heading"><strong>Tu avatar</strong><small>Ilustraciones centradas y ampliadas, no sprites pixelados</small></div>'+
+      '<div class="poke-avatar-picker-layout"><div class="poke-avatar-main">'+
+      '<div class="poke-avatar-tools"><input id="puAvatarSearch" type="search" placeholder="Buscar entrenador, Pokémon o meme…" autocomplete="off" aria-label="Buscar avatar">'+
+      '<button type="button" id="puAvatarRandom" class="ghost" title="Elegir avatar aleatorio">🎲 Aleatorio</button></div>'+
+      '<div class="poke-avatar-filters" role="group" aria-label="Categorías de avatares">'+
+       groups.map(g=>'<button type="button" data-avatar-category="'+g.id+'" aria-pressed="'+(g.id==="all")+'">'+g.name+'</button>').join("")+
+      '<button type="button" id="puAvatarFavOnly" aria-pressed="false">★ Favoritos</button></div>'+
+      '<div class="poke-avatar-grid" id="puAvatarGrid" aria-live="polite"></div>'+
+      '<p class="poke-avatar-credits">Ilustraciones de personajes: <a href="https://archives.bulbagarden.net/" target="_blank" rel="noopener noreferrer">Bulbagarden Archives</a>. Pokémon: <a href="https://github.com/PokeAPI/sprites" target="_blank" rel="noopener noreferrer">PokéAPI</a>. Merequetengue: <a href="https://www.redbubble.com/i/sticker/merequetengue-by-CSGODesignz/157462397.EJUG5" target="_blank" rel="noopener noreferrer">CSGODesignz</a>. Derechos de sus respectivos titulares.</p>'+
+      '</div><aside class="poke-avatar-preview" id="puAvatarPreview" aria-live="polite"></aside></div>'+
       '<div class="poke-upgrade-actions"><button type="button" data-pu-close>Cancelar</button>'+
       '<button type="submit" class="pu-primary">Guardar tarjeta</button></div></form>');
-    overlay.querySelectorAll("[data-pu-avatar]").forEach(b=>b.onclick=()=>{
-      avatar=b.dataset.puAvatar;
-      overlay.querySelectorAll("[data-pu-avatar]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
-    });
+    const grid=overlay.querySelector("#puAvatarGrid"),preview=overlay.querySelector("#puAvatarPreview");
+    const filtered=()=>avatars.filter(x=>
+      (category==="all"||x.category===category)&&(!onlyFavorites||favorites.includes(x.id))&&
+      (!query||(x.label+" "+(x.stamp||"")).toLocaleLowerCase("es").includes(query))
+    );
+    const draw=()=>{
+      const entries=filtered();
+      const ranked=[...entries].sort((a,b)=>{
+        const af=favorites.includes(a.id)?0:1,bf=favorites.includes(b.id)?0:1;
+        if(af!==bf)return af-bf;
+        const ar=recents.indexOf(a.id),br=recents.indexOf(b.id);
+        return (ar<0?1000:ar)-(br<0?1000:br);
+      });
+      grid.innerHTML=ranked.length?ranked.map(item=>
+        '<div class="poke-avatar-entry"><button type="button" class="poke-avatar-tile" data-pu-avatar="'+safe(item.id)+'"'+
+        ' aria-label="Elegir '+safe(item.label)+'" aria-pressed="'+(item.id===avatar)+'">'+
+        image(item)+'<span class="poke-avatar-name">'+safe(item.label)+'</span></button>'+
+        '<button type="button" class="poke-avatar-fav'+(favorites.includes(item.id)?' is-favorite':'')+
+        '" data-pu-fav="'+safe(item.id)+'" aria-label="'+(favorites.includes(item.id)?"Quitar de":"Añadir a")+
+        ' favoritos: '+safe(item.label)+'" title="Marcar favorito">'+(favorites.includes(item.id)?"★":"☆")+'</button></div>'
+      ).join(""):'<div class="poke-avatar-empty">No hay avatares que coincidan. Cambia los filtros.</div>';
+      const active=selected();
+      preview.innerHTML='<small>VISTA PREVIA</small><div class="poke-avatar-preview-image">'+image(active)+'</div>'+
+        '<strong>'+safe(active.label)+'</strong>'+
+        '<p>'+(active.category==="trainer"?"Entrenador":active.category==="pokemon"?"Pokémon":"Meme competitivo")+'</p>'+
+        (active.stamp?'<em>'+safe(active.stamp)+'</em>':'')+
+        '<span class="poke-avatar-count">'+entries.length+' opciones visibles</span>';
+      overlay.querySelectorAll("[data-avatar-category]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.avatarCategory===category)));
+      overlay.querySelector("#puAvatarFavOnly").setAttribute("aria-pressed",String(onlyFavorites));
+      grid.querySelectorAll("[data-pu-avatar]").forEach(b=>b.onclick=()=>{avatar=b.dataset.puAvatar;draw()});
+      grid.querySelectorAll("[data-pu-fav]").forEach(b=>b.onclick=()=>{
+        const id=b.dataset.puFav;
+        favorites=favorites.includes(id)?favorites.filter(x=>x!==id):[id,...favorites];
+        try{localStorage.setItem(favKey,JSON.stringify(favorites))}catch{}
+        draw();
+      });
+    };
+    overlay.querySelector("#puAvatarSearch").oninput=e=>{query=e.target.value.trim().toLocaleLowerCase("es");draw()};
+    overlay.querySelectorAll("[data-avatar-category]").forEach(b=>b.onclick=()=>{category=b.dataset.avatarCategory;draw()});
+    overlay.querySelector("#puAvatarFavOnly").onclick=()=>{onlyFavorites=!onlyFavorites;draw()};
+    overlay.querySelector("#puAvatarRandom").onclick=()=>{
+      const list=filtered();
+      if(list.length){avatar=list[Math.floor(Math.random()*list.length)].id;draw()}
+    };
+    draw();
     document.getElementById("puTrainerForm").onsubmit=e=>{
       e.preventDefault();
       run.trainer={
@@ -183,6 +231,8 @@
         motto:document.getElementById("puTrainerMotto").value.trim().slice(0,120),
         avatar,
       };
+      recents=[avatar,...recents.filter(x=>x!==avatar)].slice(0,8);
+      try{localStorage.setItem(recentKey,JSON.stringify(recents))}catch{}
       save();closeDialog();render();
     };
   }
