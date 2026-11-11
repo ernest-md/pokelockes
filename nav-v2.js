@@ -52,6 +52,7 @@ function drawDashboard(){
    '<button type="button" data-v2-quick="battle">Abrir objetivos →</button></article>'+
   '<article class="nav-v2-panel"><h3>🔒 Reglas especiales</h3>'+
    '<strong>'+locked.length+' MVP bloqueados</strong><p>💎 '+bonus+' teracapturas extra pendientes</p>'+
+   '<button type="button" data-v2-quick="tera">💎 Guía de teracapturas →</button>'+
    '<button type="button" data-v2-quick="rules">Consultar reglas →</button></article></div>'+
  '<article class="nav-v2-panel nav-v2-recent"><h3>📖 Últimos recuerdos</h3>'+
   (recent.length?recent.map(x=>'<p>'+escapeHtml(typeof x==="string"?x:x.text||x.message||x.title||"Actividad registrada")+'</p>').join(""):'<p>Todavía no hay recuerdos. Las capturas y victorias aparecerán en tu diario.</p>')+
@@ -67,6 +68,7 @@ function drawDashboard(){
   if(kind==="map")return openPage("mapa");
   if(kind==="diary")return openPage("diario");
   if(kind==="rules")return openPage("reglas");
+  if(kind==="tera")return openPage("teracapturas");
   if(kind==="battle"){
    const next=B.findIndex((_b,i)=>!(run.bosses||[]).includes(i));
    tab="objetivos";
