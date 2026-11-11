@@ -205,7 +205,7 @@ function showVictory(id){
    '<div><b>2</b><span><strong>Completar el equipo</strong><small>'+team().length+'/6 Pokémon titulares. Puedes elegir un sustituto desde las cajas.</small></span></div>'+
    '<div><b>3</b><span><strong>Captura extra de teratipo</strong><small>Úsala ahora o acumúlala para más adelante.</small></span></div></div>'+
   '<div class="tc-victory-actions"><button type="button" id="tcVictoryTeam">📦 Elegir sustituto</button>'+
-   '<button type="button" id="tcVictoryTera" '+(cap.available<1?'disabled':'')+'>💎 Teracaptura</button>'+
+   '<button type="button" id="tcVictoryTera" '+(cap.available<1?'disabled':'')+'>💎 Ver teracapturas</button>'+
    '<button type="button" id="tcVictoryClose">Continuar aventura →</button></div></div>';
  document.body.appendChild(overlay);
  const key=e=>{if(e.key==="Escape")close()};
@@ -214,8 +214,7 @@ function showVictory(id){
  document.getElementById("tcVictoryTeam").onclick=()=>jump("equipo");
  document.getElementById("tcVictoryTera").onclick=()=>{
    close();
-   const button=document.getElementById("registerTeraBonus");
-   if(button&&!button.disabled)button.click();
+   if(window.PokeTeraGuide?.open)window.PokeTeraGuide.open();
    else jump("objetivos");
  };
  document.getElementById("tcVictoryClose").onclick=()=>{
