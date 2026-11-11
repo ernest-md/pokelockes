@@ -1,0 +1,44 @@
+/* PokéLockes v2 navigation and quick-actions dashboard */
+.tabs.nav-v2{display:block;overflow:visible;border-bottom:0;padding:0;margin:0 0 18px}
+.nav-v2-primary{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;padding:7px;background:#101d2d;border:1px solid #34506f;border-radius:14px}
+.tabs.nav-v2 .nav-v2-primary button{display:flex;align-items:center;justify-content:center;min-height:45px;white-space:normal;border:1px solid transparent;border-radius:10px;padding:9px 5px;background:transparent;color:#c8d7ea;font-size:13px;font-weight:850}
+.tabs.nav-v2 .nav-v2-primary button[aria-pressed="true"]{background:#f0c879;color:#29251c;border-color:#ffe3a9;box-shadow:0 4px 15px #0003}
+.tabs.nav-v2 .nav-v2-primary button:hover:not([aria-pressed="true"]){background:#263a55;color:#fff}
+.nav-v2-secondary{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-start;padding:12px 2px 0}
+.nav-v2-secondary[hidden],.nav-v2-secondary button[hidden]{display:none!important}
+.tabs.nav-v2 .nav-v2-secondary button{white-space:nowrap;padding:9px 14px;border-radius:9px;color:#cdd9e8;font-weight:750;background:#1d2c40}
+.tabs.nav-v2 .nav-v2-secondary button.on{background:#395272;border-color:#8eaac9;color:#fff}
+.nav-v2-home{display:none}
+.nav-v2-home.on{display:block}
+.nav-v2-welcome{display:flex;align-items:center;justify-content:space-between;gap:18px;background:linear-gradient(115deg,#1a344b,#172239);padding:24px;border:1px solid #456180;border-radius:18px;margin-bottom:14px}
+.nav-v2-eyebrow{display:inline-block;font-size:11px;letter-spacing:.09em;font-weight:900;color:#f7d28d;margin-bottom:5px}
+.nav-v2-welcome h2{font-size:clamp(20px,3vw,28px);margin:0 0 6px}
+.nav-v2-welcome p{font-size:13px;color:#bdd0e5;margin:0}
+.nav-v2-bonus{flex:0 0 165px;text-align:center;border:1px solid #54708f;background:#0d1c2c;border-radius:14px;padding:13px}
+.nav-v2-bonus small{display:block;font-size:10px;letter-spacing:.08em;color:#aebfd5}
+.nav-v2-bonus strong{display:block;font-size:30px;color:#f5d28e}
+.nav-v2-bonus span{font-size:11px;color:#becfe3}
+.nav-v2-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.nav-v2-actions button{min-height:92px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;text-align:left;gap:8px;background:#1c3049;border:1px solid #506e90;border-radius:14px;padding:13px;white-space:normal}
+.nav-v2-actions button:hover{border-color:#f5d08c;background:#29405e}
+.nav-v2-actions button strong{font-size:14px}
+.nav-v2-actions button small{font-size:11px;line-height:1.35;color:#bacce2}
+.nav-v2-overview{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:12px}
+.nav-v2-panel{background:#151f30;border:1px solid #344860;border-radius:15px;padding:20px}
+.nav-v2-panel h3{margin:0 0 12px;font-size:14px}
+.nav-v2-panel>strong{display:block;font-size:21px}
+.nav-v2-panel p{color:#b7c9df;font-size:13px;line-height:1.4}
+.nav-v2-panel button{background:#273d58;border-color:#537493;color:#e9f5ff;padding:9px 14px;font-weight:850;font-size:12px}
+.nav-v2-recent p{border-left:3px solid #647c99;padding-left:12px;margin:9px 0}
+.nav-v2-recent p:last-of-type{margin-bottom:15px}
+.tc-victory-next-steps{display:grid;gap:8px;margin:15px 0}
+.tc-victory-next-steps>div{display:flex;align-items:center;gap:10px;text-align:left;border:1px solid #4e6177;background:#18283e;border-radius:11px;padding:8px}
+.tc-victory-next-steps b{display:grid;place-items:center;flex:0 0 28px;width:28px;height:28px;border-radius:50%;background:#eac577;color:#152033}
+.tc-victory-next-steps span{display:grid;gap:2px}
+.tc-victory-next-steps strong{font-size:12px}
+.tc-victory-next-steps small{font-size:11px;color:#b5c7df}
+.tc-victory-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.tc-victory-actions button{font-size:12px;padding:10px 6px}
+.tc-victory-actions button:disabled{opacity:.5;cursor:not-allowed}
+@media(max-width:760px){.nav-v2-actions{grid-template-columns:repeat(2,minmax(0,1fr))}.nav-v2-primary{gap:3px}.tabs.nav-v2 .nav-v2-primary button{font-size:11px;padding:9px 2px}}
+@media(max-width:540px){.nav-v2-welcome{padding:16px;align-items:flex-start}.nav-v2-bonus{flex-basis:110px;padding:9px}.nav-v2-bonus strong{font-size:22px}.nav-v2-overview{grid-template-columns:1fr}.nav-v2-actions button{min-height:78px}.nav-v2-actions button strong{font-size:12px}.nav-v2-primary{padding:4px}.tabs.nav-v2 .nav-v2-primary button{font-size:10px;min-height:48px}.nav-v2-panel{padding:15px}.tc-victory-actions{grid-template-columns:1fr}}
