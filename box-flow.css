@@ -1,0 +1,46 @@
+
+/* Movimientos directos de cajas y rotaciones detalladas */
+.pc-flow-help{margin:8px 0 14px;color:#b8cce5;font-size:12px;line-height:1.5}
+.pc-flow-zone{border:1px dashed #607e9f;border-radius:12px;background:#1a2b42;margin-bottom:11px;padding:10px 12px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;font-weight:750;color:#d7e8ff;min-height:43px}
+.pc-flow-zone.is-drop-over,.pc-slot.is-drop-over,.team-slot.is-drop-over,.team-showcase-card.is-drop-over{outline:2px solid #6be0cf;outline-offset:-2px;background:#27545b55;box-shadow:0 0 12px #78f7d644}
+.pc-flow-zone small{font-size:11px;font-weight:500;color:#b6cbe2}
+.pc-slot.is-being-dragged,.team-slot.is-being-dragged,.team-showcase-card.is-being-dragged{opacity:.45}
+.pc-flow-actions{margin:10px 0;display:flex;gap:7px;flex-wrap:wrap}
+.pc-flow-actions button{border:1px solid #506f96;border-radius:8px;color:#e9f3ff;font-weight:750;font-size:12px;background:#243952;padding:9px 11px;cursor:pointer}
+.pc-flow-actions button:hover{background:#365472}
+.pc-flow-actions button.danger{border-color:#995865;color:#ffc2c7}
+.pc-flow-actions button:disabled{opacity:.5;cursor:not-allowed}
+.team-card-actions .pc-flow-chip{font-weight:800;font-size:12px}
+.team-card-actions .pc-flow-chip[title="Marcar baja"]{color:#ffb0b6;border-color:#895463}
+.pc-rotation-entry{background:#112035;border:1px solid #3f5b79;border-radius:11px;padding:11px 12px;margin-top:8px}
+.pc-rotation-entry strong{font-size:12px;color:#eef6ff}
+.pc-rotation-entry p{color:#d2e5f8;font-size:12px;line-height:1.5;margin:5px 0 0}
+.pc-rotation-entry small{color:#9db8d6;font-size:11px}
+.pc-rotation-head{display:flex;align-items:center;justify-content:space-between;gap:7px}
+.pc-rotation-head button{background:#263d57;color:#bcd6f1;border:1px solid #56799d;border-radius:7px;padding:5px 8px;font-size:11px;cursor:pointer}
+.pc-rotation-head button:hover{background:#36587a}
+.pc-rotation-legacy{border:1px dashed #6b839f;background:#1b2b41;border-radius:11px;padding:12px;margin:10px 0;color:#d8e7f9;font-size:12px}
+.pc-rotation-summary{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.pc-rotation-count{background:#14263d;border:1px solid #445c78;border-radius:10px;padding:9px 13px;min-width:98px}
+.pc-rotation-count strong{display:block;font-size:20px}
+.pc-rotation-count small{display:block;font-size:10px;color:#a9c3e1}
+.pc-battle-rotation{margin-top:9px;padding:7px 0 0;border-top:1px solid #3a4c67;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.pc-battle-rotation button{border:1px solid #617c9f;background:#243a54;border-radius:8px;padding:7px 10px;font-size:11px;color:#edf7ff;cursor:pointer}
+.pc-battle-rotation button:hover{background:#375776}
+.pc-battle-rotation small{font-size:11px;color:#9bcfac}
+.pc-flow-dialog{position:fixed;z-index:1450;inset:0;background:#050b18df;display:flex;justify-content:center;align-items:center;overflow:auto;padding:15px}
+.pc-flow-dialog[hidden]{display:none!important}
+.pc-flow-modal{background:#18273c;border:1px solid #6e86a7;color:#ecf4ff;border-radius:18px;padding:22px;width:min(100%,540px);max-height:calc(100dvh - 30px);overflow:auto;box-shadow:0 22px 80px #000a}
+.pc-flow-modal h2{margin:0 0 10px;font-size:22px}
+.pc-flow-modal p{font-size:13px;line-height:1.5;color:#b9cce2;margin:0 0 13px}
+.pc-flow-modal label{display:block;font-size:12px;font-weight:800;margin:12px 0 5px}
+.pc-flow-modal select,.pc-flow-modal input,.pc-flow-modal textarea{width:100%;font:inherit;font-size:13px;background:#0e1b2d;border:1px solid #597493;border-radius:9px;color:#fff;padding:10px 11px;box-sizing:border-box}
+.pc-flow-modal textarea{min-height:65px}
+.pc-flow-modal .pc-flow-buttons{display:flex;gap:8px;justify-content:flex-end;margin-top:18px;flex-wrap:wrap}
+.pc-flow-modal .pc-flow-buttons button{padding:10px 13px;background:#263d58;border:1px solid #6988a9;border-radius:9px;font-size:12px;font-weight:850;color:#fff;cursor:pointer}
+.pc-flow-modal .pc-flow-buttons button.primary{background:#6dd9ae;color:#10212d;border:0}
+.pc-flow-modal .pc-flow-buttons button.danger{background:#a84658;border-color:#bd7180}
+.pc-flow-modal .pc-flow-buttons button:disabled{opacity:.45}
+.pc-flow-modal .pc-flow-warning{border-radius:9px;background:#332a37;padding:9px 11px;font-size:12px;color:#e8c2cb;margin:9px 0}
+.pc-flow-live{font-size:12px;color:#9fdfbd;min-height:18px;margin-top:9px}
+@media (max-width:650px){.pc-flow-zone{flex-direction:column;align-items:flex-start}.pc-flow-actions button{flex:1}.pc-flow-modal{padding:16px}.team-card-actions .pc-flow-chip{padding:4px 6px}}
