@@ -76,8 +76,11 @@ const selectedAvatar=()=>{
 };
 const avatarMarkup=()=>{
  const item=selectedAvatar();
- return item?'<img class="tc-trainer-image" src="'+esc(item.src)+'" alt="'+esc(item.label)+'" loading="eager" referrerpolicy="no-referrer">':
-   '<span class="tc-trainer-fallback">POKÉ</span>';
+ if(!item)return '<span class="tc-trainer-fallback">POKÉ</span>';
+ const style=window.PokeTrainerAvatars?.style?.(item)||"";
+ return '<span class="poke-avatar-frame" style="'+esc(style)+'">'+
+   '<img class="tc-trainer-image" data-avatar-image="'+esc(item.id)+'" src="'+esc(item.src)+'" alt="'+esc(item.label)+'" loading="eager" referrerpolicy="no-referrer">'+
+   (item.stamp?'<span class="poke-avatar-stamp">'+esc(item.stamp)+'</span>':'')+'</span>';
 };
 const sprite=mon=>mon&&typeof pokemonSprite==="function"?pokemonSprite(mon):null;
 const edition=()=>run.gameVersion==="purpura"?"Púrpura":"Escarlata";
@@ -237,17 +240,29 @@ async function exportCard(){
    const panel=(x,y,w,h)=>{ctx.fillStyle="#1b2b43";ctx.beginPath();ctx.roundRect(x,y,w,h,13);ctx.fill()};
    const bg=ctx.createLinearGradient(0,0,1200,675);bg.addColorStop(0,"#253c55");bg.addColorStop(1,"#0d172b");
    fill(0,0,1200,675,bg);fill(0,0,1200,12,accent);
-   const picture=await fetchSprite(selectedAvatar()?.src);
+   const avatar=selectedAvatar();
+   const picture=await fetchSprite(avatar?.src)||(avatar?.fallbackSrc?await fetchSprite(avatar.fallbackSrc):null);
+   const faceX=55,faceY=83,faceSize=185;
+   fill(faceX,faceY,faceSize,faceSize,"#17304a");
    if(picture){
-     fill(55,83,185,235,"#17304a");
-     const ratio=Math.min(180/picture.width,224/picture.height);
+     // Match the live selector framing when exporting the PNG.
+     const zoom=Math.max(1,Math.min(2.5,Number(avatar.zoom||1)));
+     const cover=avatar.fit!=="contain";
+     const ratio=(cover?Math.max(faceSize/picture.width,faceSize/picture.height):Math.min(faceSize/picture.width,faceSize/picture.height))*zoom;
      const w=picture.width*ratio,h=picture.height*ratio;
-     ctx.imageSmoothingEnabled=false;
-     ctx.drawImage(picture,55+(185-w)/2,83+(235-h)/2,w,h);
+     const fx=Math.max(0,Math.min(1,Number(avatar.focusX??50)/100));
+     const fy=Math.max(0,Math.min(1,Number(avatar.focusY??0)/100));
+     ctx.save();ctx.beginPath();ctx.rect(faceX,faceY,faceSize,faceSize);ctx.clip();
      ctx.imageSmoothingEnabled=true;
-   }else{
-     fill(55,83,185,235,accent);
-     words(trainerName().slice(0,1).toUpperCase(),110,212,60,"#fff","900");
+     ctx.drawImage(picture,faceX+(faceSize-w)*fx,faceY+(faceSize-h)*fy,w,h);
+     ctx.restore();
+   }else words(trainerName().slice(0,1).toUpperCase(),110,203,60,"#fff","900");
+   if(avatar?.stamp){
+     const label=String(avatar.stamp).toUpperCase();
+     fill(faceX+3,faceY+faceSize-34,faceSize-6,29,"#a72a45");
+     const fontSize=label.length>21?11:label.length>15?13:16;
+     ctx.font="900 "+fontSize+"px system-ui,sans-serif";ctx.fillStyle="#fff";
+     ctx.textAlign="center";ctx.fillText(label,faceX+faceSize/2,faceY+faceSize-14,faceSize-12);ctx.textAlign="left";
    }
    words(TYPE_EMOJI+" RETO MONOTIPO "+TYPE_NAME.toUpperCase(),270,105,17,light,"900");
    words(trainerName().slice(0,23),270,166,43,"#ffffff","900");
