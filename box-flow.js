@@ -70,6 +70,9 @@
     const occupied=run.mons.find(other=>other.id!==m.id&&stored(other)&&other.box===box&&other.slot===slot);
     if(m.status==="equipo"){
       if(occupied){
+        if(window.PokeLockeRules?.isLocked(occupied.id)){
+          alert("🔒 "+label(occupied)+" fue MVP del último objetivo y no puede volver al equipo hasta vencer otro.");return false;
+        }
         occupied.status="equipo";clearBoxFields(occupied);
         insertTeam(occupied.id,m.id);
       }else ensureTeamRank(team().filter(x=>x.id!==m.id).map(x=>x.id));
@@ -89,6 +92,9 @@
   }
   function moveToTeam(m,targetId=null){
     if(!stored(m))return false;
+    if(window.PokeLockeRules?.isLocked(m.id)){
+      alert("🔒 "+label(m)+" está bloqueado por ser el MVP del último objetivo. Completa el siguiente para volver a incluirlo.");return false;
+    }
     const target=targetId?byId(targetId):null;
     if(targetId&&(!target||target.status!=="equipo"))return false;
     if(!target && team().length>=6){
@@ -167,12 +173,12 @@
     return run.battles.filter(b=>b.result==="victoria"&&!ids.has(b.id)).length;
   }
   function renderRotationPanel(){
-    const records=rotations(),old=Math.max(0,(Number(run.rotations)||0)-records.filter(x=>x.kind==="swap").length);
-    const completed=records.filter(r=>r.kind==="swap");
+    const records=rotations(),old=Math.max(0,(Number(run.rotations)||0)-records.filter(x=>x.kind==="swap"||x.kind==="mvp").length);
+    const completed=records.filter(r=>r.kind==="swap"||r.kind==="mvp");
     const none=records.filter(r=>r.kind==="none");
     summary.innerHTML='<div class="pc-rotation-summary">'+
       '<div class="pc-rotation-count"><strong>'+completed.length+'</strong><small>Rotaciones detalladas</small></div>'+
-      '<div class="pc-rotation-count"><strong>'+pendingDecisions()+'</strong><small>Victorias sin respuesta</small></div>'+
+      '<div class="pc-rotation-count"><strong>'+(window.PokeLockeRules?Object.keys(run.challengeRules?.mvpLocks||{}).length:pendingDecisions())+'</strong><small>'+(window.PokeLockeRules?'MVP bloqueados':'Victorias sin respuesta')+'</small></div>'+
       '<div class="pc-rotation-count"><strong>'+none.length+'</strong><small>Sin rotación</small></div></div>'+
       (old?'<div class="pc-rotation-legacy">📜 '+old+' rotación'+(old!==1?'es':'')+
       ' antigua'+(old!==1?'s':'')+' sin detalle. Se conserva el contador anterior.</div>':'')+
@@ -180,10 +186,11 @@
         const when=safe(formatDate(r.date));
         const boss=r.bossId!=null?bossDisplay(r.bossId):"Objetivo no especificado";
         return '<div class="pc-rotation-entry"><div class="pc-rotation-head">'+
-          '<strong>'+(r.kind==="none"?"✓ Sin rotación":"↪ Rotación")+' · '+safe(boss)+'</strong>'+
+          '<strong>'+(r.kind==="none"?"✓ Sin rotación":r.kind==="mvp"?"⭐ MVP a reserva":"↪ Cambio adicional")+' · '+safe(boss)+'</strong>'+
           (r.kind==="none"?'<button type="button" data-pc-correct="'+safe(r.id)+'">Corregir</button>':'')+
           '</div><p>'+(r.kind==="none"?'No se modificó el equipo.':
-          safe(r.outName||"Pokémon saliente")+' → '+safe(r.inName||"Pokémon entrante"))+
+          (r.kind==="mvp"?safe(r.outName||"MVP")+" → 📦 Caja · Bloqueado hasta vencer otro objetivo":
+          safe(r.outName||"Pokémon saliente")+' → '+safe(r.inName||"Pokémon entrante")))+
           (r.notes?" · "+safe(r.notes):"")+'</p><small>'+when+'</small></div>';
       }).join("")+
       (!records.length&&!old?'<p class="hint">Registra quién sale y quién entra tras una victoria. Los movimientos normales de caja no cuentan.</p>':'');
@@ -207,14 +214,14 @@
       const row=document.createElement("div");row.className="pc-battle-rotation";
       const decision=related.find(r=>r.kind==="none");
       const swaps=related.filter(r=>r.kind==="swap");
-      if(swaps.length)row.innerHTML="<small>✓ "+swaps.length+" rotación(es) registrada(s) tras esta victoria</small> ";
+      if(swaps.length||related.some(x=>x.kind==="mvp"))row.innerHTML="<small>✓ MVP rotado tras esta victoria</small> ";
       else if(decision)row.innerHTML="<small>✓ Confirmado: sin rotación</small> ";
-      else row.innerHTML="<small>¿Qué pasó con el equipo después?</small> ";
+      else row.innerHTML="<small>"+(window.PokeLockeRules?"Victoria antigua sin MVP identificado.":"¿Qué pasó con el equipo después?")+"</small> ";
       const button=document.createElement("button");
       button.type="button";button.textContent=swaps.length?"↪ Otra rotación":"↪ Indicar quién rota";
       button.onclick=()=>openRotation({battleId:battle.id});
       row.appendChild(button);
-      if(!swaps.length&&!decision){
+      if(!window.PokeLockeRules&&!swaps.length&&!decision){
         const no=document.createElement("button");
         no.type="button";no.textContent="Sin rotación";
         no.onclick=()=>recordNoRotation({battleId:battle.id,bossId:battle.boss});
@@ -229,6 +236,7 @@
   }
   function recordNoRotation(ctx){
     if(!ctx)return;
+    if(window.PokeLockeRules){alert("La rotación del MVP es obligatoria después de cada objetivo nuevo.");return;}
     const same=rotations().some(r=>
       (ctx.battleId&&r.battleId===ctx.battleId)||(!ctx.battleId&&!r.battleId&&Number(r.bossId)===Number(ctx.bossId)));
     if(same){status("Ya existe una respuesta para ese combate. Corrígela antes si corresponde.");return;}
@@ -247,7 +255,7 @@
     }
     const wanted=opts.battleId?"battle:"+opts.battleId:opts.bossId!=null?"boss:"+opts.bossId:null;
     const chosen=contexts.find(x=>x.key===wanted)||contexts[0];
-    const outgoing=team(),incoming=run.mons.filter(stored);
+    const outgoing=team(),incoming=run.mons.filter(m=>stored(m)&&!window.PokeLockeRules?.isLocked(m.id));
     const root=openModal("↪ Registrar rotación tras victoria",
       "Selecciona el combate y los Pokémon que cambian. Esto cuenta como rotación real; mover Pokémon entre cajas NO cuenta.",
       '<label for="pcRotateBoss">Victoria / objetivo relacionado</label><select id="pcRotateBoss">'+contexts.map(c=>
@@ -263,11 +271,11 @@
       '<textarea id="pcRotateNotes" maxlength="500" placeholder="Motivo de la rotación, anécdotas…"></textarea>'+
       ((!outgoing.length||!incoming.length)?'<div class="pc-flow-warning">Necesitas al menos un Pokémon en el equipo y uno disponible en cajas para realizar una rotación.</div>':'')+
       '<div class="pc-flow-buttons"><button type="button" data-close-pc>Cancelar</button>'+
-      '<button type="button" id="pcNoRotation">No hubo rotación</button>'+
+      (window.PokeLockeRules?'':'<button type="button" id="pcNoRotation">No hubo rotación</button>')+
       '<button type="button" class="primary" id="pcSaveRotation" '+(!outgoing.length||!incoming.length?'disabled':'')+
       '>Confirmar intercambio</button></div><div class="pc-flow-live" id="pcRotationFeedback" role="status"></div>');
     const feedback=root.querySelector("#pcRotationFeedback");
-    root.querySelector("#pcNoRotation").onclick=()=>{
+    if(root.querySelector("#pcNoRotation"))root.querySelector("#pcNoRotation").onclick=()=>{
       const ctx=getContext(root.querySelector("#pcRotateBoss").value);
       closeModal();recordNoRotation(ctx);
     };
@@ -275,7 +283,7 @@
       const ctx=getContext(root.querySelector("#pcRotateBoss").value);
       const out=byId(root.querySelector("#pcRotateOut").value);
       const incomingMon=byId(root.querySelector("#pcRotateIn").value);
-      if(!ctx||!out||out.status!=="equipo"||!incomingMon||!stored(incomingMon)){
+      if(!ctx||!out||out.status!=="equipo"||!incomingMon||!stored(incomingMon)||window.PokeLockeRules?.isLocked(incomingMon.id)){
         feedback.textContent="Selecciona un Pokémon del equipo y uno de las cajas.";return;
       }
       const locationBox=incomingMon.box,locationSlot=incomingMon.slot;
