@@ -59,6 +59,14 @@ async function check(file,type){
  for(let i=0;i<80&&!w.PokeDiarySync?.status().ready;i++)await sleep(25);
  assert.ok(w.PokeDiarySync?.status().ready,"cloud initialized");
  assert.ok(w.PokeLockeRules,"rules loaded");
+ assert.ok(w.PokeTrainerPro,"trainer card premium extension loaded");
+ assert.ok(d.getElementById("trainerHero").classList.contains("trainer-pro"),"new trainer design");
+ assert.equal(d.querySelectorAll(".tc-squad-member").length,6,"six visible team slots");
+ assert.ok(d.getElementById("trainerShareBtn"),"PNG export button");
+ assert.ok(d.getElementById("trainerNextObjective"),"next objective button");
+ assert.ok(d.querySelector(".tc-mini-medals"),"medal showcase");
+ assert.ok(d.querySelector(".tc-mvp-row"),"MVP leaderboard section");
+
  assert.deepEqual(JSON.parse(JSON.stringify(w.PokeLockeRules.credits())),{earned:0,used:0,available:0});
  const read=()=>{
    const key=Object.keys(w.localStorage).find(k=>k.startsWith("locke-"));
@@ -78,6 +86,15 @@ async function check(file,type){
  d.getElementById("saveBattle").click();
  let run=read();
  assert.deepEqual(run.bosses,[0],"objective recorded");
+ await sleep(30);
+ assert.ok(d.getElementById("tcVictoryShade"),"new objective triggers victory screen");
+ assert.ok(d.getElementById("tcVictoryShade").textContent.includes("Teracaptura")||d.getElementById("tcVictoryShade").textContent.includes("Captura extra"),"victory includes bonus reminder");
+ d.getElementById("tcVictoryClose").click();
+ assert.equal(d.getElementById("tcVictoryShade"),null,"result modal dismisses");
+ assert.ok(d.getElementById("trainerHero").textContent.includes("1 / 39"),"trainer progress tracks victory");
+ assert.ok(d.getElementById("trainerHero").textContent.includes("1 disponibles"),"trainer displays tera credits");
+ assert.ok(d.getElementById("trainerHero").textContent.includes("Fuecoco")||d.getElementById("trainerHero").textContent.includes("Sprigatito")||d.getElementById("trainerHero").textContent.includes("Quaxly")||d.getElementById("trainerHero").textContent.includes("Fidough"),"trainer shows team or lock details");
+
  assert.equal(run.mons.find(m=>m.id==="starter").status,"reserva","MVP automatically benched");
  assert.ok(run.challengeRules.mvpLocks.starter,"MVP lock persisted");
  assert.equal(run.rotationsLog.length,1);
