@@ -348,7 +348,7 @@ if(Number.isInteger(desiredSlot)&&desiredSlot>=0&&desiredSlot<BOX_SIZE&&!occupie
 for(let s=0;s<BOX_SIZE;s++)if(!occupied(box,s)){m.box=box;m.slot=s;return true}
 let free=firstFreeBoxSlot(null,m.id);if(!free)return false;m.box=free.box;m.slot=free.slot;return true;}
 function displayOrigin(m){if(m.starter)return 'Inicial';let z=zById(m.zone);if(z)return 'Capturado en '+z.name;if(m.originDetail)return (m.origin||'Encuentro')+' · '+m.originDetail;if(m.origin)return m.origin;return m.zone||'Encuentro sin indicar'}
-function pokemonSprite(m){let id=Number(m.dexNumber)||IDS[String(m.name||'').split(' (')[0]]||null;return id?`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${m.isShiny?'shiny/':''}${id}.png`:null}
+function pokemonSprite(m){let id=IDS[String(m.name||'').split(' (')[0]]||Number(m.dexNumber)||null;return id?`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${m.isShiny?'shiny/':''}${id}.png`:null}
 function pokePicture(m){let src=pokemonSprite(m);return src?`<img src="${src}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="poke-fallback" style="display:none">${esc((m.name||'?')[0].toUpperCase())}</span>`:`<span class="poke-fallback">${esc((m.name||'?')[0].toUpperCase())}</span>`}
 function pokeSlot(m,extra=''){return `${pokePicture(m)}<span class="slot-name">${esc(m.nickname||m.name)}</span>${m.isShiny?'<span class="slot-shiny">✨</span>':''}`}
 async function resolveDex(m){if(!m||m.dexNumber||IDS[String(m.name||'').split(' (')[0]]||m.dexLookedUp)return;m.dexLookedUp=true;
@@ -428,7 +428,7 @@ $('#monEditor').innerHTML=`<div class="between"><h2>Ficha de ${esc(m.nickname||m
 <div class="field full"><label class="field-label">Apodo</label><div class="nickname-row"><input class="input" id="editNick" value="${esc(m.nickname||'')}"><button type="button" id="randomEditNick">🎲 Aleatorio</button></div></div>
 <div><label class="field-label">Estado</label><select id="editStatus">${[['equipo','⚔️ Equipo'],['reserva','📦 En caja'],['descanso','💤 Descanso (en caja)'],['baja','💀 Baja']].map(([k,v])=>`<option value="${k}" ${m.status===k?'selected':''}>${v}</option>`).join('')}</select></div>
 <div><label class="field-label">Caja de destino</label><select id="editBox">${boxOptions(Number.isInteger(m.box)?m.box:boxPage)}</select></div>
-<div><label class="field-label">N.º Pokédex (para sprite)</label><input class="input" id="editDex" type="number" min="1" max="1499" placeholder="Opcional" value="${esc(m.dexNumber||'')}"></div>
+<div><label class="field-label">N.º Pokédex (para sprite)</label><input class="input" id="editDex" type="number" min="1" max="1499" placeholder="Opcional" value="${esc(IDS[m.name]||m.dexNumber||'')}"></div>
 <div><label class="checkbox-field"><input id="editShiny" type="checkbox" ${m.isShiny?'checked':''}> ✨ Shiny</label></div>
 <div class="field full"><label class="field-label">Notas</label><textarea id="editMonNotes" placeholder="Evoluciones, combates, anécdotas…">${esc(m.notes||'')}</textarea></div>
 <div class="field full death-fields"><h3>💀 Ficha de baja (solo se aplicará si marcas Baja)</h3></div>
@@ -452,7 +452,7 @@ if(nextStatus==='baja'){
  const f=run.battles.find(b=>b.id===deathId);
  m.death={...(m.death||{}),date:m.death?.date||stamp(),killer:$('#deathKiller').value.trim(),battleId:deathId||null,bossId:f?.boss??null,context:$('#deathContext').value.trim()||(f?bossDisplay(f.boss):''),lastWords:$('#deathWords').value.trim()};
 } else if(previousStatus==='baja'){if(confirm('¿Corregir esta baja y devolverlo a la colección? Se conservará su ficha de baja por si fue un error de registro.')){m.death={...(m.death||{}),corrected:true}}else{return}}
-m.name=newName;m.nickname=$('#editNick').value.trim();m.level=Math.min(100,Math.max(1,Number($('#editLevel').value)||1));m.status=nextStatus;m.isShiny=newShiny;m.notes=$('#editMonNotes').value;let dex=Number($('#editDex').value)||null;if(dex&&dex>0&&dex<1500)m.dexNumber=dex;else delete m.dexNumber;
+m.name=newName;m.nickname=$('#editNick').value.trim();m.level=Math.min(100,Math.max(1,Number($('#editLevel').value)||1));m.status=nextStatus;m.isShiny=newShiny;m.notes=$('#editMonNotes').value;let dex=Number($('#editDex').value)||null;if(oldName!==newName){dex=IDS[String(newName).split(' (')[0]]||null;delete m.dexLookedUp}if(dex&&dex>0&&dex<1500)m.dexNumber=dex;else delete m.dexNumber;
 if(isStored(m)){let requestedBox=Number($('#editBox').value);if(!putInBox(m,requestedBox,(previousStatus===nextStatus&&m.box===requestedBox)?m.slot:null)){m.status=previousStatus;alert('No hay huecos libres en las 32 cajas.');return}boxPage=m.box}
 if(oldName!==m.name)recordMonEvent(m,'evolucion',`🔄 ${oldName} → ${m.name}`);
 if(oldNick!==m.nickname)recordMonEvent(m,'apodo',`🏷️ Apodo: ${oldNick||'Sin apodo'} → ${m.nickname||'Sin apodo'}`);
