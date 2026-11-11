@@ -97,7 +97,7 @@ def main():
     evolutions={t:{} for t in TYPES}
     unknown=collections.Counter()
     total=0
-    for reg,zone,url,species in fetched:
+    for reg,zone,url,species,_ in fetched:
         sources[reg][zone]=url
         for n in species:
             sid=byname.get(slug(n))
