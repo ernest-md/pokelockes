@@ -96,12 +96,14 @@
       return false;
     }
     const originalBox=m.box,originalSlot=m.slot;
+    const order=team().map(x=>x.id);
     if(target){
       target.status="reserva";
       target.box=Number.isInteger(originalBox)?originalBox:boxPage;
       target.slot=Number.isInteger(originalSlot)?originalSlot:0;
-      insertTeam(m.id,target.id);
-    }else insertTeam(m.id);
+      order[order.indexOf(target.id)]=m.id;
+    }else order.push(m.id);
+    run.teamOrder=[...new Set(order)];
     m.status="equipo";clearBoxFields(m);
     saved(target?'↔ '+label(m)+' entra en el equipo por '+label(target)+'.':'⚔️ '+label(m)+' añadido al equipo.');
     return true;
@@ -289,9 +291,11 @@
       run.rotationsLog=run.rotationsLog.filter(r=>!(r.kind==="none"&&
         ((ctx.battleId&&r.battleId===ctx.battleId)||(!ctx.battleId&&!r.battleId&&Number(r.bossId)===Number(ctx.bossId)))));
       const oldName=label(out),newName=label(incomingMon);
+      const teamOrder=team().map(x=>x.id);
       out.status="reserva";out.box=box;out.slot=slot;
       incomingMon.status="equipo";clearBoxFields(incomingMon);
-      insertTeam(incomingMon.id,out.id);
+      teamOrder[teamOrder.indexOf(out.id)]=incomingMon.id;
+      run.teamOrder=[...new Set(teamOrder)];
       const record={id:newId("rotation"),kind:"swap",date:stamp(),bossId:ctx.bossId,battleId:ctx.battleId,
         outId:out.id,inId:incomingMon.id,outName:oldName,inName:newName,
         outSpecies:out.name,inSpecies:incomingMon.name,notes:root.querySelector("#pcRotateNotes").value.trim()};
