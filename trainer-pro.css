@@ -79,3 +79,7 @@
 @media(prefers-reduced-motion:reduce){.tc-squad-member,.tc-progress>span{transition:none}}
 
 .tc-moments{border-top:1px solid #475f7b;margin:12px 0;padding-top:10px;display:grid;gap:7px}.tc-moments div{display:flex;justify-content:space-between;gap:12px;font-size:11px;color:#a8c2df}.tc-moments strong{color:#e8f4ff;font-size:12px;text-align:right;overflow-wrap:anywhere}
+
+#trainerHero.trainer-pro .tc-portrait{display:flex;align-items:flex-end;justify-content:center;overflow:hidden;background:radial-gradient(ellipse at 50% 88%,color-mix(in srgb,var(--trainer-accent) 36%,#182940),#0e1c30 80%)}
+#trainerHero.trainer-pro .tc-portrait img.tc-trainer-image{display:block;width:100%;height:100%;max-height:100%;object-fit:contain;object-position:bottom center;image-rendering:pixelated;filter:drop-shadow(0 5px 7px #0005)}
+#trainerHero.trainer-pro .tc-portrait .tc-trainer-fallback{font-size:22px;font-weight:950;color:#fff}
