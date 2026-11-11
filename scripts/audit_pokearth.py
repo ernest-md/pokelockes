@@ -28,11 +28,25 @@ TE={'t_arida':'savannabiome','t_costera':'coastalbiome','t_escarpada':'canyonbio
  't_electrorroca':'chargestonecavern','t_lumbre':'torchlitlabyrinth'}
 AREAS={'paldea':PA,'kitakami':KI,'terra':TE}
 TYPES=['normal','lucha','volador','veneno','tierra','roca','bicho','fantasma','acero','fuego','agua','planta','electrico','psiquico','hielo','dragon','siniestro','hada']
-EXCLUDED={
- 'paldea':set('Misdreavus Mismagius Gulpin Swalot Bagon Shelgon Salamence Clauncher Clawitzer Passimian Eiscue Dreepy Drakloak Dragapult Ceruledge'.lower().split()) |
- {'iron treads','iron bundle','iron hands','iron jugulis','iron moth','iron thorns','iron valiant','iron leaves','iron boulder','iron crown','miraidon'},
- 'kitakami':{'aipom','ambipom','morpeko'},
- 'terra':{'shieldon','bastiodon','sandshrew','sandslash'} }
+# Wild version exclusives, by region, based on Serebii's Scarlet/Violet list.
+# Each side lists species UNAVAILABLE in the opposite version.
+VERSION_EXCLUSIVES={
+ 'paldea':{
+  'escarlata':set('Drifloon Drifblim Stunky Skuntank Larvitar Pupitar Tyranitar Deino Zweilous Hydreigon Skrelp Dragalge Oranguru Stonjourner'.lower().split()) |
+    {'great tusk','scream tail','brute bonnet','flutter mane','slither wing','sandy shocks','roaring moon'},
+  'purpura':set('Misdreavus Mismagius Gulpin Swalot Bagon Shelgon Salamence Clauncher Clawitzer Passimian Eiscue Dreepy Drakloak Dragapult'.lower().split()) |
+    {'iron treads','iron bundle','iron hands','iron jugulis','iron moth','iron thorns','iron valiant'}
+ },
+ 'kitakami':{
+  'escarlata':{'vulpix','ninetales','gligar','gliscor','cramorant'},
+  'purpura':{'sandshrew','sandslash','aipom','ambipom','morpeko'}
+ },
+ 'terra':{
+  'escarlata':{'vulpix','ninetales','cranidos','rampardos','gouging fire','raging bolt'},
+  'purpura':{'sandshrew','sandslash','shieldon','bastiodon','iron boulder','iron crown'}
+ }
+}
+VERSIONS=('escarlata','purpura')
 UA={'User-Agent':'Mozilla/5.0 (compatible; Pokelockes fact check)'}
 
 def get(url):
@@ -79,7 +93,7 @@ def area_read(row):
         pokemon=[]
         for a in table.select('a[onclick*="pokeToggle"]'):
             n=a.get_text(' ',strip=True)
-            if n and n not in pokemon and n.lower() not in EXCLUDED[region]:pokemon.append(n)
+            if n and n not in pokemon:pokemon.append(n)
         return (region,zone,url,pokemon,None)
     except Exception as exc:
         return (region,zone,url,[],str(exc))
@@ -89,74 +103,96 @@ def main():
     with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
         fetched=list(pool.map(area_read,paths))
     broken={region+'/'+zone:err for region,zone,_,_,err in fetched if err}
-    if broken:
-        raise RuntimeError('Cannot certify all mapped areas: '+json.dumps(broken))
+    if broken:raise RuntimeError('Cannot verify all mapped areas: '+json.dumps(broken))
     byname,default,typed,desc,names=type_data()
-    candidates={r:{t:{} for t in TYPES} for r in AREAS}
     sources={r:{} for r in AREAS}
-    evolutions={t:{} for t in TYPES}
-    unknown=collections.Counter()
+    for region,zone,url,_,_ in fetched:sources[region][zone]=url
+    sources['paldea']['columna']=None # no independent source page
     dex={}
-    total=0
-    for reg,zone,url,species,_ in fetched:
-        sources[reg][zone]=url
-        for n in species:
-            sid=byname.get(slug(n))
-            if sid is None:
-                unknown[n]+=1;continue
-            dex[n]=sid
-            native=set(typed[default[sid]])
-            display=n
-            extra={}
-            if reg=='paldea' and n=='Wooper':
-                display='Wooper (Paldea)';native={'tierra','veneno'} # NOT water; no Quagsire
-            elif reg=='paldea' and n=='Tauros':
-                display='Tauros (Paldea)';native={'lucha'} # Combat breed
-            elif reg=='terra' and zone=='t_polar' and n=='Vulpix':
-                display='Vulpix (Alola)';native={'hielo'};extra={'hada':'Ninetales (Alola)'}
-            valid={typ:None for typ in native}
-            if not (reg=='paldea' and n in {'Wooper','Tauros'}) and not (reg=='terra' and zone=='t_polar' and n=='Vulpix'):
-                for evolved in desc[sid]:
-                    for typ in typed[default[evolved]]:
-                        if typ not in valid:valid[typ]=names[evolved]
-            valid.update(extra)
-            if n=='Charcadet':valid.pop('fantasma',None) # Ceruledge is Violet-only
-            if n=='Basculin':
-                if reg=='kitakami' and zone=='k_soto':
-                    display='Basculin (raya blanca)'  # Timeless Woods exclusive; Basculegion valid Ghost evolution
-                else:
-                    valid.pop('fantasma',None)  # Standard Basculin cannot evolve into Basculegion
-            if n=='Oricorio':valid={t:v for t,v in valid.items() if t=='volador'} # area-specific form unknown
-            if n=='Rotom':valid={t:v for t,v in valid.items() if t in {'fantasma','electrico'}} # appliance forms aren't evo
-            for typ,ev in valid.items():
-                zone_list=candidates[reg][typ].setdefault(zone,[])
-                if display not in zone_list:
-                    zone_list.append(display);total+=1
-                if ev:evolutions[typ][display]=f'{ev} · tipo {typ}'
-    # Scarlet-exclusive Paldean Tauros Blaze Breed has documented wild locations.
-    # Source: https://www.serebii.net/pokedex-sv/tauros/
-    conditional={}
-    for zone in ['oeste2','este2','este3','desierto']:
-        current=next((pokemon for r,z,_,pokemon,_ in fetched if r=='paldea' and z==zone),[])
-        if 'Tauros' not in current:continue
-        name='Tauros de Paldea (variedad ardiente)'
-        arr=candidates['paldea']['fuego'].setdefault(zone,[])
-        if name not in arr:arr.append(name)
-        conditional[name]='Forma rara exclusiva de Escarlata; no es el Tauros combatiente común.'
-    # No distinct Serebii page for Colonnade Hollow: leave empty instead of inventing spawns.
-    sources['paldea']['columna']=None
-    report={'provider':'Serebii Pokéarth (not an official Pokémon guide)',
-     'note':'Area-level sightings may be approximate. Filters exclude Violet-only wild species. Verify encounter rules in-game.',
-     'auditedOn':str(date.today()),'coverage':{'checked':len(fetched),'zones':len(fetched)+1,'unmapped':['paldea/columna']},
-     'sources':sources,'candidates':candidates,'evolutions':evolutions,'dex':dex,'conditional':conditional}
-    output='/* Data fact-checked against Pokéarth, not an official guide. Generated by scripts/audit_pokearth.py. */\nwindow.POKE_VERIFIED='+json.dumps(report,ensure_ascii=False,separators=(',',':'))+';\n'
+    unknown=collections.Counter()
+    variations={}
+    for version in VERSIONS:
+        candidates={r:{t:{} for t in TYPES} for r in AREAS}
+        evolutions={t:{} for t in TYPES}
+        conditional={}
+        total=0
+        for reg,zone,url,species,_ in fetched:
+            for n in species:
+                # Includes the common encounter species and only exclusives for this version.
+                exclusive_other=VERSIONS[1] if version==VERSIONS[0] else VERSIONS[0]
+                if n.lower() in VERSION_EXCLUSIVES[reg][exclusive_other]:
+                    continue
+                sid=byname.get(slug(n))
+                if sid is None:
+                    unknown[n]+=1;continue
+                dex[n]=sid
+                native=set(typed[default[sid]])
+                display=n
+                extra={}
+                if reg=='paldea' and n=='Wooper':
+                    display='Wooper (Paldea)';native={'tierra','veneno'}
+                elif reg=='paldea' and n=='Tauros':
+                    display='Tauros (Paldea)';native={'lucha'}
+                elif reg=='terra' and zone=='t_polar' and n=='Vulpix':
+                    display='Vulpix (Alola)';native={'hielo'}
+                    extra={'hada':'Ninetales (Alola)'}
+                elif reg=='terra' and zone=='t_polar' and n=='Sandshrew':
+                    display='Sandshrew (Alola)';native={'hielo','acero'}
+                valid={typ:None for typ in native}
+                if not (reg=='paldea' and n in {'Wooper','Tauros'}) and not (reg=='terra' and zone=='t_polar' and n in {'Vulpix','Sandshrew'}):
+                    for evolved in desc[sid]:
+                        for typ in typed[default[evolved]]:
+                            if typ not in valid:valid[typ]=names[evolved]
+                valid.update(extra)
+                if n=='Charcadet':
+                    if version=='escarlata':
+                        valid.pop('fantasma',None) # Ceruledge requires Violet exclusive armor
+                    else:
+                        valid.pop('psiquico',None) # Armarouge requires Scarlet exclusive armor
+                if n=='Basculin':
+                    if reg=='kitakami' and zone=='k_soto':
+                        display='Basculin (raya blanca)'
+                    else:valid.pop('fantasma',None)
+                if n=='Oricorio':valid={t:v for t,v in valid.items() if t=='volador'}
+                if n=='Rotom':valid={t:v for t,v in valid.items() if t in {'fantasma','electrico'}}
+                for typ,ev in valid.items():
+                    zone_list=candidates[reg][typ].setdefault(zone,[])
+                    if display not in zone_list:
+                        zone_list.append(display);total+=1
+                    if ev:evolutions[typ][display]=f'{ev} · tipo {typ}'
+        # Version-specific Paldean Tauros breeds are rare forms of common Tauros.
+        for zone in ['oeste2','este2','este3','desierto']:
+            current=next((species for r,z,_,species,_ in fetched if r=='paldea' and z==zone),[])
+            if 'Tauros' not in current:continue
+            if version=='escarlata':
+                name='Tauros de Paldea (variedad ardiente)';typ='fuego'
+                msg='Forma rara exclusiva de Escarlata; no es el Tauros combatiente común.'
+            else:
+                name='Tauros de Paldea (variedad acuática)';typ='agua'
+                msg='Forma rara exclusiva de Púrpura; no es el Tauros combatiente común.'
+            arr=candidates['paldea'][typ].setdefault(zone,[])
+            if name not in arr:arr.append(name)
+            conditional[name]=msg
+        variations[version]={'candidates':candidates,'evolutions':evolutions,'conditional':conditional}
+        print('VERSION_AUDIT',version,'candidates',total,'south1_ghost',candidates['paldea']['fantasma'].get('sur1',[]),
+              'soto_dark',candidates['kitakami']['siniestro'].get('k_soto',[]))
+    report={'provider':'Serebii Pokéarth (non-official area guide)',
+      'note':'Approximate area spawns; exclusive species filtered for the selected game. Events, trades, Union Circle or raids can provide exceptions.',
+      'auditedOn':str(date.today()),
+      'coverage':{'checked':len(fetched),'zones':len(fetched)+1,'unmapped':['paldea/columna']},
+      'sources':sources,'versions':variations,
+      'candidates':variations['escarlata']['candidates'],
+      'evolutions':variations['escarlata']['evolutions'],
+      'conditional':variations['escarlata']['conditional'],
+      'dex':dex}
+    output='/* Version-aware encounters from Pokéarth; not official game data. Generated by scripts/audit_pokearth.py. */\\nwindow.POKE_VERIFIED='+json.dumps(report,ensure_ascii=False,separators=(',',':'))+';\\n'
     (ROOT/'verified-encounters.js').write_text(output,encoding='utf8')
-    print('AUDIT_COMPLETE',json.dumps({'checked':len(fetched),'zone_counts':{r:len(m) for r,m in AREAS.items()},'matched_candidates':total,'unknown_species':unknown.most_common(35),'output_bytes':len(output.encode('utf8'))},ensure_ascii=False))
-    for region,zone,url,names,_ in fetched:
-        if not names:print('EMPTY_SOURCE',region,zone,url)
-    print('TEST',json.dumps({'south1_fire':candidates['paldea']['fuego'].get('sur1',[]),
-         'south1_ghost':candidates['paldea']['fantasma'].get('sur1',[]),
-         'coastal_steel':candidates['terra']['acero'].get('t_costera',[]),
-         'polar_ice':candidates['terra']['hielo'].get('t_polar',[]),
-         'paldea_north1':len(candidates['paldea']['agua'].get('norte1',[]))},ensure_ascii=False))
+    print('AUDIT_COMPLETE',json.dumps({'checked':len(fetched),'versions':list(variations),'unknown_species':unknown.most_common(20),'output_bytes':len(output.encode('utf8'))},ensure_ascii=False))
+    assert 'Misdreavus' not in variations['escarlata']['candidates']['paldea']['fantasma']['sur1']
+    assert 'Misdreavus' in variations['purpura']['candidates']['paldea']['fantasma']['sur1']
+    assert 'Drifloon' not in variations['purpura']['candidates']['paldea']['fantasma']['sur1']
+    assert 'Drifloon' in variations['escarlata']['candidates']['paldea']['fantasma']['sur1']
+    assert 'Tauros de Paldea (variedad ardiente)' in variations['escarlata']['candidates']['paldea']['fuego']['oeste2']
+    assert 'Tauros de Paldea (variedad acuática)' in variations['purpura']['candidates']['paldea']['agua']['oeste2']
+
 if __name__=='__main__':main()
