@@ -150,25 +150,25 @@ const builtIn=[
 const others=Object.values(window.POKE_TYPES?.meta||{});
 const types=[...builtIn,...others];
 const stats={};
-let filter="all",fetching=false;
+let filter="all",fetching=false,loaded=false;
 const byId=id=>document.getElementById(id);
 const info=byId("connection"),cards=byId("runCards");
 function card(type){
- const stat=stats[type.id],started=!!stat?.initialized;
+ const stat=stats[type.id],started=!!stat?.initialized,unknown=!loaded;
  const url=["fuego","agua","planta"].includes(type.id)?"./"+type.id+".html":"./run.html?tipo="+encodeURIComponent(type.id);
  const c=stat?.captures??0,goals=stat?.goals??0,shiny=stat?.shinies??0,deaths=stat?.deaths??0;
  return `<article class="card" style="--accent:${type.color}" data-type="${type.id}">
  <div class="visual"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${type.dex}.png" alt="" loading="lazy" onerror="this.style.display='none'"><span class="emoji">${type.emoji}</span></div>
- <div class="cardBody"><div style="display:flex;align-items:center;justify-content:space-between;gap:7px"><span class="cardKicker">Reto de tipo</span><span class="state ${started?'started':''}">${started?'● En marcha':'○ Sin empezar'}</span></div>
+ <div class="cardBody"><div style="display:flex;align-items:center;justify-content:space-between;gap:7px"><span class="cardKicker">Reto de tipo</span><span class="state ${started?'started':''}">${unknown?'◌ Consultando':started?'● En marcha':'○ Sin empezar'}</span></div>
  <h3>${type.name}</h3>
  <p class="subtitle">${type.initial?'Inicial: '+type.initial:'Inicio libre · Sugerencia: '+type.sample}</p>
  <div class="stats"><div class="stat"><strong>${c}</strong><small>Pokémon</small></div><div class="stat"><strong>${shiny}</strong><small>Shinies</small></div><div class="stat"><strong>${goals}</strong><small>Objetivos</small></div><div class="stat"><strong>${deaths}</strong><small>Bajas</small></div></div>
  <div class="progressHeader"><span>Progreso</span><strong>${goals}/39 objetivos</strong></div><div class="bar"><span style="width:${Math.max(0,Math.min(100,goals/39*100))}%"></span></div></div>
- <a class="enter" href="${url}">${started?'Continuar':'Empezar'} run ${type.name} →</a></article>`;
+ <a class="enter" href="${url}">${unknown?'Abrir':started?'Continuar':'Empezar'} run ${type.name} →</a></article>`;
 }
 function render(){
  const q=byId("typeSearch").value.trim().toLocaleLowerCase();
- const match=types.filter(t=>(filter==="all"||(filter==="started"&&stats[t.id]?.initialized)||(filter==="new"&&!stats[t.id]?.initialized))&&(t.name+" "+t.id+" "+t.sample).toLocaleLowerCase().includes(q));
+ const match=types.filter(t=>(filter==="all"||(filter==="started"&&stats[t.id]?.initialized)||(filter==="new"&&!stats[t.id]?.initialized))&&(t.name+" "+t.id+" "+t.sample).toLocaleLowerCase().includes(q)).sort((a,b)=>Number(!!stats[b.id]?.initialized)-Number(!!stats[a.id]?.initialized));
  cards.innerHTML=match.length?match.map(card).join(""):'<div class="empty">No hay runs que coincidan. Cambia los filtros para ver los demás tipos.</div>';
  byId("showing").textContent=match.length+" de "+types.length+" runs";
 }
@@ -177,6 +177,7 @@ async function refresh(){
  try {
   const result=await window.PokeAccess.request("summary",{});
   if(!Array.isArray(result.runs))throw new Error("La respuesta de la nube es inválida");
+  loaded=true;
   result.runs.forEach(x=>{stats[x.run]=x});
   byId("totalStarted").textContent=result.runs.filter(x=>x.initialized).length+" / 18";
   byId("totalMons").textContent=result.runs.reduce((n,x)=>n+x.captures,0);
