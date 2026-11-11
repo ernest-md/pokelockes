@@ -1,0 +1,25 @@
+name: Test box moves and detailed rotations
+on:
+  push:
+    paths:
+      - scripts/smoke_box_flow.mjs
+      - .github/workflows/box-flow-smoke.yml
+      - box-flow.js
+      - box-flow.css
+      - fuego.html
+      - planta.html
+      - agua.html
+      - run.html
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save --no-package-lock jsdom@26.1.0
+      - run: node scripts/smoke_box_flow.mjs
