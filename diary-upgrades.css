@@ -84,3 +84,17 @@
 .pu-status{margin:12px 0;color:#bed1e6;font-size:12px;min-height:17px}
 @media(max-width:1000px){.trainer-stats{flex:1 1 190px}.team-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px){.trainer-banner{padding:15px;gap:12px}.trainer-avatar{width:66px;height:66px;font-size:39px}.trainer-main{min-width:calc(100% - 85px)}.trainer-stats{flex-basis:100%;grid-template-columns:repeat(4,minmax(0,1fr))}.trainer-stat{padding:8px}.trainer-stat strong{font-size:19px}.trainer-stat small{font-size:9px}.trainer-actions{flex-direction:row;width:100%;justify-content:stretch}.trainer-actions button{flex:1}.team-card-grid{grid-template-columns:1fr}.team-showcase{padding:12px}.poke-upgrade-dialog{padding:18px}}
+
+/* Avatares de personajes Pokémon y selección de memes VGC */
+.poke-upgrade-dialog .poke-avatars{display:block;margin:10px 0 4px}
+.poke-avatar-group{margin:14px 0 17px}
+.poke-avatar-group>strong{font-size:12px;display:block;color:#dbe9ff;margin-bottom:9px;letter-spacing:.03em}
+.poke-avatar-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.poke-avatar-grid .poke-avatar-tile{display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:start;min-width:0;width:100%;height:auto;min-height:110px;background:#102037;border:1px solid #4b6281;color:#e7f2ff;padding:5px;border-radius:10px;cursor:pointer}
+.poke-avatar-grid .poke-avatar-tile[aria-pressed="true"]{border-color:#f3d184;background:#30415d;box-shadow:0 0 0 2px #efd38b66}
+.poke-avatar-grid .poke-avatar-tile:hover{border-color:#c4d9fa;background:#263c55}
+.poke-avatar-tile img{display:block;width:100%;height:75px;object-fit:contain;object-position:center center;image-rendering:pixelated;background:radial-gradient(circle at 50% 70%,#344861 0%,#14233b 83%);border-radius:7px}
+.poke-avatar-tile span{font-size:10px;line-height:1.15;font-weight:850;min-height:24px;text-align:center;overflow-wrap:anywhere;display:grid;place-items:center}
+.poke-avatar-credits{font-size:11px!important;line-height:1.55;color:#afc3d9;margin:12px 0 16px!important}
+.poke-avatar-credits a{color:#bbdaf8}
+@media(max-width:550px){.poke-avatar-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.poke-avatar-grid .poke-avatar-tile{min-height:103px}.poke-avatar-tile img{height:68px}}
