@@ -1,0 +1,788 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101625"><title>PokéLockes — Diario monotipo</title>
+<style>
+:root{color-scheme:dark;--bg:#0c111b;--panel:#151d2c;--panel2:#1e2b3b;--border:#304055;--text:#f0f4f9;--muted:#a4b5c8;--fire:#ff965b;--fire2:#ffd18c;--good:#56d9ae;--bad:#ef8c98;--warn:#f5cb72}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 10% 0%,#342222 0,transparent 32%),radial-gradient(ellipse at 85% 25%,#132d3a 0,transparent 42%),var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.45}button,input,textarea,select{font:inherit}button{cursor:pointer;color:inherit;border:1px solid var(--border);background:var(--panel2);border-radius:10px;padding:10px 13px;font-weight:650;transition:background .15s,border .15s}button:hover:not(:disabled){border-color:var(--fire)}button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--fire);outline-offset:2px}button:disabled{opacity:.4;cursor:not-allowed}.primary{background:var(--fire);border-color:var(--fire);color:#211a16}.ghost{background:transparent}.danger{color:#ffb8bf}.shell{max-width:1490px;margin:auto;padding:23px 24px 70px}.top{display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap}.eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--fire2)}h1{font-size:clamp(28px,4vw,41px);line-height:1.1;margin:6px 0}h1 span{font-size:29px}.subtitle{font-size:14px;color:var(--muted);margin:8px 0 0}.toptools{display:flex;flex-wrap:wrap;gap:7px}.stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:22px 0 20px}.stat{padding:14px 17px;border:1px solid var(--border);background:var(--panel);border-radius:14px;min-width:0}.stat strong{display:block;font-size:25px;font-variant-numeric:tabular-nums}.stat small{display:block;color:var(--muted);font-size:12px}.regions{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:19px}.regions h2{font-size:14px;color:var(--muted);margin:0 10px 0 0}.region-btn{display:flex;gap:8px;align-items:center}.region-btn.active{border-color:var(--fire);background:#4a2d29;box-shadow:inset 0 0 0 1px rgba(255,150,91,.35)}.region-btn small{font-size:11px;color:var(--muted)}.tabs{display:flex;gap:8px;border-bottom:1px solid var(--border);overflow:auto;padding:0 0 13px;margin-bottom:17px}.tabs button{white-space:nowrap}.tabs button.on{background:var(--fire);color:#251811;border-color:var(--fire)}.pane{display:none}.pane.on{display:block}.grid2{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(345px,.88fr);gap:16px}.panel{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:19px;min-width:0}.panel h2{margin:0 0 7px;font-size:20px}.panel h3{font-size:15px;margin:17px 0 9px}.hint{font-size:13px;color:var(--muted);line-height:1.52}.between{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.badge{font-size:11px;border:1px solid #4c6877;padding:4px 9px;background:#1d3948;color:#b8e5f2;border-radius:999px;white-space:nowrap}.badge.good{background:#153b32;color:#90ead0;border-color:#326b5b}.badge.bad{background:#452a33;color:#ffb3bd;border-color:#794b59}.badge.warn{background:#453724;color:#ffdfa0;border-color:#826b47}.badge.shiny{color:#ffdf78;border-color:#987849;background:#3d3425}.legend{display:flex;flex-wrap:wrap;gap:11px;margin-top:10px;font-size:12px;color:var(--muted)}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}.map-controls{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin:12px 0}.mapviewport{max-height:700px;overflow:auto;border:1px solid #364c59;border-radius:14px;background:radial-gradient(circle,#213c42,#102030);scrollbar-color:#536879 transparent}.mapstage{width:100%;position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(circle at 49% 48%,#4b6453 0%,#25433f 38%,#25536d 60%,#163a52 100%);aspect-ratio:1/1}.mapstage.terra{aspect-ratio:1000/670}.mapstage img.mapimg{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:fill;z-index:1}.mapstage svg.mapfallback{position:absolute;inset:0;display:block;width:100%;height:100%;z-index:0}.mapstage.no-image img.mapimg{display:none}.mapstage.no-image.terra{background:conic-gradient(from 0deg,#658d75 0 25%,#8c8a59 25% 50%,#7a6755 50% 75%,#678b9e 75% 100%)}.mapstage.no-image.kitakami{background:radial-gradient(circle at 50% 47%,#d4c5aa 0 12%,#958673 13% 32%,#6e9f75 33% 65%,#4e815f 66% 100%)}.mappin{width:24px;height:24px;position:absolute;transform:translate(-50%,-50%);padding:0;border:2px solid #e6f3ff;border-radius:50%;font-size:11px;line-height:17px;text-align:center;font-weight:800;color:#091923;background:#8b9eaa;box-shadow:0 1px 7px #061320b3;z-index:2}.mappin.visited{background:#ebc76b}.mappin.captured{background:#4ddaab}.mappin.lost{background:#ed9299}.mappin.selected{outline:3px solid var(--fire);outline-offset:2px;z-index:4}.mappin:hover{transform:translate(-50%,-50%) scale(1.18);z-index:5}.mapcredit{font-size:11px;color:var(--muted);margin:10px 0 0}.mapcredit a,a{color:#ffbc86}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.field.full{grid-column:1/-1}label.field-label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.input,select,textarea{width:100%;color:var(--text);background:#0e1928;border:1px solid #42546a;padding:10px 11px;border-radius:9px;outline-color:var(--fire)}textarea{min-height:86px;resize:vertical}.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.zone-list,.mon-list,.boss-list,.log-list{max-height:715px;overflow:auto;display:flex;flex-direction:column;gap:8px;padding-right:4px}.zone-entry,.mon-entry,.boss-entry,.log-entry{background:#101b2a;border:1px solid var(--border);border-radius:11px;padding:11px}.zone-entry{width:100%;text-align:left}.zone-entry.selected{border-color:var(--fire);background:#2b2829}.zone-entry strong{font-size:14px}.zone-entry small,.mon-entry small{color:var(--muted);font-size:12px}.filters{display:grid;grid-template-columns:1fr 180px;gap:9px;margin:13px 0}.candidate-list{display:flex;flex-wrap:wrap;gap:7px;margin:9px 0}.candidate{display:flex;align-items:center;gap:6px;border-radius:9px;padding:7px 9px;background:#212c39;border:1px solid #455064;font-size:13px;text-align:left;font-weight:600}.candidate img{height:35px;width:35px;object-fit:contain;image-rendering:pixelated}.candidate .candidate-type{font-size:10px;color:var(--muted)}.candidate:hover{background:#42352c}.checkbox-field{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #79654a;border-radius:10px;background:#30291f;color:#f4d8a8;font-weight:700;font-size:13px}.checkbox-field input{width:18px;height:18px;accent-color:#edc15e}.note{padding:12px 13px;border-radius:0 8px 8px 0;border-left:3px solid var(--fire);background:#1b2d3d;color:#cddcea;font-size:12px;margin-top:11px}.mon-entry{display:flex;align-items:center;gap:11px}.mon-entry img{width:51px;height:51px;object-fit:contain;image-rendering:pixelated;background:#1f2a37;border-radius:10px}.mon-entry .details{flex:1;min-width:0}.mon-entry strong{font-size:15px}.mon-entry .badge{margin-left:4px}.mon-entry button{padding:7px 10px;font-size:12px}.boss-entry{display:flex;align-items:center;gap:10px;cursor:pointer}.boss-entry.done{opacity:.73}.boss-entry input{width:18px;height:18px;accent-color:var(--fire)}.boss-entry .details{flex:1}.boss-entry strong{display:block;font-size:14px}.boss-entry small{display:block;color:var(--muted)}.rule-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.rule{background:#101c2a;border:1px solid var(--border);border-radius:10px;padding:13px}.rule strong{display:block;margin-bottom:3px}.rule span{font-size:13px;color:var(--muted)}.log-entry time{font-size:11px;color:var(--muted)}.log-entry p{margin:5px 0 0;white-space:pre-wrap;overflow-wrap:anywhere}.footer{font-size:12px;color:var(--muted);margin-top:23px}.empty{padding:15px;color:var(--muted);border:1px dashed #465568;border-radius:10px;font-size:13px}.tiny{font-size:11px;color:var(--muted)}
+@media(max-width:930px){.grid2{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,minmax(0,1fr))}.mapviewport{max-height:590px}}@media(max-width:590px){.shell{padding:15px 11px 42px}.stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.stat{padding:11px}.region-btn{font-size:12px;padding:9px}.region-btn small{display:none}.filters,.rule-grid{grid-template-columns:1fr}.panel{padding:14px}.fields{grid-template-columns:1fr}.field.full{grid-column:auto}.toptools button{font-size:12px;padding:8px}.mappin{width:23px;height:23px;font-size:10px}.mapviewport{max-height:510px}}
+
+/* Sistema de cajas inspirado en Escarlata: 32 cajas de 30 huecos */
+.box-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:14px 0 12px}
+.box-toolbar>button{min-width:41px}.box-toolbar select{width:auto;min-width:165px;flex:1;max-width:310px}.box-toolbar .badge{margin-left:auto}
+.pc-box{background:linear-gradient(160deg,#1b4253,#162d44 60%,#12283d);border:1px solid #527487;border-radius:15px;padding:12px;box-shadow:inset 0 1px 0 #7fb1bc40}
+.pc-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:11px}
+.pc-head strong{font-size:16px}.pc-head small{color:#b4d2de;font-size:11px}
+.pc-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px}
+.pc-slot{position:relative;aspect-ratio:1/1;min-width:0;border:1px solid #63869a;border-radius:11px;background:#e7eff01c;padding:1px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:1px;color:#f1faff;transition:.13s}
+.pc-slot.empty{border:1px dashed #537082;background:#abc1c60a;color:#7c9cae}
+.pc-slot:not(.empty):hover,.pc-slot.selected{border:2px solid #ffc980;background:#f8b76630;transform:translateY(-1px)}
+.pc-slot img,.team-slot img,.mini-poke img{width:76%;height:72%;object-fit:contain;image-rendering:pixelated;filter:drop-shadow(0 3px 2px #0007)}
+.pc-slot .slot-name{max-width:100%;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#e9f2f6;text-align:center}
+.pc-slot .slot-shiny,.team-slot .slot-shiny{position:absolute;top:2px;right:3px;font-size:14px;filter:drop-shadow(0 1px 2px #000)}
+.poke-fallback{font-weight:900;font-size:20px;color:#ffcc8a;text-shadow:0 1px 2px #0009;line-height:1}
+.box-empty-icon{font-size:19px;opacity:.35;font-weight:400}
+.pokemon-shelves{display:grid;gap:10px;margin:10px 0 14px}
+.team-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}
+.team-slot{position:relative;min-width:0;min-height:68px;aspect-ratio:1.05;border:1px solid #3d645a;border-radius:10px;background:#1a3b34;padding:3px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px}
+.team-slot .slot-name{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.team-slot.empty{opacity:.5;border-style:dashed}.team-slot.selected{border-color:var(--fire);box-shadow:0 0 0 1px var(--fire)}
+.memorial-list{display:flex;flex-wrap:wrap;gap:7px}.memorial-chip{display:flex;align-items:center;gap:4px;background:#43252d;border:1px solid #79545d;border-radius:9px;font-size:12px;padding:5px 8px}
+.memorial-chip.selected{border-color:var(--fire)}.memorial-chip img{width:29px;height:29px;object-fit:contain;image-rendering:pixelated}
+.box-help{font-size:12px;color:#adc4d4;margin:10px 0 0}
+.nickname-row{display:flex;gap:7px}.nickname-row input{flex:1;min-width:0}.nickname-row button{flex:none;white-space:nowrap;background:#40344c;color:#f0d2ff;border-color:#6b4e77;font-size:12px;padding:8px 11px}
+.add-mon{margin-bottom:15px}.add-mon[hidden]{display:none}.add-mon .panel{border-color:#845e43}
+.section-note{font-size:12px;color:var(--muted);padding:9px 11px;border:1px dashed #496071;border-radius:10px;margin:12px 0}
+.boss-entry{cursor:default}.boss-entry .details{min-width:0}.boss-entry .boss-buttons{display:flex;gap:5px}.boss-entry button{font-size:12px;padding:7px 9px}.boss-entry.done{opacity:1;border-color:#375f53;background:#102820}
+.boss-entry.selected{border-color:var(--fire);box-shadow:0 0 0 1px var(--fire)}
+.roster-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:10px 0}
+.roster-item{background:#122334;border:1px solid #3d5267;border-radius:9px;padding:6px;display:flex;align-items:center;gap:7px;cursor:pointer;min-width:0}
+.roster-item:has(input:checked){border-color:var(--fire);background:#362f32}
+.roster-item img{width:37px;height:37px;object-fit:contain;image-rendering:pixelated}.roster-item input{flex:none;width:17px;height:17px;accent-color:var(--fire)}
+.roster-item .roster-info{flex:1;min-width:0}.roster-item strong{display:block;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.roster-item small{display:block;font-size:10px;color:var(--muted)}
+.casualty-entry{font-size:12px;display:inline-flex;align-items:center;gap:5px;margin-right:10px;margin-bottom:7px;color:#ffbec5}
+.battle-card{padding:13px;border:1px solid #40576a;border-radius:12px;background:#0f1a2b;margin-top:11px}
+.battle-card strong{font-size:14px}.battle-card p{font-size:13px;margin:7px 0;color:#c0d0dd;white-space:pre-wrap;overflow-wrap:anywhere}
+.battle-squad{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.battle-squad .mini-poke{border-radius:9px;border:1px solid #526878;background:#213548;width:67px;min-height:72px;padding:3px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.battle-squad .mini-poke img{width:45px;height:45px}.mini-poke small{font-size:9px;max-width:100%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.battle-card .between{margin-bottom:6px}.battle-card .badge{margin-right:3px}
+@media(max-width:590px){.pc-grid{gap:4px}.pc-box{padding:8px}.pc-slot{border-radius:7px}.pc-slot .slot-name,.team-slot .slot-name{font-size:8px}.poke-fallback{font-size:15px}.roster-grid{grid-template-columns:1fr}.box-toolbar select{min-width:120px}.nickname-row button{padding:8px;font-size:11px}.team-slot{min-height:49px}.pc-slot .slot-shiny{font-size:11px}}
+
+/* v4: álbum, MVPs y registro de bajas */
+.battle-mvp{font-size:13px;color:#ffda8b;font-weight:800;margin-top:8px}
+.is-mvp{box-shadow:0 0 0 2px #edc96c; background:#453925!important}
+.casualty-row{border:1px solid #425367;border-radius:10px;padding:8px;margin:6px 0;background:#122033}
+.casualty-row .casualty-entry{margin:0;min-height:25px}
+.death-extra{display:none;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-top:7px}
+.casualty-row.casualty-on .death-extra{display:grid}
+.death-extra input{font-size:12px;padding:7px}
+.feature-on{color:#ffde8a;border-color:#a38243}
+.album-stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;margin-bottom:14px}
+.album-stat{border:1px solid var(--border);border-radius:12px;background:var(--panel);padding:13px}
+.album-stat strong{display:block;font-size:21px}.album-stat small{font-size:11px;color:var(--muted)}
+.album-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
+.album-regions{display:grid;gap:11px}
+.album-region{background:#111b2a;border:1px solid var(--border);border-radius:11px;padding:11px}
+.album-region strong{display:block;font-size:14px}.album-region small{color:var(--muted);font-size:12px}
+.progress-track{height:8px;border-radius:8px;overflow:hidden;background:#2c3e53;margin:9px 0 6px}
+.progress-track span{display:block;background:linear-gradient(90deg,#ff835d,#ffce79);height:100%;border-radius:8px}
+.album-highlights{display:grid;gap:8px;max-height:320px;overflow:auto}
+.album-highlight{background:#171d2a;border-left:3px solid #eabf69;border-radius:6px;padding:10px 11px}
+.album-highlight span{color:#ffdf88;font-size:11px}.album-highlight p{white-space:pre-wrap;margin:5px 0 0;font-size:13px;overflow-wrap:anywhere}
+.album-captures{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:9px;max-height:520px;overflow:auto}
+.album-mon{display:flex;flex-direction:column;align-items:center;min-width:0;padding:9px 5px;gap:2px;background:#132335;border-radius:12px;text-align:center}
+.album-mon strong{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.album-mon small{font-size:10px;color:var(--muted);max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.album-mon-sprite{display:grid;place-items:center;width:72px;height:67px}
+.album-mon-sprite img{width:68px;height:68px;object-fit:contain;image-rendering:pixelated}
+.album-mon-sprite .poke-fallback{font-size:30px}
+.album-victories{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,345px),1fr));gap:12px}
+.album-victory{padding:13px;border-radius:13px;background:#101e2b;border:1px solid #3c5365}
+.album-victory>small{color:var(--muted)}.album-victory .battle-squad{margin-bottom:7px}
+.album-memorial{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,310px),1fr));gap:10px}
+.album-death{background:#241b27;border:1px solid #594452;border-radius:12px;padding:10px;display:flex;align-items:center;gap:9px}
+.album-death>img{width:62px;height:62px;object-fit:contain;image-rendering:pixelated}
+.album-death .poke-fallback{font-size:30px}
+.album-death>div{min-width:0;flex:1}.album-death strong{display:block}.album-death small{display:block;color:#ddbdc4;font-size:11px;overflow-wrap:anywhere}
+@media(max-width:760px){.album-layout{grid-template-columns:1fr}.album-stats{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:480px){.album-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.album-captures{grid-template-columns:repeat(3,minmax(0,1fr))}.death-extra{grid-template-columns:1fr}}
+
+/* v5: biografías y logros del diario */
+.bio-heading{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin:0 0 10px}
+.bio-heading h3{margin:0}.bio-timeline{display:grid;gap:10px;margin:14px 0 18px}
+.bio-event{position:relative;border-left:2px solid var(--fire);background:#ffffff07;border-radius:0 9px 9px 0;padding:9px 12px 10px}
+.bio-event>div{display:flex;gap:8px;align-items:center}.bio-event time{font-size:11px;color:var(--muted)}
+.bio-marker{font-size:15px}.bio-event p{font-size:12px;white-space:pre-wrap;overflow-wrap:anywhere;margin:5px 0 0}
+.bio-event button{margin-top:8px;padding:4px 8px;font-size:11px}
+.bio-add{background:#ffffff07;padding:12px;border-radius:11px;display:grid;gap:8px}.bio-add textarea{min-height:60px}
+.achievement-top{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:16px}
+.achievement-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.achievement{border:1px solid #42566c;border-radius:13px;background:#142137;padding:13px;display:flex;align-items:center;gap:10px;min-height:92px}
+.achievement.locked{opacity:.55;filter:grayscale(.5)}.achievement.unlocked{border-color:#6b794d;background:#213027}
+.achievement-icon{font-size:29px;width:42px;text-align:center;flex:none}.achievement strong{display:block;font-size:14px}
+.achievement p{font-size:12px;color:var(--muted);margin:3px 0 4px}.achievement small{font-size:10px;color:#a9d5aa;font-weight:750}
+.records-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.record{display:flex;gap:10px;align-items:center;border:1px solid #3a5268;background:#122036;border-radius:11px;padding:12px}
+.record>span{font-size:25px}.record small{display:block;font-size:11px;color:var(--muted)}.record strong{font-size:13px;overflow-wrap:anywhere}
+@media(max-width:850px){.achievement-top{grid-template-columns:1fr}}@media(max-width:600px){.achievement-grid{grid-template-columns:1fr}.records-grid{grid-template-columns:1fr 1fr}}@media(max-width:390px){.records-grid{grid-template-columns:1fr}}
+</style><style id="pokelocke-cloud-style">
+.cloud-box{margin:12px 0 17px;padding:13px 17px;border-radius:14px;background:#18293d;border:1px solid #55708b;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;color:#e8f1fe}
+.cloud-box strong{display:block;font-size:13px}.cloud-box small{display:block;color:#bfd0e3;font-size:12px;margin-top:3px}
+.cloud-actions{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.cloud-actions button,.cloud-actions a{font:inherit;font-size:12px;border:1px solid #637c9e;border-radius:9px;color:#f3f8ff;padding:7px 10px;background:#233953;text-decoration:none}
+.cloud-actions button:hover,.cloud-actions a:hover{background:#36536f}
+.cloud-actions [hidden]{display:none}
+</style><style id="poke-access-css">
+html:not(.poke-authorized) body>.shell,html:not(.poke-authorized) body>main{visibility:hidden}
+#pokeGate{position:fixed;z-index:2147483647;inset:0;display:grid;place-items:center;background:linear-gradient(135deg,#08101ceF,#101c33fB);padding:18px;color:#f5f8ff;font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;overflow:auto}
+#pokeGate[hidden]{display:none!important}
+#pokeGate .pga-card{width:min(100%,440px);background:#18253b;border:1px solid #50698a;border-radius:22px;padding:30px 25px;box-shadow:0 20px 70px #0009}
+#pokeGate .pga-eyebrow{font-size:12px;letter-spacing:.18em;color:#9fc5fb;font-weight:900;text-transform:uppercase}
+#pokeGate h2{font-size:clamp(23px,5vw,31px);line-height:1.12;margin:9px 0 11px;color:#fff}
+#pokeGate p{color:#c4d1e4;font-size:14px;line-height:1.5;margin:0 0 20px}
+#pokeGate label{display:block;font-size:13px;font-weight:750;margin:0 0 7px}
+#pokeGate input{display:block;width:100%;border:1px solid #6a87ad;border-radius:11px;padding:14px 15px;color:#fff;background:#0a1427;font-size:18px;letter-spacing:.04em;outline:none;box-sizing:border-box}
+#pokeGate input:focus{border-color:#e6c677;box-shadow:0 0 0 3px #e6c67744}
+#pokeGate button{display:block;width:100%;margin-top:14px;padding:14px;border:0;border-radius:11px;background:#eac579;color:#1e1d20;font-weight:850;font-size:16px;cursor:pointer}
+#pokeGate button:disabled{opacity:.55;cursor:wait}
+#pokeGate .pga-error{color:#ffb1a6;font-size:13px;margin-top:11px;min-height:16px;line-height:1.3}
+#pokeGate .pga-footer{font-size:12px;color:#9fb0c9;margin-top:19px}
+</style><script src="./types.js"></script></head>
+<body><div id="pokeGate" role="dialog" aria-modal="true" aria-labelledby="pgaTitle"><div class="pga-card"><div class="pga-eyebrow">🌈 &nbsp; PokéLockes · 18 tipos</div><h2 id="pgaTitle">Código de acceso</h2><p>Introduce el código compartido para acceder a las 18 aventuras y guardar cambios.</p><form id="pgaForm" autocomplete="off"><label for="pgaInput">Código</label><input id="pgaInput" type="password" placeholder="Introduce el código" required autocomplete="off" maxlength="80"><button id="pgaButton" type="submit">Entrar a PokéLockes →</button><div id="pgaError" class="pga-error" aria-live="polite"></div></form><div class="pga-footer">La sesión se mantiene mientras tengas abierto el navegador. Sin cuentas de usuario.</div></div></div><div class="shell"><header class="top"><div><div class="eyebrow">Pokémon Escarlata · Diario monotipo</div><h1 id="genericTitle">Locke monotipo <span>🎮</span></h1><p class="subtitle">Paldea, Noroteo y Biodomo · Capturas, encuentros, equipo y recuerdos de tu aventura</p></div><div class="toptools"><button id="exportBtn">↓ Exportar JSON</button><button id="importBtn">↑ Importar partida</button><input id="importFile" type="file" accept=".json,application/json" hidden><button id="resetBtn" class="danger">↺ Reiniciar</button></div></header><div class="cloud-box" id="cloudBox" role="status" aria-live="polite"><div><strong id="cloudTitle">☁️ Conectando a Supabase…</strong><small id="cloudSubtitle">El código de acceso habilita la edición compartida.</small></div><div class="cloud-actions"><button type="button" id="cloudPull">↓ Cargar nube</button><button type="button" id="cloudPush">↑ Subir progreso local</button><a href="./index.html">⌂ Portada</a></div></div>
+<section id="genericStarterHint" class="cloud-box" style="margin-bottom:15px;display:flex;gap:12px;align-items:center;justify-content:space-between"><div><strong>🧭 Elige el primer Pokémon de tu run </strong><small>No hay inicial fijo para este tipo. Puedes registrar el primer compañero desde «Pokémon» y definir vosotros las reglas.</small></div><button type="button" id="genericStartBtn" class="primary">＋ Elegir primer Pokémon</button></section><section id="stats" class="stats" aria-label="Estadísticas de la partida"></section>
+<div class="regions" id="regions"><h2>Explorar región</h2><button class="region-btn active" data-region="paldea">🗺️ Paldea <small>Base</small></button><button class="region-btn" data-region="kitakami">🍃 Noroteo <small>DLC 1</small></button><button class="region-btn" data-region="terra">🌐 Biodomo <small>DLC 2</small></button></div>
+<nav class="tabs" aria-label="Secciones"><button class="on" data-tab="mapa">🗺️ Mapa</button><button data-tab="zonas">📍 Zonas</button><button data-tab="equipo">🎒 Pokémon</button><button data-tab="objetivos">🏆 Objetivos</button><button data-tab="diario">📖 Diario</button><button data-tab="album">📸 Álbum</button><button data-tab="logros">🏅 Logros</button><button data-tab="reglas">📜 Reglas</button></nav>
+<section class="pane on" id="mapa"><div class="grid2"><article class="panel"><div class="between"><h2 id="mapTitle">Mapa de Paldea</h2><span id="mapProgress" class="badge"></span></div><p id="mapHelp" class="hint">Pulsa los marcadores para ver las capturas de tipo Fuego y registrar la zona.</p><div class="map-controls"><span class="tiny">Los números corresponden a la lista de zonas</span><div class="row"><label for="mapZoom" class="tiny">Zoom</label><select id="mapZoom" style="width:100px" aria-label="Zoom del mapa"><option value="100">100 %</option><option value="135">135 %</option><option value="170">170 %</option></select></div></div><div class="mapviewport" id="mapViewport"><div id="mapBox"></div></div><div class="legend"><span><i class="dot" style="background:#8b9eaa"></i>Pendiente</span><span><i class="dot" style="background:#ebc76b"></i>Visitada</span><span><i class="dot" style="background:#4ddaab"></i>Capturada</span><span><i class="dot" style="background:#ed9299"></i>Fallida</span></div><p class="mapcredit" id="mapCredit"></p></article><article id="mapEditor" class="panel" aria-label="Ficha de la zona"></article></div></section>
+<section class="pane" id="zonas"><div class="grid2"><article class="panel"><div class="between"><h2>📍 Zonas de <span id="zoneRegionName">Paldea</span></h2><span class="badge" id="zoneProgress"></span></div><p class="hint">Las subzonas opcionales se indican. Decide con tu grupo cuáles cuentan como encuentro independiente.</p><div class="filters"><input class="input" id="zoneSearch" placeholder="Buscar zona o Pokémon…"><select id="zoneFilter"><option value="all">Todas las zonas</option><option value="todo">Pendientes</option><option value="visited">Visitadas</option><option value="captured">Capturadas</option><option value="lost">Fallidas</option></select></div><div id="zoneList" class="zone-list"></div></article><article id="zoneEditor" class="panel"></article></div></section>
+<section class="pane" id="equipo">
+ <div class="between" style="margin-bottom:12px"><div><h2 style="margin:0">🎒 Tus Pokémon</h2><p class="hint" style="margin:4px 0">Cajas de Escarlata, equipo y memorial. Se admite cualquier especie, también incursiones y shinies.</p></div><button class="primary" id="toggleAddMon">＋ Registrar Pokémon</button></div>
+ <div class="add-mon" id="addMonPanel" hidden></div>
+ <div class="grid2">
+  <article class="panel">
+   <div class="between"><h2>📦 Cajas Pokémon</h2><span class="badge" id="monProgress"></span></div>
+   <div class="pokemon-shelves"><div><div class="between"><strong>⚔️ Equipo actual</strong><span class="tiny" id="teamCount"></span></div><div class="team-grid" id="teamSlots"></div></div></div>
+   <div class="box-toolbar"><button id="prevBox" title="Caja anterior">◀</button><select id="boxSelect" aria-label="Seleccionar caja"></select><button id="nextBox" title="Caja siguiente">▶</button><label class="checkbox-field" style="padding:6px 8px"><input id="onlyShiny" type="checkbox"> ✨ Solo shiny</label></div>
+   <div class="pc-box"><div class="pc-head"><div class="row"><strong id="boxTitle">Caja 1</strong><button type="button" class="ghost" id="renameBox" title="Poner nombre a la caja" style="padding:3px 7px;font-size:12px">✎</button></div><small id="boxCount">0/30</small></div><div class="pc-grid" id="boxGrid"></div><p class="box-help" id="boxHelp">Selecciona un Pokémon para ver su ficha.</p></div>
+   <div style="margin-top:14px"><div class="between"><strong>💀 Memorial de bajas</strong><span class="badge" id="memorialCount"></span></div><div class="memorial-list" id="memorialList" style="margin-top:9px"></div></div>
+  </article><article class="panel" id="monEditor"></article>
+ </div>
+</section>
+<section class="pane" id="objetivos">
+ <div class="grid2"><article class="panel"><div class="between"><h2 id="objectivesTitle">🏆 Objetivos de Paldea</h2><span class="badge" id="bossCount"></span></div><p class="hint">Elige un jefe para registrar quién participó, el resultado y las anécdotas. Puedes guardar varios intentos.</p><div class="boss-list" id="bossList"></div></article>
+ <article class="panel"><div id="battleForm"></div><hr style="border:0;border-top:1px solid var(--border);margin:20px 0"><h3>↪ Rotaciones anotadas</h3><div id="rotationSummary"></div><button class="primary" id="rotationBtn">✓ Registrar una rotación</button><h3>Notas generales</h3><textarea id="runNotes" placeholder="Tus recordatorios de la aventura…"></textarea></article></div>
+ <article class="panel" style="margin-top:16px"><div class="between"><h2>📜 Historial de combates</h2><span class="badge" id="battleCount"></span></div><div id="battlesHistory"></div></article>
+</section>
+<section class="pane" id="diario"><div class="grid2"><article class="panel"><h2>📖 Diario de aventura</h2><p class="hint">Capturas y victorias importantes se registran automáticamente. Escribe aquí también tus anécdotas.</p><div class="field"><label for="journalText" class="field-label">Nueva entrada</label><textarea id="journalText" placeholder="Hoy he encontrado mi primer shiny…"></textarea></div><label class="checkbox-field" style="margin-top:10px;width:fit-content"><input type="checkbox" id="journalFeatured"> ⭐ Destacar en el álbum</label><div class="actions"><button id="addJournal" class="primary">+ Guardar recuerdo</button></div><div class="note">El diario se guarda con el resto de la partida y se incluye en la copia JSON.</div></article><article class="panel"><div class="between"><h2>Historial</h2><span id="logCount" class="badge"></span></div><div id="journalList" class="log-list"></div></article></div></section>
+<section class="pane" id="album">
+ <div class="between" style="margin-bottom:15px"><div><h2 style="margin:0">📸 Álbum de la aventura</h2><p class="hint">Tu colección, victorias, equipos históricos, MVPs y recuerdos. Todo se actualiza automáticamente.</p></div></div>
+ <div class="album-stats" id="albumStats"></div>
+ <div class="album-layout">
+  <article class="panel"><h2>🗺️ Recorrido por las regiones</h2><div class="album-regions" id="albumRegions"></div></article>
+  <article class="panel"><h2>⭐ Mejores momentos</h2><p class="hint">Marca cualquier recuerdo como destacado en la pestaña Diario.</p><div id="albumHighlights" class="album-highlights"></div></article>
+ </div>
+ <article class="panel" style="margin-top:15px"><div class="between"><h2>📸 Álbum de capturas</h2><span class="badge">Incluye shinies y bajas</span></div><div class="album-captures" id="albumCaptures"></div></article>
+ <article class="panel" style="margin-top:15px"><h2>🏆 Salón de la Fama · Equipos de cada victoria</h2><p class="hint">Cada victoria conserva la fotografía de hasta seis Pokémon tal y como estaban en ese momento. Los MVPs aparecen con una estrella.</p><div class="album-victories" id="albumVictories"></div></article>
+ <article class="panel" style="margin-top:15px"><h2>🕯️ Memorial</h2><div class="album-memorial" id="albumMemorial"></div></article>
+</section>
+<section id="logros" class="pane"><div class="achievement-top"><article class="panel"><div class="between"><h2>🏅 Logros de tu aventura</h2><span id="achievementCount" class="badge"></span></div><p class="hint">Se desbloquean automáticamente a partir de las capturas, combates, shinies y recuerdos que vayas registrando. No afectan a las reglas del reto.</p><div class="progress-track"><span id="achievementTrack" style="width:0%"></span></div></article><article class="panel"><h2>📈 Récords personales</h2><p class="hint">Tus Pokémon más veteranos y los mejores números de la aventura.</p></article></div><div class="album-layout"><article class="panel"><h2>🎖️ Medallas obtenidas</h2><div id="achievementGrid" class="achievement-grid"></div></article><article class="panel"><h2>📊 Tabla de récords</h2><div id="recordsGrid" class="records-grid"></div></article></div></section>
+<section class="pane" id="reglas"><article class="panel"><h2>Reglas de vuestra aventura</h2><p class="hint">Se conservan las reglas del archivo original como referencia. La aplicación sirve de diario, no bloquea decisiones.</p><div class="rule-grid" id="rulesList"></div><h3>Sobre las posibles capturas de tipo Fuego</h3><p class="hint">Las listas incluyen Pokémon de tipo Fuego en su forma salvaje, también de tipo dual. No incluyen preevoluciones que todavía no sean Fuego, evoluciones solo por objeto, teratipos de incursiones ni transferencias de HOME. Algunos encuentros requieren avanzar o desbloquear mejoras; una lista vacía significa «ningún encuentro verificado en esta guía», no una garantía de imposibilidad.</p><p class="hint">La disponibilidad se ha contrastado con las guías de <a href="https://vandal.elespanol.com/guias/guia-pokemon-escarlata-y-purpura-trucos-consejos-y-secretos/pokemon-por-zonas" target="_blank" rel="noopener">Paldea (Vandal)</a>, <a href="https://www.serebii.net/pokearth/kitakami/" target="_blank" rel="noopener">Noroteo (Serebii)</a> y <a href="https://vandal.elespanol.com/guias/guia-pokemon-escarlata-y-purpura-trucos-consejos-y-secretos/pokemon-del-biodomo" target="_blank" rel="noopener">Biodomo (Vandal)</a>. Las variantes de aparición, hábitat exacto y excepciones deben comprobarse antes de un sorteo estricto.</p></article></section>
+<footer class="footer">Guardado automático en este navegador (localStorage). Exporta copias JSON periódicas. Los mapas ilustrados y sprites se cargan desde fuentes externas si tienes conexión; sin internet seguirán funcionando los marcadores y tus fichas.</footer></div>
+<script>
+'use strict';
+const Z=[
+['cabo','Cabo Poco','Sur',49,86,1,'Zona inicial; captura si hay especie válida.'],
+['sendero','Sendero de Cahíz / Poco Path','Sur',46,79,0,'Ruta inicial.'],
+['gruta','Gruta de la Ensenada / Inlet Grotto','Sur',42,76,1,'Cueva de la historia inicial; normalmente sin encuentro válido temprano.'],
+['sur1','Área 1 (Sur)','Sur',49,70,0,'Alrededores del inicio y Pueblo Ataifor.'],
+['sur2','Área 2 (Sur)','Sur',32,70,0,'Al oeste de Mesagoza.'],
+['sur3','Área 3 (Sur)','Sur',63,67,0,'Al este de Mesagoza.'],
+['sur4','Área 4 (Sur)','Sur',30,81,0,'Sur y suroeste.'],
+['sur5','Área 5 (Sur)','Sur',70,82,0,'Sureste de Paldea.'],
+['sur6','Área 6 (Sur)','Sur',22,84,0,'Suroeste, junto a Pueblo Alforno.'],
+['caverna','Caverna de Alforno','Sur',19,77,1,'Subzona opcional con nombre propio.'],
+['marSur','Mar de Paldea (Sur)','Mar',49,94,1,'Encuentros en el agua; requiere acceso.'],
+['liga','Liga Pokémon','Centro',40,60,1,'Área pequeña junto a Mesagoza.'],
+['oeste1','Área 1 (Oeste)','Oeste',24,63,0,'Primera área oeste.'],
+['oeste2','Área 2 (Oeste)','Oeste',17,49,0,'Entre desierto y costa.'],
+['oeste3','Área 3 (Oeste)','Oeste',27,39,0,'Zona alrededor de Pueblo Mestura.'],
+['desierto','Desierto Rostiz / Asado Desert','Oeste',16,57,0,'Zona diferenciada en el mapa.'],
+['columna','Hondonada de la Columna / Colonnade Hollow','Oeste',21,46,1,'Subzona opcional.'],
+['marOeste','Mar de Paldea (Oeste)','Mar',6,51,1,'Encuentros acuáticos.'],
+['este1','Área 1 (Este)','Este',75,64,0,'Zona oriental inferior.'],
+['este2','Área 2 (Este)','Este',86,55,0,'Próxima a Ciudad Leudal.'],
+['este3','Área 3 (Este)','Este',76,44,0,'Área oriental minera.'],
+['bosque','Bosquejada / Tagtree Thicket','Este',72,33,0,'Bosque del noreste.'],
+['marEste','Mar de Paldea (Este)','Mar',93,54,1,'Encuentros acuáticos.'],
+['norte1','Área 1 (Norte)','Norte',67,23,0,'Al noreste del cráter.'],
+['norte2','Área 2 (Norte)','Norte',80,18,0,'Extremo noreste.'],
+['norte3','Área 3 (Norte)','Norte',54,12,0,'Norte de la montaña.'],
+['lago','Lago Cazola / Casseroya Lake','Norte',25,24,0,'Gran lago del noroeste.'],
+['senda','Senda Socarrat / Socarrat Trail','Norte',17,16,1,'Subzona opcional al norte del lago.'],
+['montana','Sierra Napada / Glaseado Mountain','Norte',48,26,0,'Gran montaña nevada.'],
+['pasaje','Paso Píleos / Dalizapa Passage','Norte',58,37,1,'Paso montañoso opcional.'],
+['marNorte','Mar de Paldea (Norte)','Mar',36,6,1,'Encuentros acuáticos.'],
+['cero','Área Cero','Centro',49,49,0,'Se desbloquea al final de las tres historias.']
+];
+const B=[
+['Araceli','Gimnasio','Bicho',15],['Klawf','Dominante','Roca',16],['Brais','Gimnasio','Planta',17],['Bombirdier','Dominante','Volador',20],['Anán','Team Star','Siniestro',21],['e-Nigma','Gimnasio','Eléctrico',24],['Melo','Team Star','Fuego',27],['Orthworm','Dominante','Acero',29],['Fuco','Gimnasio','Agua',30],['Henzo','Team Star','Veneno',33],['Laureano','Gimnasio','Normal',36],['Lima','Gimnasio','Fantasma',42],['Ferrodada','Dominante','Tierra',44],['Tuli','Gimnasio','Psíquico',45],['Grusha','Gimnasio','Hielo',48],['Gus','Team Star','Hada',51],['Dondozo / Tatsugiri','Dominante','Agua / Dragón',55],['Erin','Team Star','Lucha',56]
+];
+B[12][0]='Colmilargo'; // Dominante de Escarlata: sustituye a Ferrodada de Púrpura.
+// El índice 0..17 es histórico: se preserva para los JSON de v1-v3.
+B.push(
+ ['Cass · primer duelo','Rival','Noroteo',null,'kitakami'],
+ ['Cass · segundo duelo','Rival','Noroteo',null,'kitakami'],
+ ['Cass · tercer duelo','Rival','Noroteo',null,'kitakami'],
+ ['Cass · Parque de los compatrones','Rival','Noroteo',null,'kitakami'],
+ ['Munkidori · rescate de Ogerpon','Historia','Veneno / Psíquico',null,'kitakami'],
+ ['Okidogi · recuperar máscara','Historia','Veneno / Lucha',null,'kitakami'],
+ ['Munkidori · recuperar máscara','Historia','Veneno / Psíquico',null,'kitakami'],
+ ['Fezandipiti · recuperar máscara','Historia','Veneno / Hada',null,'kitakami'],
+ ['Cass · duelo por Ogerpon','Rival','Noroteo',null,'kitakami'],
+ ['Ogerpon · cuatro máscaras','Historia','Planta / varios',null,'kitakami'],
+ ['Corin · duelo final','Rival','Noroteo',null,'kitakami'],
+ ['Corin · Academia Arándano','Rival','Biodomo',null,'terra'],
+ ['Nerina · Alto Mando Arándano','Alto Mando','Acero',null,'terra'],
+ ['Denis · Alto Mando Arándano','Alto Mando','Fuego',null,'terra'],
+ ['Aroa · Alto Mando Arándano','Alto Mando','Hada',null,'terra'],
+ ['Levi · Alto Mando Arándano','Alto Mando','Dragón',null,'terra'],
+ ['Cass · campeón Arándano','Campeón','Biodomo',null,'terra'],
+ ['Terapagos · profundidades','Historia','Teracristal',null,'terra'],
+ ['Ursaluna Luna Carmesí · Gama','Objetivo opcional','Normal / Tierra',null,'kitakami'],
+ ['Mencía · epílogo Mochisteria','Epílogo','Noroteo',null,'kitakami'],
+ ['Pecharunt · epílogo Mochisteria','Epílogo','Veneno / Fantasma',null,'kitakami']
+);
+const objectiveRegion=i=>B[i]?.[4]||'paldea';
+const regionBossIndices=r=>B.map((_,i)=>i).filter(i=>objectiveRegion(i)===r);
+const bossDisplay=i=>B[i]?.[0]||'Objetivo desconocido';
+
+const RUN_TYPE=new URLSearchParams(location.search).get("tipo")||"normal";
+const RUN_CONFIG=window.POKE_TYPES?.meta?.[RUN_TYPE]||null;
+if(!RUN_CONFIG)throw Error("Tipo no válido: "+RUN_TYPE);
+const KEY="locke-"+RUN_TYPE+"-escarlata-individual-v1";
+const PBASE='https://vandal.elespanol.com/guias/guia-pokemon-escarlata-y-purpura-trucos-consejos-y-secretos/pokemon-por-zonas';
+const TBASE='https://vandal.elespanol.com/guias/guia-pokemon-escarlata-y-purpura-trucos-consejos-y-secretos/pokemon-del-biodomo';
+const KBASE='https://www.serebii.net/pokearth/kitakami/';
+const CATALOG={
+  paldea:{name:'Paldea',image:'https://images.wikidexcdn.net/mwuploads/wikidex/thumb/9/96/latest/20230917213245/Mapa_de_Paldea_con_nombres.png/480px-Mapa_de_Paldea_con_nombres.png',imageCredit:'Mapa de Paldea con nombres · WikiDex',creditUrl:'https://www.wikidex.net/wiki/Archivo:Mapa_de_Paldea_con_nombres.png',source:PBASE},
+  kitakami:{name:'Noroteo · Kitakami',image:'https://assets.game8.co/tools/map/pokemon_sv/PokemonScarletandVioletKitakamiRegionMap.jpg',imageCredit:'Mapa de Kitakami · Game8',creditUrl:'https://game8.co/games/Pokemon-Scarlet-Violet/archives/425891',source:KBASE},
+  terra:{name:'Biodomo · Academia Arándano',image:'https://media.vandal.net/m/12-2023/18/202312188501193_1.jpg.webp',imageCredit:'Mapa del Biodomo · Vandal',creditUrl:TBASE,source:TBASE}
+};
+const FIRE_P=RUN_CONFIG.candidates.paldea;
+// En el Terario, los iniciales salvajes requieren mejoras de biodiversidad compradas con PA.
+const SPECIAL_STARTERS=new Set(['Bulbasaur','Charmander','Squirtle','Chikorita','Cyndaquil','Totodile','Treecko','Torchic','Mudkip','Turtwig','Chimchar','Piplup','Snivy','Tepig','Oshawott','Chespin','Fennekin','Froakie','Rowlet','Litten','Popplio','Grookey','Scorbunny','Sobble']);
+const kitakamiZones=[
+ ['k_arroyo','Arroyo Helado','Montaña',39,33,1,[], 'Curso de agua del Monte Ogro.','chillingwaterhead.shtml'],
+ ['k_campos','Campos Prístinos de Noroteo','Norte',54,12,0,['Vulpix','Growlithe','Houndour','Houndoom'],'Campos del norte.','kitakamiwilds.shtml'],
+ ['k_carretera','Carretera de Noroteo','Sur',58,80,0,[],'Acceso sur de Noroteo.','kitakamiroad.shtml'],
+ ['k_centro','Centro Cultural de Noroteo','Este',75,59,0,[],'Área del festival.','kitakamihall.shtml'],
+ ['k_manzanar','Colina Manzanar','Sur',38,85,0,[],'Huertos al suroeste de Villa Versui.','applehills.shtml'],
+ ['k_cuerno','Desfiladero del Cuerno','Este',88,47,0,['Vulpix','Growlithe'],'Barrancos del extremo este.','fellhorngorge.shtml'],
+ ['k_eliseo','Elíseo Baldío','Oeste',23,16,0,['Vulpix','Houndour'],'Terrenos áridos del noroeste.','paradisebarrens.shtml'],
+ ['k_fauces','Fauces del Ogro','Monte',54,51,1,['Vulpix','Growlithe','Salandit'],'Interior de la montaña.','oni%27smaw.shtml'],
+ ['k_lago','Lago Cristalino','Monte',48,43,1,['Vulpix','Growlithe','Slugma','Houndour','Houndoom','Litwick','Salandit'],'Cima del Monte Ogro.','crystalpool.shtml'],
+ ['k_monte','Monte Ogro','Monte',59,56,0,[],'Gran macizo central; las subzonas pueden contar por separado.','onimountain.shtml'],
+ ['k_averno','Paso del Averno','Monte',28,38,0,['Vulpix','Growlithe','Slugma','Houndour','Houndoom','Litwick','Lampent'],'Pasaje rocoso occidental.','infernalpass.shtml'],
+ ['k_glicina','Pradera Glicina','Oeste',13,60,0,['Vulpix','Houndour'],'Praderas del oeste.','wistfulfields.shtml'],
+ ['k_ribera','Ribera Confluencia','Sureste',88,87,0,[],'Confluencia de ríos y bambúes.','mossfellconfluence.shtml'],
+ ['k_jarana','Senda Jarana','Sur',51,71,0,[],'Camino hacia el centro cultural.','revelersroad.shtml'],
+ ['k_soto','Soto Sempiterno','Noreste',82,12,0,[],'Bosque del noreste.','timelesswoods.shtml']
+];
+kitakamiZones.forEach(z=>{z[6]=RUN_CONFIG.candidates.kitakami[z[0]]||[]});
+const teraZones=[
+ ['t_arida','Área Árida','Sureste',66,69,0,['Charmander','Magmar','Magby','Fennekin','Litleo','Pyroar'],'Praderas del sureste; los iniciales necesitan desbloqueo.'],
+ ['t_costera','Área Costera','Noreste',66,33,0,['Magmar','Magby','Numel','Camerupt','Torkoal','Fletchinder','Talonflame','Fletchling'],'Ríos y vegetación cálida.'],
+ ['t_escarpada','Área Escarpada','Suroeste',34,70,0,['Magmar','Tepig','Fletchinder','Litleo','Pyroar','Litten','Fletchling'],'Montañas del suroeste.'],
+ ['t_polar','Área Polar','Noroeste',34,31,0,['Cyndaquil','Torchic','Numel','Camerupt','Chimchar','Scorbunny'],'Zona nevada del noroeste.'],
+ ['t_electrorroca','Gruta Electrorroca','Cueva',39,56,1,['Vulpix','Chimchar','Tepig','Litten','Scorbunny'],'Cueva asociada al Área Escarpada.'],
+ ['t_lumbre','Laberinto Lumbre','Cueva',56,46,1,['Magmar','Magby','Numel','Camerupt','Torkoal','Fletchinder','Talonflame'],'Cueva bajo el Área Costera.']
+];
+teraZones.forEach(z=>{z[6]=RUN_CONFIG.candidates.terra[z[0]]||[]});
+const ZONES=[...Z.map(z=>({id:z[0],name:z[1],group:z[2],x:z[3],y:z[4],optional:!!z[5],note:z[6],region:'paldea',fire:FIRE_P[z[0]]||[],source:PBASE})),...kitakamiZones.map(z=>({id:z[0],name:z[1],group:z[2],x:z[3],y:z[4],optional:!!z[5],fire:z[6],note:z[7],region:'kitakami',source:KBASE+z[8]})),...teraZones.map(z=>({id:z[0],name:z[1],group:z[2],x:z[3],y:z[4],optional:!!z[5],fire:z[6],note:z[7],region:'terra',source:TBASE}))];
+const IDS=Object.assign({Fuecoco:909,Crocalor:910,Skeledirge:911,Houndour:228,Houndoom:229,Fletchinder:662,Talonflame:663,Litleo:667,Pyroar:668,Charcadet:935,Armarouge:936,Ceruledge:937,Growlithe:58,Arcanine:59,Numel:322,Camerupt:323,Torkoal:324,Larvesta:636,Volcarona:637,Salandit:757,Salazzle:758,Scovillain:952,Flareon:136,Oricorio:741,Magmar:126,Magby:240,Magmortar:467,Vulpix:37,Ninetales:38,Slugma:218,Magcargo:219,Litwick:607,Lampent:608,Chandelure:609,Charmander:4,Charmeleon:5,Charizard:6,Cyndaquil:155,Quilava:156,Typhlosion:157,Torchic:255,Combusken:256,Blaziken:257,Chimchar:390,Monferno:391,Infernape:392,Tepig:498,Pignite:499,Emboar:500,Fennekin:653,Braixen:654,Delphox:655,Litten:725,Torracat:726,Incineroar:727,Scorbunny:813,Raboot:814,Cinderace:815,Fletchling:661,Capsakid:951,Rolycoly:837,Eevee:133},window.POKE_TYPES.dex);
+const $=s=>document.querySelector(s); const $$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const sprite=name=>{const id=IDS[String(name||'').split(' (')[0]];return id?`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`:null};
+const statusText={todo:'Pendiente',visited:'Visitada',captured:'Capturada',lost:'Fallida'};
+const stamp=()=>new Date().toISOString();
+function makeRun(){return {zones:{},bosses:[],rotations:0,notes:'',mons:[],journal:[],battles:[],boxNames:{}}}
+let store;
+try{store=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+if(!store||typeof store!=='object') store={[RUN_TYPE]:makeRun()};
+if(!store[RUN_TYPE]||!Array.isArray(store[RUN_TYPE].mons)||!store[RUN_TYPE].zones)store[RUN_TYPE]=makeRun();
+let run=store[RUN_TYPE];
+run.journal=Array.isArray(run.journal)?run.journal:[];run.bosses=Array.isArray(run.bosses)?run.bosses:[];run.rotations=Number(run.rotations)||0;run.notes=run.notes||'';
+run.mons.forEach(m=>{m.isShiny=Boolean(m.isShiny??m.shiny??false);if(!m.captureSpecies)m.captureSpecies=m.zone==='Inicial'?(RUN_CONFIG.sample):(run.zones[m.zone]?.pokemon||m.name);});
+run.battles=Array.isArray(run.battles)?run.battles:[];run.mons.forEach(m=>{m.life=Array.isArray(m.life)?m.life:[]});run.boxNames=run.boxNames&&typeof run.boxNames==='object'?run.boxNames:{};
+let region='paldea',selected='sur1',monSelected='starter',tab='mapa',mapZoom=100;
+let boxPage=0, movingMonId=null, addMonExpanded=false, battleEditorBoss=0, battleParticipants=new Set();
+
+const TYPE_NAME=RUN_CONFIG.name, TYPE_EMOJI=RUN_CONFIG.emoji;
+document.title='Locke '+TYPE_NAME+' — Diario Pokémon Escarlata + DLC';
+document.querySelector('.top h1').innerHTML='Locke '+TYPE_NAME+' <span>'+TYPE_EMOJI+'</span>';
+document.querySelector('.top .eyebrow').textContent='Pokémon Escarlata · Diario monotipo '+TYPE_NAME.toLowerCase();
+document.documentElement.style.setProperty('--accent',RUN_CONFIG.color);
+const BOX_COUNT=32, BOX_SIZE=30;
+// Generador multitemático: una tirada puede ser cualquier categoría, sin sesgo a comida.
+const NICK_FAMOUS=['Shakira','Beyoncé','Messi','Rosalía','Rihanna','Pitbull','Gandalf','Shrek','Cher','Madonna','Bad Bunny','Yoda','Homer','Elvis','Aitana','Piqué','Rambo','Zidane','Lola Flores','Chayanne','Godzilla','Tarantino','Morpheo','Mozart','Einstein','Cleopatra','Napoleón','Doraemon','Chiquito','Mr Bean','Dua Lipa','Picasso','Rasputín','Pikachu','Bertín','Bob Esponja','Stallone'];
+const NICK_FOODS=['Fideuá','Croqueta','Migas','Gachas','Tofu','Pepinillo','Gofre','Morcilla','Calçot','Gazpacho','Mochi','Ñoqui','Kebab','Tortilla','Empanada','Frijol','Lasaña','Berenjena','Turrón','Pudin','Wasabi','Sashimi','Sobrassada','Burrito','Churro','Macarrón','Flan','Cocido','Kimchi','Panettone','Albóndiga','Mermelada','Salmorejo'];
+const NICK_OBJECTS=['Tupper','Enchufe','Router','Bisagra','Escobilla','Calcetín','Almohada','Microondas','Paraguas','Fax','Tornillo','Trípode','Chancleta','Cuchara','Papelera','Bidón','Pendrive','Lavadora','Espátula','Neumático','Tendedero','Radiador','Pestillo','Mando','Tostadora','Cenicero','Perchero','Grifo'];
+const NICK_PLACES=['Luxemburgo','Canadá','Albacete','Mongolia','Estonia','Uruguay','Tanzania','Gibraltar','Portugal','Móstoles','Bali','Salamanca','Badajoz','Japón','Andorra','Soria','Fiyi','Aragón','Perú','Vietnam','Cuenca','Alaska','Islandia','Murcia','Nepal','Qatar','La Rioja','Benidorm','Valencia','Córdoba'];
+const NICK_ANIMALS=['Capibara','Ñu','Garrapata','Rorcual','Palomo','Bogavante','Ornitorrinco','Lombriz','Koala','Alpaca','Erizo','Dromedario','Calamar','Mapache','Avestruz','Topo','Colibrí','Babosa','Chinche','Mofeta'];
+const NICK_WORDS=['Fistro','Sacamante','Zambombo','Pompurrio','Chiripitif','Mamarracho','Chufle','Mocatrón','Churufleta','Patatús','Truñaco','Sacafrunflis','Pipirrana','Zurrupio','Mondongo','Pelusqui','Tontolaba','Gañán','Chispum','Almóndiga'];
+const NICK_PREFIX=['Don','Doña','Rey','Tía','Sr.','Dra.','Lord','Mega','Paco','Tío','San','El','La','Mc','Ultra'];
+const NICK_SUFFIX=['Pro','3000','2.0','Supremo','Junior','Turbo','Deluxe','X','XL','HD','Flix','Bros','Frito','Prime'];
+const NICK_SYLLABLES=['saca','frun','flis','poto','moco','zumba','trola','chiqui','fli','ñaca','mara','pipu','zuri','fongo','glupi','trun','gacha','limo','tor','waka','chur','plin','bro','flopa','ñon','birri','kiri','laca','bu','fon','puf','nardo','pipi','chus','guachi'];
+function choose(arr){return arr[Math.floor(Math.random()*arr.length)]}
+function randomNickname(){
+ const bases=[NICK_FAMOUS,NICK_FOODS,NICK_OBJECTS,NICK_PLACES,NICK_ANIMALS,NICK_WORDS];
+ for(let attempt=0;attempt<35;attempt++){
+   const mode=Math.floor(Math.random()*10);let nick='';
+   if(mode<6)nick=choose(bases[mode]);
+   else if(mode===6)nick=choose(NICK_PREFIX)+' '+choose(choose(bases));
+   else if(mode===7)nick=choose(choose(bases))+' '+choose(NICK_SUFFIX);
+   else if(mode===8)nick=choose(NICK_PREFIX)+' '+choose(NICK_WORDS);
+   else nick=Array.from({length:2+Math.floor(Math.random()*3)},()=>choose(NICK_SYLLABLES)).join('');
+   nick=nick[0].toUpperCase()+nick.slice(1);
+   if([...nick].length<=12)return nick;
+ }
+ return choose(['Sacafrunflis','Paco WiFi','Don Ñoqui','Mocatrón','Frito 3000']);
+}
+function randomToField(root,field){let inp=root.querySelector(field);if(inp){inp.value=randomNickname();inp.dispatchEvent(new Event('input',{bubbles:true}));inp.focus()}}
+const isStored=m=>m.status!=='equipo'&&m.status!=='baja';
+function firstFreeBoxSlot(boxOnly=null,skipId=null){const taken=new Set(run.mons.filter(m=>isStored(m)&&m.id!==skipId&&Number.isInteger(m.box)&&Number.isInteger(m.slot)).map(m=>m.box+'-'+m.slot));for(let b=0;b<BOX_COUNT;b++){if(boxOnly!==null&&boxOnly!==b)continue;for(let p=0;p<BOX_SIZE;p++)if(!taken.has(b+'-'+p))return {box:b,slot:p}}return null;}
+function ensureBoxes(){let seen=new Set(),changed=false;for(let m of run.mons){if(!isStored(m))continue;let key=m.box+'-'+m.slot;let valid=Number.isInteger(m.box)&&Number.isInteger(m.slot)&&m.box>=0&&m.box<BOX_COUNT&&m.slot>=0&&m.slot<BOX_SIZE&&!seen.has(key);if(valid){seen.add(key);continue;}let free=firstFreeBoxSlot(null,m.id);if(free){m.box=free.box;m.slot=free.slot;seen.add(free.box+'-'+free.slot);changed=true;}}return changed;}
+function putInBox(m,desiredBox=boxPage,desiredSlot=null){if(!isStored(m))return true;let box=Number(desiredBox);if(!Number.isInteger(box)||box<0||box>=BOX_COUNT)box=0;
+let occupied=(b,s)=>run.mons.some(other=>other.id!==m.id&&isStored(other)&&other.box===b&&other.slot===s);
+if(Number.isInteger(desiredSlot)&&desiredSlot>=0&&desiredSlot<BOX_SIZE&&!occupied(box,desiredSlot)){m.box=box;m.slot=desiredSlot;return true}
+for(let s=0;s<BOX_SIZE;s++)if(!occupied(box,s)){m.box=box;m.slot=s;return true}
+let free=firstFreeBoxSlot(null,m.id);if(!free)return false;m.box=free.box;m.slot=free.slot;return true;}
+function displayOrigin(m){if(m.starter)return 'Inicial';let z=zById(m.zone);if(z)return 'Capturado en '+z.name;if(m.originDetail)return (m.origin||'Encuentro')+' · '+m.originDetail;if(m.origin)return m.origin;return m.zone||'Encuentro sin indicar'}
+function pokemonSprite(m){let id=Number(m.dexNumber)||IDS[String(m.name||'').split(' (')[0]]||null;return id?`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${m.isShiny?'shiny/':''}${id}.png`:null}
+function pokePicture(m){let src=pokemonSprite(m);return src?`<img src="${src}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="poke-fallback" style="display:none">${esc((m.name||'?')[0].toUpperCase())}</span>`:`<span class="poke-fallback">${esc((m.name||'?')[0].toUpperCase())}</span>`}
+function pokeSlot(m,extra=''){return `${pokePicture(m)}<span class="slot-name">${esc(m.nickname||m.name)}</span>${m.isShiny?'<span class="slot-shiny">✨</span>':''}`}
+async function resolveDex(m){if(!m||m.dexNumber||IDS[String(m.name||'').split(' (')[0]]||m.dexLookedUp)return;m.dexLookedUp=true;
+let slug=String(m.name||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim().replace(/[ ._]+/g,'-').replace(/[^a-z0-9-]/g,'');if(!slug)return;
+try{let controller=new AbortController();let timer=setTimeout(()=>controller.abort(),4500);let res;try{res=await fetch('https://pokeapi.co/api/v2/pokemon/'+encodeURIComponent(slug),{signal:controller.signal})}finally{clearTimeout(timer)}if(!res.ok)return;let data=await res.json();if(Number.isInteger(data.id)&&data.id>0&&data.id<1500){m.dexNumber=data.id;save();if(tab==='equipo')renderMons()}}catch{}}
+function formatMon(m){return `${m.nickname||m.name}${m.isShiny?' ✨':''} (${m.name}, Nv. ${m.level||'?'})`}
+function newId(prefix){return prefix+'-'+Date.now()+'-'+Math.random().toString(36).slice(2,8)}
+function boxOptions(current){return Array.from({length:BOX_COUNT},(_,b)=>`<option value="${b}" ${b===current?'selected':''}>Caja ${b+1}${run.boxNames[b]?' · '+esc(run.boxNames[b]):''}</option>`).join('')}
+function refreshSelectedMBox(m){if(isStored(m)&&Number.isInteger(m.box))boxPage=m.box}
+function selectMon(id){monSelected=id;let mon=run.mons.find(m=>m.id===id);if(mon)refreshSelectedMBox(mon);movingMonId=null;renderMons()}
+
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){alert('No se ha podido guardar. Exporta una copia de tu partida.')}}
+function regZones(){return ZONES.filter(z=>z.region===region)}
+function zById(id){return ZONES.find(z=>z.id===id)}
+function zoneData(id){return run.zones[id]||{status:'todo',pokemon:'',nickname:'',level:'',notes:'',isShiny:false}}
+function pushJournal(message,source='auto',featured=false){run.journal.push({id:'evt-'+Date.now()+'-'+Math.random().toString(36).slice(2,6),date:stamp(),region,source,message,featured});if(run.journal.length>2000)run.journal=run.journal.slice(-2000)}
+function formatDate(iso){try{return new Date(iso).toLocaleString('es-ES',{dateStyle:'medium',timeStyle:'short'})}catch{return iso||''}}
+function setRegion(id){if(!CATALOG[id])return;region=id;selected=({paldea:'sur1',kitakami:'k_campos',terra:'t_arida'})[id];mapZoom=100;$('#mapZoom').value='100';render();}
+function renderStats(){let zones=regZones(),completed=zones.filter(z=>zoneData(z.id).status==='captured').length;let allCaptured=ZONES.filter(z=>zoneData(z.id).status==='captured').length;let alive=run.mons.filter(m=>m.status!=='baja').length;let shiny=run.mons.filter(m=>m.isShiny).length;$('#stats').innerHTML=[['🔥',alive,'Pokémon vivos'],['📍',completed+' / '+zones.length,'Capturas en '+CATALOG[region].name.split(' · ')[0]],['🗺️',allCaptured,'Zonas capturadas (total)'],['✨',shiny,'Pokémon shiny'],['🏆',run.bosses.filter(i=>objectiveRegion(i)===region).length+' / '+regionBossIndices(region).length,'Objetivos de '+CATALOG[region].name.split(' · ')[0]]].map(a=>`<div class="stat"><strong>${a[0]} ${a[1]}</strong><small>${esc(a[2])}</small></div>`).join('');$$('[data-region]').forEach(b=>{b.classList.toggle('active',b.dataset.region===region);b.setAttribute('aria-pressed',String(b.dataset.region===region))});}
+const EVOLUTION_COMPATIBLE=RUN_CONFIG.evo;
+function candidatesHtml(zone){if(!zone.fire.length)return `<div class="empty">No tenemos sugerencias verificadas de tipo ${TYPE_NAME} ni preevoluciones compatibles para esta zona. Esto no confirma que sea imposible encontrarlos.</div>`;return `<div class="candidate-list">${zone.fire.map(name=>{let picture=sprite(name);return `<button type="button" class="candidate" data-candidate="${esc(name)}" title="Copiar ${esc(name)} al registro">${picture?`<img src="${picture}" alt="" loading="lazy" onerror="this.style.display='none'">`:'🔥'}<span>${esc(name)}${EVOLUTION_COMPATIBLE[name]?'<br><span class="candidate-type">↗ Válido al evolucionar: '+esc(EVOLUTION_COMPATIBLE[name])+'</span>':''}${region==='terra'&&SPECIAL_STARTERS.has(name)?'<br><span class="candidate-type">🔓 Requiere desbloqueo</span>':''}</span></button>`}).join('')}</div>`}
+function zoneEditorHtml(id){let zone=zById(id);if(!zone)return '<h2>Elige una zona</h2>';let data=zoneData(id),existing=run.mons.find(m=>m.zone===id);let shiny=Boolean(existing?.isShiny??data.isShiny);return `<div class="between"><h2>${esc(zone.name)}</h2><span class="badge ${zone.optional?'warn':'good'}">${zone.optional?'Zona opcional':'Zona principal'}</span></div><p class="hint">${esc(zone.note)} · ${esc(CATALOG[zone.region].name)}</p><h3>${TYPE_EMOJI} ${TYPE_NAME} y preevoluciones compatibles</h3>${candidatesHtml(zone)}<p class="tiny">Pulsa un Pokémon para copiarlo a la ficha. Lista orientativa y parcial; puede depender de subzona, versión y progreso. Comprueba el encuentro en la guía. <a href="${esc(zone.source)}" target="_blank" rel="noopener">Comprobar en la fuente ↗</a></p><h3>Tu encuentro</h3><div class="fields"><div class="field full"><label class="field-label">Estado de la zona</label><select data-f="status">${Object.entries(statusText).map(([k,v])=>`<option value="${k}" ${data.status===k?'selected':''}>${v}</option>`).join('')}</select></div><div class="field full"><label class="field-label">Especie capturada</label><input class="input" data-f="pokemon" value="${esc(data.pokemon)}" placeholder="Ej.: Growlithe"></div><div><label class="field-label">Apodo</label><div class="nickname-row"><input class="input" data-f="nickname" value="${esc(data.nickname)}"><button type="button" data-action="randomNick" title="Genera motes absurdos de hasta 12 caracteres, como en Escarlata">🎲 Aleatorio</button></div></div><div><label class="field-label">Nivel al capturar</label><input class="input" type="number" min="1" max="100" data-f="level" value="${esc(data.level)}"></div><div class="field full"><label class="checkbox-field"><input data-f="isShiny" type="checkbox" ${shiny?'checked':''}> ✨ ¡Es shiny!</label></div><div class="field full"><label class="field-label">Notas de la zona / encuentro</label><textarea data-f="notes" placeholder="Qué ocurrió, cómo lo encontraste, anécdotas…">${esc(data.notes)}</textarea></div></div><div class="actions"><button type="button" class="primary" data-action="savezone">Guardar zona y captura</button><button type="button" class="ghost danger" data-action="clearzone">Limpiar zona</button></div>${existing?`<p class="hint">📦 En colección: ${esc(existing.nickname||existing.name)}${existing.isShiny?' ✨':''} (actual: ${esc(existing.name)})</p>`:''}`}
+function bindZoneEditor(selector){let el=$(selector);if(!el)return;el.querySelector('[data-action=randomNick]').onclick=()=>randomToField(el,'[data-f=nickname]');el.querySelectorAll('[data-candidate]').forEach(btn=>btn.onclick=()=>{el.querySelector('[data-f="pokemon"]').value=btn.dataset.candidate;el.querySelector('[data-f="status"]').value='captured'});el.querySelector('[data-action="savezone"]').onclick=()=>saveZone(selected,selector);el.querySelector('[data-action="clearzone"]').onclick=()=>{if(!confirm('¿Limpiar el registro de esta zona? Se eliminaría también su Pokémon de la colección.'))return;run.mons=run.mons.filter(m=>m.zone!==selected);delete run.zones[selected];save();render()}}
+function captureForm(el){let d={};el.querySelectorAll('[data-f]').forEach(e=>d[e.dataset.f]=e.type==='checkbox'?e.checked:e.value.trim());return d}
+function saveZone(id,selector){let el=$(selector),d=captureForm(el),prev=zoneData(id),existing=run.mons.find(m=>m.zone===id);if(d.status==='captured'&&!d.pokemon){alert('Escribe la especie capturada o elígela de la lista.');return;}if(d.pokemon&&d.status!=='captured'&&confirm('Has escrito un Pokémon. ¿Marcar la zona como capturada?'))d.status='captured';if(d.status!=='captured'&&existing){if(!confirm('Esta zona dejará de figurar como capturada. ¿Eliminar también el Pokémon de la colección?'))return;run.mons=run.mons.filter(m=>m.id!==existing.id);existing=null}
+run.zones[id]=d;if(d.status==='captured'){if(existing){if(d.pokemon!==(prev.pokemon||existing.captureSpecies)){existing.name=d.pokemon;existing.captureSpecies=d.pokemon}existing.nickname=d.nickname;if(d.level)existing.level=Math.min(100,Math.max(1,Number(d.level)||1));existing.isShiny=!!d.isShiny;}else{run.mons.push({id:'mon-'+Date.now()+'-'+Math.random().toString(36).slice(2,6),name:d.pokemon,captureSpecies:d.pokemon,nickname:d.nickname,zone:id,level:Number(d.level)||1,status:'reserva',notes:d.notes,starter:false,isShiny:!!d.isShiny,origin:'Captura de zona',createdAt:stamp()});putInBox(run.mons[run.mons.length-1]);pushJournal(`Capturado ${d.pokemon}${d.isShiny?' ✨ SHINY':''} en ${zById(id).name}.`)}if(existing&&existing.isShiny!==Boolean(prev.isShiny)&&existing.isShiny)pushJournal(`${existing.nickname||existing.name} marcado como shiny ✨.`);}else if(d.status==='lost'&&prev.status!=='lost')pushJournal(`Encuentro fallido en ${zById(id).name}.`);save();render()}
+function fallbackMap(key){
+ if(key==='terra')return `<svg class="mapfallback" viewBox="0 0 1000 670" preserveAspectRatio="none" aria-hidden="true"><defs><clipPath id="bioClip"><circle cx="500" cy="335" r="302"/></clipPath><pattern id="bioGrid" width="36" height="36" patternUnits="userSpaceOnUse"><path d="M36 0H0V36" fill="none" stroke="#b7c5c5" stroke-width=".5" opacity=".2"/></pattern></defs><rect width="1000" height="670" fill="#205575"/><circle cx="500" cy="335" r="313" fill="#baa18e" stroke="#b8b3a7" stroke-width="7"/><g clip-path="url(#bioClip)"><rect x="198" y="33" width="302" height="302" fill="#9bc6d5"/><path d="M221 108 282 56 360 85 388 174 458 211 472 317 215 306Z" fill="#d1e3df" opacity=".68"/><path d="M274 168 330 124 357 189 412 201 392 270 321 264Z" fill="#f1f7ee" opacity=".55"/><rect x="500" y="33" width="302" height="302" fill="#88b888"/><path d="M507 89 592 65 660 125 751 120 791 226 718 318 522 320 538 235Z" fill="#cbd18e" opacity=".67"/><path d="M528 187Q620 160 739 210M558 283 648 241 716 291" stroke="#2f8d8c" stroke-width="23" fill="none" opacity=".55"/><rect x="198" y="335" width="302" height="302" fill="#816d5c"/><path d="M202 370 258 389 304 351 375 441 432 424 484 511 444 636 200 637Z" fill="#b6a384" opacity=".65"/><path d="M264 480 322 464 392 503 350 578 265 554Z" fill="#689c7e" opacity=".8"/><rect x="500" y="335" width="302" height="302" fill="#b6b56c"/><path d="M531 392 592 360 638 436 720 390 804 450 768 603 552 614Z" fill="#8bad67" opacity=".75"/><path d="M548 482 655 530 743 515" stroke="#d8ce9b" stroke-width="32" fill="none" opacity=".55"/><path d="M198 335H802M500 33V637" stroke="#e5dfc7" stroke-width="4" opacity=".75"/><circle cx="500" cy="335" r="43" fill="#c5d4d0" stroke="#8eafb0" stroke-width="12"/><path d="M220 33H803V637H198V33" fill="url(#bioGrid)"/></g><text x="330" y="136" fill="#23485a" font-size="25" font-weight="800">ÁREA POLAR</text><text x="577" y="135" fill="#274e3a" font-size="24" font-weight="800">ÁREA COSTERA</text><text x="253" y="573" fill="#f6eadc" font-size="25" font-weight="800">ÁREA ESCARPADA</text><text x="605" y="570" fill="#504524" font-size="25" font-weight="800">ÁREA ÁRIDA</text></svg>`;
+ if(key==='kitakami')return `<svg class="mapfallback" viewBox="0 0 1000 1000" aria-hidden="true"><defs><radialGradient id="mt"><stop stop-color="#d9c6a7"/><stop offset=".55" stop-color="#bca78c"/><stop offset="1" stop-color="#829c7a"/></radialGradient><pattern id="tr" patternUnits="userSpaceOnUse" width="62" height="72"><circle cx="13" cy="12" r="8" fill="#396d55" opacity=".37"/><circle cx="44" cy="45" r="13" fill="#497b5a" opacity=".35"/></pattern></defs><rect width="1000" height="1000" fill="#86ae7a"/><path d="M0 200Q215 160 388 83T750 120L1000 48V1000H0Z" fill="#75a46e"/><path d="M0 200Q220 150 420 94T750 129L1000 50V1000H0Z" fill="url(#tr)"/><path d="M580 0 596 121 654 226 616 358 730 490 707 673 856 736 889 1000" fill="none" stroke="#519cb5" stroke-width="40" opacity=".7"/><path d="M380 0 320 82 260 193 292 283 170 420 98 546 0 636" fill="none" stroke="#a6ba8c" stroke-width="50" opacity=".8"/><path d="M155 240 325 103 597 143 728 282 738 547 654 729 420 783 191 676 104 482Z" fill="url(#mt)" stroke="#8b846e" stroke-width="17"/><path d="M190 300 345 197 585 218 676 386 651 574 500 687 281 592 197 416Z" fill="none" stroke="#d4c6a5" stroke-width="58" opacity=".62"/><path d="M328 402 402 317 510 324 571 405 539 502 416 510Z" fill="#d8d3bd"/><path d="M423 446 486 407 531 452 480 503 439 493Z" fill="#6cb8b4"/><path d="M615 111 684 61 918 81 951 258 790 311 638 242Z" fill="#4b8560" opacity=".75"/><path d="M729 336 824 296 928 363 983 492 905 648 786 594Z" fill="#76afa7" opacity=".7"/><path d="M0 876 210 818 355 930 481 832 637 934 784 827 1000 929" fill="none" stroke="#b5be83" stroke-width="55" opacity=".75"/><text x="90" y="168" font-size="27" fill="#253a29" font-weight="700">ELÍSEO BALDÍO</text><text x="695" y="155" font-size="27" fill="#223c28" font-weight="700">SOTO SEMPITERNO</text><text x="410" y="625" font-size="30" fill="#3f3a2f" font-weight="800">MONTE OGRO</text><text x="380" y="871" font-size="27" fill="#233b2c" font-weight="700">COLINA MANZANAR</text></svg>`;
+ return `<svg class="mapfallback" viewBox="0 0 1000 1000" aria-hidden="true"><defs><pattern id="wave" patternUnits="userSpaceOnUse" width="65" height="65"><path d="M8 42Q18 33 30 42T54 42" stroke="#78b7c1" stroke-width="2" fill="none" opacity=".23"/></pattern><linearGradient id="land"><stop stop-color="#77ab73"/><stop offset="1" stop-color="#9aab65"/></linearGradient></defs><rect width="1000" height="1000" fill="#2a667e"/><rect width="1000" height="1000" fill="url(#wave)"/><path d="M390 66 513 35 622 67 712 92 853 180 912 294 873 457 917 582 813 757 701 825 581 900 450 954 316 901 204 846 142 712 92 600 124 463 92 330 205 186 271 103Z" fill="url(#land)" stroke="#e6cfa8" stroke-width="11"/><path d="M327 166 500 86 686 163 778 300 741 403 554 447 348 340Z" fill="#b6cad4" opacity=".78"/><path d="M310 162 500 90 653 151 719 240 622 306 420 258Z" fill="#e2eff4" opacity=".65"/><path d="M143 374 301 331 382 425 357 546 177 564Z" fill="#d6ae6b" opacity=".67"/><path d="M300 277 198 232 157 314 179 411 331 431 425 383Z" fill="#7eaa6b" opacity=".82"/><path d="M365 641 493 612 621 689 517 855 397 809 303 733Z" fill="#7fac75" opacity=".65"/><path d="M255 268 389 419 308 631 417 729M684 270 653 479 773 644 699 756" fill="none" stroke="#e3d29c" stroke-width="11" stroke-dasharray="25 18" opacity=".65"/><path d="M338 450Q390 419 500 429Q586 436 662 457L740 565 700 642 590 661 482 596 356 604 302 531Z" fill="#aa9176" stroke="#c7b59b" stroke-width="13"/><ellipse cx="500" cy="518" rx="136" ry="112" fill="#34424d" stroke="#8c969b" stroke-width="18"/><ellipse cx="500" cy="531" rx="98" ry="81" fill="#242f3a"/><text x="500" y="531" fill="#e1ded3" text-anchor="middle" font-size="26" font-weight="700">FOSO DE</text><text x="500" y="563" fill="#e1ded3" text-anchor="middle" font-size="26" font-weight="700">PALDEA</text><text x="497" y="115" text-anchor="middle" font-size="27" fill="#273e4a" font-weight="800">SIERRA NAPADA</text><text x="195" y="356" font-size="28" fill="#4b392e" font-weight="700">DESIERTO ROSTIZ</text><text x="503" y="763" font-size="32" fill="#2d4e3b" font-weight="800">SUR</text></svg>`;
+}
+function renderMap(){let config=CATALOG[region],zones=regZones(),done=zones.filter(z=>zoneData(z.id).status==='captured').length;$('#mapTitle').textContent='Mapa de '+config.name;$('#mapProgress').textContent=done+' / '+zones.length+' capturadas';$('#mapHelp').textContent='Selecciona una zona para ver Pokémon de tipo '+TYPE_NAME+' y preevoluciones que pueden adquirirlo.';let stage=`<div class="mapstage ${region==='terra'?'terra':region}" style="width:${mapZoom}%">${fallbackMap(region)}<img class="mapimg" src="${config.image}" alt="Mapa ilustrado de ${esc(config.name)}" referrerpolicy="no-referrer" loading="eager" onerror="this.parentElement.classList.add('no-image')">${zones.map((z,i)=>`<button type="button" class="mappin ${zoneData(z.id).status} ${selected===z.id?'selected':''}" data-zone="${z.id}" style="left:${z.x}%;top:${z.y}%" aria-label="${esc(z.name)}: ${esc(statusText[zoneData(z.id).status]||'Pendiente')}" title="${esc(z.name)} · ${z.fire.length} opciones ${TYPE_NAME}">${i+1}</button>`).join('')}</div>`;$('#mapBox').innerHTML=stage;$$('#mapBox .mappin').forEach(b=>b.onclick=()=>{selected=b.dataset.zone;renderMap();renderZones()});$('#mapCredit').innerHTML=`Imagen: <a href="${config.creditUrl}" target="_blank" rel="noopener">${esc(config.imageCredit)}</a> · Mapas y sprites necesitan conexión; marcadores y datos siguen disponibles sin internet.`;$('#mapEditor').innerHTML=zoneEditorHtml(selected);bindZoneEditor('#mapEditor')}
+function renderZones(){let list=regZones();let q=$('#zoneSearch').value.trim().toLocaleLowerCase(),f=$('#zoneFilter').value;let show=list.filter(z=>(f==='all'||zoneData(z.id).status===f)&&(z.name+' '+z.group+' '+z.fire.join(' ')+' '+zoneData(z.id).pokemon).toLocaleLowerCase().includes(q));$('#zoneRegionName').textContent=CATALOG[region].name;$('#zoneProgress').textContent=list.filter(z=>zoneData(z.id).status!=='todo').length+' / '+list.length+' revisadas';$('#zoneList').innerHTML=show.map(z=>{let d=zoneData(z.id);return `<button type="button" class="zone-entry ${selected===z.id?'selected':''}" data-id="${z.id}"><div class="between"><strong>${list.indexOf(z)+1}. ${esc(z.name)}</strong><span class="badge ${d.status==='captured'?'good':d.status==='lost'?'bad':d.status==='visited'?'warn':''}">${esc(statusText[d.status])}</span></div><small>${d.status==='captured'?'✅ '+esc(d.pokemon):TYPE_EMOJI+' '+z.fire.length+' posibles (guía)'}${z.optional?' · opcional':''}</small></button>`}).join('')||'<div class="empty">No hay zonas que coincidan con el filtro.</div>';$$('#zoneList [data-id]').forEach(b=>b.onclick=()=>{selected=b.dataset.id;renderZones();renderMap()});$('#zoneEditor').innerHTML=zoneEditorHtml(selected);bindZoneEditor('#zoneEditor')}
+
+function renderAddForm(){let pane=$('#addMonPanel');pane.hidden=!addMonExpanded;if(!addMonExpanded)return;
+pane.innerHTML=`<article class="panel"><div class="between"><h2>＋ Registrar un Pokémon</h2><button type="button" class="ghost" id="closeAddMon">✕ Cerrar</button></div><p class="hint">Puedes registrar cualquier especie: capturas normales, teraincursiones, excepciones shiny, regalos… Puedes registrar también excepciones de otro tipo.</p><div class="fields">
+<div><label class="field-label">Especie *</label><input class="input" id="addSpecies" placeholder="Ej.: Pikachu, Dragonite, Growlithe"></div>
+<div><label class="field-label">Nivel</label><input class="input" id="addLevel" type="number" min="1" max="100" value="${run.mons.length?1:5}"></div>
+<div><label class="field-label">Apodo</label><div class="nickname-row"><input class="input" id="addNickname" placeholder="El más absurdo que se te ocurra"><button type="button" id="randomAddNick">🎲 Aleatorio</button></div></div>
+<div><label class="field-label">Procedencia</label><select id="addOrigin">${['Inicial','Teraincursión','Encuentro shiny','Captura de zona','Regalo','Intercambio','Evento','Otro'].map(x=>`<option>${x}</option>`).join('')}</select></div>
+<div><label class="field-label">Lugar / detalle (opcional)</label><input class="input" id="addOriginDetail" placeholder="Ej.: Raid de 3★, Noroteo"></div>
+<div><label class="field-label">Estado inicial</label><select id="addStatus"><option value="reserva">📦 En caja</option><option value="equipo">⚔️ En el equipo</option><option value="descanso">💤 Descanso</option><option value="baja">💀 Baja / memorial</option></select></div>
+<div><label class="field-label">N.º Pokédex (opcional para sprite)</label><input class="input" type="number" min="1" max="1499" id="addDex" placeholder="Ej.: 25 para Pikachu"></div>
+<div><label class="checkbox-field"><input type="checkbox" id="addShiny"> ✨ Variocolor / shiny</label></div>
+<div class="field full"><label class="field-label">Notas de captura</label><textarea id="addNotes" placeholder="Cómo lo conseguiste, quién estaba jugando, anécdotas…"></textarea></div>
+<div class="field full"><label class="field-label">Si lo registras como baja, ¿qué le ocurrió? (opcional)</label><input class="input" id="addDeathKiller" placeholder="Quién lo derrotó"></div>
+<div class="field full"><input class="input" id="addDeathWords" placeholder="Sus últimas palabras..."></div></div><div class="actions"><button id="saveNewMon" type="button" class="primary">＋ Añadir a la colección</button></div></article>`;
+if(!run.mons.length){$('#addStatus').value='equipo'}
+$('#closeAddMon').onclick=()=>{addMonExpanded=false;renderAddForm()};$('#randomAddNick').onclick=()=>randomToField(pane,'#addNickname');
+$('#saveNewMon').onclick=()=>{let species=$('#addSpecies').value.trim();if(!species){alert('Escribe el nombre del Pokémon.');return}let status=$('#addStatus').value;
+if(status==='equipo'&&run.mons.filter(m=>m.status==='equipo').length>=6){alert('El equipo ya tiene seis Pokémon. Elige una caja o pasa otro Pokémon a reserva.');return}
+let dex=Number($('#addDex').value)||null;
+let m={id:newId('mon'),name:species,captureSpecies:species,nickname:$('#addNickname').value.trim(),level:Math.max(1,Math.min(100,Number($('#addLevel').value)||1)),zone:'',origin:$('#addOrigin').value,originDetail:$('#addOriginDetail').value.trim(),notes:$('#addNotes').value.trim(),status,isShiny:$('#addShiny').checked,starter:run.mons.length===0&&$('#addOrigin').value==='Inicial',dexNumber:dex,death:status==='baja'?{killer:$('#addDeathKiller').value.trim(),lastWords:$('#addDeathWords').value.trim(),context:'',date:stamp()}:null};
+run.mons.push(m);if(isStored(m)&&!putInBox(m,boxPage)){run.mons.pop();alert('Las 32 cajas están llenas.');return}
+pushJournal(`📥 Añadido ${formatMon(m)} · ${displayOrigin(m)}.`);m.createdAt=m.createdAt||stamp();monSelected=m.id;addMonExpanded=false;save();render();resolveDex(m)};}
+function renderMons(){let hint=$('#genericStarterHint');if(hint)hint.hidden=run.mons.length>0;ensureBoxes();let shinyOnly=$('#onlyShiny').checked;let storage=run.mons.filter(isStored),team=run.mons.filter(m=>m.status==='equipo'),dead=run.mons.filter(m=>m.status==='baja');
+$('#monProgress').textContent=`${run.mons.length} Pokémon · ${run.mons.filter(m=>m.isShiny).length} ✨`;
+$('#teamCount').textContent=`${team.length}/6`;
+$('#teamSlots').innerHTML=Array.from({length:6},(_,i)=>{let m=team[i];return `<button type="button" class="team-slot ${m?'':'empty'} ${m?.id===monSelected?'selected':''}" ${m?`data-mon="${esc(m.id)}"`: 'disabled'} title="${m?esc(formatMon(m)):'Hueco libre'}">${m?pokeSlot(m):'<span class="box-empty-icon">＋</span>'}</button>`}).join('');
+$$('#teamSlots [data-mon]').forEach(b=>b.onclick=()=>selectMon(b.dataset.mon));
+$('#boxSelect').innerHTML=boxOptions(boxPage);$('#renameBox').onclick=()=>{let n=prompt('Nombre de esta caja (máximo 28 caracteres):',run.boxNames[boxPage]||'');if(n===null)return;n=n.trim().slice(0,28);if(n)run.boxNames[boxPage]=n;else delete run.boxNames[boxPage];save();renderMons()};$('#boxTitle').textContent=`Caja ${boxPage+1}${run.boxNames[boxPage]?' · '+run.boxNames[boxPage]:''}`;
+$('#boxCount').textContent=`${storage.filter(m=>m.box===boxPage).length}/30`;
+let inBox=new Map(storage.filter(m=>m.box===boxPage).map(m=>[m.slot,m]));
+$('#boxGrid').innerHTML=Array.from({length:30},(_,i)=>{let m=inBox.get(i);let hide=m&&shinyOnly&&!m.isShiny;return `<button type="button" class="pc-slot ${!m?'empty':''} ${m?.id===monSelected?'selected':''}" data-slot="${i}" ${hide?'data-busy="1"':''} ${m&&!hide?`data-mon="${esc(m.id)}"`:''} aria-label="${m&&!hide?esc(formatMon(m)):'Hueco '+(i+1)}" title="${m&&!hide?esc(formatMon(m)):'Hueco '+(i+1)}">${m&&!hide?pokeSlot(m):'<span class="box-empty-icon">·</span>'}</button>`}).join('');
+$$('#boxGrid .pc-slot').forEach(b=>b.onclick=()=>{if(b.dataset.busy){alert('Este hueco está ocupado por un Pokémon oculto por el filtro shiny.');return}let m=b.dataset.mon;if(m){if(movingMonId&&movingMonId!==m){alert('El hueco está ocupado. Escoge uno libre.');return}selectMon(m);return}
+if(movingMonId){let moving=run.mons.find(x=>x.id===movingMonId);if(moving&&isStored(moving)){if(!putInBox(moving,boxPage,Number(b.dataset.slot))){alert('No hay hueco libre.');return}monSelected=moving.id;movingMonId=null;save();renderMons()}}});
+$('#memorialCount').textContent=dead.length+' bajas';$('#memorialList').innerHTML=dead.length?dead.map(m=>`<button type="button" class="memorial-chip ${m.id===monSelected?'selected':''}" data-mon="${esc(m.id)}" title="${esc(m.death?.killer?'Derrotado por '+m.death.killer:'Sin causa registrada')}">${pokemonSprite(m)?`<img src="${pokemonSprite(m)}" alt="" onerror="this.style.display='none'">`:'💀'}${esc(m.nickname||m.name)}${m.isShiny?' ✨':''}</button>`).join(''):'<span class="tiny">Ninguna baja registrada.</span>';
+$$('#memorialList [data-mon]').forEach(b=>b.onclick=()=>selectMon(b.dataset.mon));
+$('#prevBox').disabled=boxPage===0;$('#nextBox').disabled=boxPage===31;
+$('#prevBox').onclick=()=>{boxPage=Math.max(0,boxPage-1);renderMons()};$('#nextBox').onclick=()=>{boxPage=Math.min(31,boxPage+1);renderMons()};
+$('#boxSelect').onchange=e=>{boxPage=Number(e.target.value)||0;renderMons()};
+let m=run.mons.find(x=>x.id===monSelected)||run.mons[0];if(!m){$('#monEditor').innerHTML='<h2>Sin Pokémon</h2>';return}
+let loc=isStored(m)?` · Caja ${Number(m.box)+1}, hueco ${Number(m.slot)+1}`:'';
+$('#boxHelp').textContent=movingMonId?'↪ Elige ahora un hueco libre, en esta caja o en otra.':`${storage.length} Pokémon en cajas · Cambia de caja con las flechas o el selector.`;
+$('#monEditor').innerHTML=`<div class="between"><h2>Ficha de ${esc(m.nickname||m.name)} ${m.isShiny?'✨':''}</h2><span class="badge ${m.status==='baja'?'bad':'good'}">${esc(m.status)}${loc}</span></div><p class="hint">${esc(displayOrigin(m))}. ${m.captureSpecies&&m.captureSpecies!==m.name?'Capturado como '+esc(m.captureSpecies)+'.':''}</p>
+<div class="fields"><div><label class="field-label">Especie / evolución</label><input class="input" id="editName" value="${esc(m.name)}"></div><div><label class="field-label">Nivel actual</label><input class="input" type="number" min="1" max="100" id="editLevel" value="${esc(m.level)}"></div>
+<div class="field full"><label class="field-label">Apodo</label><div class="nickname-row"><input class="input" id="editNick" value="${esc(m.nickname||'')}"><button type="button" id="randomEditNick">🎲 Aleatorio</button></div></div>
+<div><label class="field-label">Estado</label><select id="editStatus">${[['equipo','⚔️ Equipo'],['reserva','📦 En caja'],['descanso','💤 Descanso (en caja)'],['baja','💀 Baja']].map(([k,v])=>`<option value="${k}" ${m.status===k?'selected':''}>${v}</option>`).join('')}</select></div>
+<div><label class="field-label">Caja de destino</label><select id="editBox">${boxOptions(Number.isInteger(m.box)?m.box:boxPage)}</select></div>
+<div><label class="field-label">N.º Pokédex (para sprite)</label><input class="input" id="editDex" type="number" min="1" max="1499" placeholder="Opcional" value="${esc(m.dexNumber||'')}"></div>
+<div><label class="checkbox-field"><input id="editShiny" type="checkbox" ${m.isShiny?'checked':''}> ✨ Shiny</label></div>
+<div class="field full"><label class="field-label">Notas</label><textarea id="editMonNotes" placeholder="Evoluciones, combates, anécdotas…">${esc(m.notes||'')}</textarea></div>
+<div class="field full death-fields"><h3>💀 Ficha de baja (solo se aplicará si marcas Baja)</h3></div>
+<div><label class="field-label">¿Quién lo derrotó?</label><input class="input" id="deathKiller" value="${esc(m.death?.killer||'')}" placeholder="Ej.: Garchomp de Cass"></div>
+<div><label class="field-label">Combate del historial</label><select id="deathBattle"><option value="">Otro / no registrado</option>${run.battles.map(f=>`<option value="${esc(f.id)}" ${m.death?.battleId===f.id?'selected':''}>${esc(bossDisplay(f.boss))} · ${esc(formatDate(f.date))}</option>`).join('')}</select></div>
+<div class="field full"><label class="field-label">Contexto (si no está en el historial)</label><input class="input" id="deathContext" value="${esc(m.death?.context||'')}" placeholder="Ej.: en una ruta, contra un Pokémon salvaje…"></div>
+<div class="field full"><label class="field-label">Últimas palabras</label><textarea id="deathWords" placeholder="Una frase épica, dramática o ridícula…">${esc(m.death?.lastWords||'')}</textarea></div></div>
+<div class="actions"><button id="saveMon" class="primary">Guardar cambios</button>${isStored(m)?`<button type="button" id="moveMon">${movingMonId===m.id?'✕ Cancelar movimiento':'↪ Mover de hueco'}</button>`:''}${m.starter?'':`<button id="deleteMon" class="ghost danger">Eliminar registro</button>`}</div><p class="tiny" style="margin-top:9px">Las cajas tienen 30 huecos. Puedes mover un Pokémon a otra caja desde esta ficha o elegir un hueco libre.</p>`;
+$('#monEditor').insertAdjacentHTML('beforeend','<div id="monBiography" class="biography panel" style="margin-top:16px;background:#111c2c"></div>');
+renderMonBiography(m);
+$('#randomEditNick').onclick=()=>randomToField($('#monEditor'),'#editNick');
+$('#moveMon')?.addEventListener('click',()=>{movingMonId=movingMonId===m.id?null:m.id;renderMons()});
+$('#saveMon').onclick=()=>{let oldName=m.name,oldNick=m.nickname||'',oldStatus=m.status,oldShiny=!!m.isShiny;let nextStatus=$('#editStatus').value,newName=$('#editName').value.trim()||m.name,newShiny=$('#editShiny').checked;
+if(nextStatus==='equipo'&&run.mons.filter(x=>x.id!==m.id&&x.status==='equipo').length>=6){alert('El equipo ya tiene 6 Pokémon. Envía otro a caja antes.');return}
+if(m.name!==newName)pushJournal(`🔄 ${m.nickname||m.name} ha evolucionado o cambiado a ${newName}.`);
+if(!m.isShiny&&newShiny)pushJournal(`✨ ${m.nickname||m.name} es shiny.`);
+if(m.status!=='baja'&&nextStatus==='baja')pushJournal(`💀 ${m.nickname||m.name} ha caído en combate.`);
+let previousStatus=m.status;
+let deathId=$('#deathBattle').value;
+if(nextStatus==='baja'){
+ const f=run.battles.find(b=>b.id===deathId);
+ m.death={...(m.death||{}),date:m.death?.date||stamp(),killer:$('#deathKiller').value.trim(),battleId:deathId||null,bossId:f?.boss??null,context:$('#deathContext').value.trim()||(f?bossDisplay(f.boss):''),lastWords:$('#deathWords').value.trim()};
+} else if(previousStatus==='baja'){if(confirm('¿Corregir esta baja y devolverlo a la colección? Se conservará su ficha de baja por si fue un error de registro.')){m.death={...(m.death||{}),corrected:true}}else{return}}
+m.name=newName;m.nickname=$('#editNick').value.trim();m.level=Math.min(100,Math.max(1,Number($('#editLevel').value)||1));m.status=nextStatus;m.isShiny=newShiny;m.notes=$('#editMonNotes').value;let dex=Number($('#editDex').value)||null;if(dex&&dex>0&&dex<1500)m.dexNumber=dex;else delete m.dexNumber;
+if(isStored(m)){let requestedBox=Number($('#editBox').value);if(!putInBox(m,requestedBox,(previousStatus===nextStatus&&m.box===requestedBox)?m.slot:null)){m.status=previousStatus;alert('No hay huecos libres en las 32 cajas.');return}boxPage=m.box}
+if(oldName!==m.name)recordMonEvent(m,'evolucion',`🔄 ${oldName} → ${m.name}`);
+if(oldNick!==m.nickname)recordMonEvent(m,'apodo',`🏷️ Apodo: ${oldNick||'Sin apodo'} → ${m.nickname||'Sin apodo'}`);
+if(oldStatus!==m.status)recordMonEvent(m,'equipo',`📦 Cambio de estado: ${oldStatus} → ${m.status}`);
+if(!oldShiny&&m.isShiny)recordMonEvent(m,'shiny','✨ Registrado como shiny');
+movingMonId=null;save();render();resolveDex(m)};
+let del=$('#deleteMon');if(del)del.onclick=()=>{if(confirm('¿Eliminar definitivamente este registro? La captura original y los combates históricos se mantendrán.')){run.mons=run.mons.filter(x=>x.id!==m.id);monSelected='starter';save();render()}};
+}
+
+
+function openFightBoss(i){battleEditorBoss=i;battleParticipants=new Set(run.mons.filter(m=>m.status==='equipo').map(m=>m.id));renderBosses();$('#battleForm')?.scrollIntoView({behavior:'smooth',block:'nearest'});}
+function renderFightForm(){if(objectiveRegion(battleEditorBoss)!==region)battleEditorBoss=regionBossIndices(region)[0]??0;let boss=B[battleEditorBoss]||B[0];let available=[...run.mons].sort((a,b)=>(a.status==='equipo'?-1:1)-(b.status==='equipo'?-1:1));
+$('#battleForm').innerHTML=`<h2>⚔️ Registrar un combate</h2><div class="fields"><div class="field full"><label class="field-label">Objetivo</label><select id="fightBoss">${regionBossIndices(region).map(i=>{let b=B[i];return `<option value="${i}" ${i===battleEditorBoss?'selected':''}>${esc(b[0])} · ${esc(b[1])}</option>`}).join('')}</select></div>
+<div><label class="field-label">Resultado</label><select id="fightResult"><option value="victoria">🏆 Victoria</option><option value="derrota">❌ Derrota / intento fallido</option></select></div><div><label class="field-label">Fecha (automática)</label><input class="input" value="${esc(new Date().toLocaleDateString('es-ES'))}" disabled></div></div>
+<h3>Pokémon utilizados <span id="rosterCount" class="badge">${battleParticipants.size}/6</span></h3><p class="hint">Marca hasta 6 Pokémon. El equipo actual viene seleccionado; también puedes elegir Pokémon de las cajas o registrar combates pasados.</p><div class="roster-grid" id="battleRoster">${available.map(m=>`<label class="roster-item"><input type="checkbox" data-participant="${esc(m.id)}" ${battleParticipants.has(m.id)?'checked':''}><div style="width:35px;flex:none">${pokePicture(m)}</div><div class="roster-info"><strong>${esc(m.nickname||m.name)}${m.isShiny?' ✨':''}</strong><small>${esc(m.name)} · Nv. ${esc(m.level)} · ${esc(m.status)}</small></div></label>`).join('')}</div>
+<h3>⭐ MVP del combate</h3><p class="hint">Elige el Pokémon que se lució más. Se verá en el álbum y en el historial.</p><select id="fightMVP"><option value="">Sin MVP</option></select>
+<h3>💀 Bajas durante este combate (opcional)</h3><div id="casualtiesList"><span class="tiny">Selecciona participantes para marcar las bajas.</span></div>
+<div style="margin-top:11px"><label class="field-label">Crónica del combate</label><textarea id="fightNotes" placeholder="Qué pasó, quién fue el MVP, momentos épicos, sorpresas…"></textarea></div>
+<div class="actions"><button class="primary" id="saveBattle">Guardar combate en el historial</button></div>`;
+$('#fightBoss').onchange=e=>openFightBoss(Number(e.target.value));
+function refreshCasualties(){
+ let checked=$$('#battleRoster [data-participant]:checked').map(x=>x.dataset.participant);
+ $('#rosterCount').textContent=checked.length+'/6';
+ let kept=new Map($$('#casualtiesList .casualty-row').map(el=>[el.dataset.id,{fallen:el.querySelector('input[type=checkbox]')?.checked,killer:el.querySelector('[data-death-killer]')?.value||'',words:el.querySelector('[data-death-words]')?.value||''}]));
+ let prev=$('#fightMVP').value;
+ $('#fightMVP').innerHTML='<option value="">Sin MVP</option>'+checked.map(id=>{let m=run.mons.find(x=>x.id===id);return `<option value="${esc(id)}" ${prev===id?'selected':''}>⭐ ${esc(m.nickname||m.name)}</option>`}).join('');
+ $('#casualtiesList').innerHTML=checked.length?checked.map(id=>{let m=run.mons.find(x=>x.id===id),d=kept.get(id)||{};return `<div class="casualty-row" data-id="${esc(id)}"><label class="casualty-entry"><input type="checkbox" value="${esc(id)}" ${d.fallen?'checked':''}> 💀 ${esc(m.nickname||m.name)}</label><div class="death-extra"><input class="input" data-death-killer placeholder="¿Quién lo derrotó?" value="${esc(d.killer||'')}"><input class="input" data-death-words placeholder="Últimas palabras..." value="${esc(d.words||'')}"></div></div>`}).join(''):'<span class="tiny">Selecciona participantes para marcar las bajas.</span>';
+ $$('#casualtiesList .casualty-row').forEach(el=>{let input=el.querySelector('input[type=checkbox]');el.classList.toggle('casualty-on',input.checked);input.onchange=()=>el.classList.toggle('casualty-on',input.checked)});
+}
+$$('#battleRoster [data-participant]').forEach(x=>x.onchange=()=>{let checked=$$('#battleRoster [data-participant]:checked');if(checked.length>6){x.checked=false;alert('Máximo 6 Pokémon por combate.')}battleParticipants=new Set($$('#battleRoster [data-participant]:checked').map(n=>n.dataset.participant));refreshCasualties()});refreshCasualties();
+$('#saveBattle').onclick=()=>{let participants=$$('#battleRoster [data-participant]:checked').map(x=>run.mons.find(m=>m.id===x.dataset.participant)).filter(Boolean);if(!participants.length){alert('Elige al menos un Pokémon que participó en el combate.');return}if(participants.length>6){alert('El equipo no puede tener más de seis participantes.');return}
+let fallen=new Set($$('#casualtiesList .casualty-row input[type=checkbox]:checked').map(x=>x.value)),result=$('#fightResult').value,notes=$('#fightNotes').value.trim(),mvpId=$('#fightMVP').value;
+let deaths=new Map($$('#casualtiesList .casualty-row').map(el=>[el.dataset.id,{killer:el.querySelector('[data-death-killer]').value.trim(),lastWords:el.querySelector('[data-death-words]').value.trim()}]));let snapshots=participants.map(m=>({id:m.id,name:m.name,nickname:m.nickname||'',level:m.level||null,isShiny:!!m.isShiny,dexNumber:Number(m.dexNumber)||IDS[m.name]||null,fallen:fallen.has(m.id)}));
+let entry={id:newId('battle'),date:stamp(),boss:battleEditorBoss,region:objectiveRegion(battleEditorBoss),result,participants:snapshots,mvpId:mvpId||null,notes};run.battles.push(entry);
+if(result==='victoria'&&!run.bosses.includes(battleEditorBoss))run.bosses.push(battleEditorBoss);
+for(let m of participants)if(fallen.has(m.id)){if(m.status!=='baja'){m.status='baja';let d=deaths.get(m.id)||{};m.death={...d,date:entry.date,battleId:entry.id,bossId:battleEditorBoss,context:bossDisplay(battleEditorBoss)};pushJournal(`💀 ${m.nickname||m.name} cayó contra ${bossDisplay(battleEditorBoss)}${d.killer?' · derrotado por '+d.killer:''}.`)}}
+pushJournal(`${result==='victoria'?'🏆 Victoria':'❌ Derrota'} frente a ${bossDisplay(battleEditorBoss)} con ${snapshots.map(s=>s.nickname||s.name).join(', ')}.${mvpId?' ⭐ MVP: '+(snapshots.find(x=>x.id===mvpId)?.nickname||snapshots.find(x=>x.id===mvpId)?.name||'')+'.':''}${notes?' '+notes:''}`);
+battleParticipants=new Set(run.mons.filter(m=>m.status==='equipo').map(m=>m.id));save();render();};}
+function renderBosses(){let grouped=new Map();for(let b of run.battles){let n=grouped.get(b.boss)||0;grouped.set(b.boss,n+1)}
+$('#bossCount').textContent=`${run.bosses.filter(i=>objectiveRegion(i)===region).length}/${regionBossIndices(region).length} objetivos`; $('#objectivesTitle').textContent='🏆 Objetivos de '+CATALOG[region].name.split(' · ')[0];
+$('#bossList').innerHTML=regionBossIndices(region).map(i=>{let b=B[i];let done=run.bosses.includes(i),n=grouped.get(i)||0;return `<div class="boss-entry ${done?'done':''} ${battleEditorBoss===i?'selected':''}"><span style="font-size:18px">${done?'🏆':'◯'}</span><div class="details"><strong>${i+1}. ${esc(b[0])}</strong><small>${esc(b[1])} · ${esc(b[2])}${b[3]?' · Nivel orientativo '+b[3]:''}</small><small>${n?n+' combate'+(n===1?'':'s')+' registrado'+(n===1?'':'s'):done?'Victoria heredada, sin detalle':'Sin combatir'}</small></div><div class="boss-buttons"><button type="button" data-fight="${i}">⚔️ Registrar</button></div></div>`}).join('');
+$$('#bossList [data-fight]').forEach(b=>b.onclick=()=>openFightBoss(Number(b.dataset.fight)));
+renderFightForm();$('#rotationSummary').innerHTML=`<div class="stat" style="margin:12px 0 15px"><strong>${Math.max(0,run.bosses.length-run.rotations)}</strong><small>Pendientes · ${run.rotations} rotaciones anotadas</small></div>`;
+$('#rotationBtn').disabled=run.rotations>=run.bosses.length;$('#rotationBtn').onclick=()=>{run.rotations++;pushJournal('↪ Rotación realizada tras un objetivo.');save();render()};
+$('#runNotes').value=run.notes;$('#runNotes').oninput=e=>{run.notes=e.target.value;save()};
+$('#battleCount').textContent=run.battles.length+' combates';
+$('#battlesHistory').innerHTML=run.battles.length?[...run.battles].reverse().map(f=>{let b=B[f.boss]||['Jefe desconocido','Otro'];return `<div class="battle-card"><div class="between"><div><strong>${f.result==='victoria'?'🏆':'❌'} ${esc(b[0])}</strong> <span class="badge ${f.result==='victoria'?'good':'bad'}">${f.result==='victoria'?'Victoria':'Derrota'}</span><div class="tiny">${esc(formatDate(f.date))} · ${esc(b[1])} · ${esc(CATALOG[objectiveRegion(f.boss)]?.name||'Paldea')}</div></div><button type="button" class="ghost danger" data-battledel="${esc(f.id)}" style="font-size:11px;padding:6px">Eliminar registro</button></div><div class="battle-squad">${(f.participants||[]).map(p=>`<div class="mini-poke" title="${esc((p.nickname||p.name)+' · Nv. '+p.level)}">${pokePicture(p)}<small>${esc(p.nickname||p.name)}${p.isShiny?' ✨':''}${p.fallen?' 💀':''}</small></div>`).join('')}</div>${f.mvpId?`<div class="battle-mvp">⭐ MVP: ${esc((f.participants||[]).find(p=>p.id===f.mvpId)?.nickname||(f.participants||[]).find(p=>p.id===f.mvpId)?.name||'')}</div>`:''}${f.notes?`<p>${esc(f.notes)}</p>`:''}</div>`}).join(''):'<div class="empty">Aún no has registrado ningún combate. Elige un objetivo arriba para guardar los participantes.</div>';
+$$('[data-battledel]').forEach(b=>b.onclick=()=>{if(!confirm('¿Eliminar este combate del historial? Se conservarán los Pokémon y las bajas ya registradas.'))return;let entry=run.battles.find(f=>f.id===b.dataset.battledel);run.battles=run.battles.filter(f=>f.id!==b.dataset.battledel);if(entry?.result==='victoria'&&!run.battles.some(f=>f.boss===entry.boss&&f.result==='victoria'))run.bosses=run.bosses.filter(i=>i!==entry.boss);run.rotations=Math.min(run.rotations,run.bosses.length);save();render()});}
+
+function renderJournal(){
+ $('#logCount').textContent=run.journal.length+' entradas';
+ $('#journalList').innerHTML=[...run.journal].reverse().map(e=>`<div class="log-entry"><div class="between"><time>${esc(formatDate(e.date))} · ${esc(CATALOG[e.region]?.name?.split(' · ')[0]||'Aventura')}</time><div class="row"><button type="button" data-feature="${esc(e.id)}" class="ghost ${e.featured?'feature-on':''}" title="${e.featured?'Quitar del álbum':'Destacar en el álbum'}" style="font-size:12px;padding:5px">${e.featured?'⭐ Destacado':'☆ Destacar'}</button><button type="button" data-logdel="${esc(e.id)}" class="ghost danger" style="font-size:11px;padding:4px 7px">Eliminar</button></div></div><p>${esc(e.message)}</p></div>`).join('')||'<div class="empty">Todavía no hay entradas. ¡Empieza a contar tu aventura!</div>';
+ $$('[data-feature]').forEach(b=>b.onclick=()=>{let e=run.journal.find(x=>x.id===b.dataset.feature);if(e){e.featured=!e.featured;save();renderJournal();}});
+ $$('[data-logdel]').forEach(b=>b.onclick=()=>{if(confirm('¿Eliminar esta entrada del diario?')){run.journal=run.journal.filter(e=>e.id!==b.dataset.logdel);save();renderJournal()}})
+}
+function renderAlbum(){
+ const wins=run.battles.filter(b=>b.result==='victoria'),dead=run.mons.filter(m=>m.status==='baja'),shinies=run.mons.filter(m=>m.isShiny);
+ $('#albumStats').innerHTML=[['📸',run.mons.length,'Pokémon registrados'],['✨',shinies.length,'Shinies'],['🏆',run.bosses.length,'Objetivos ganados'],['⭐',run.battles.filter(b=>b.mvpId).length,'MVPs elegidos'],['💀',dead.length,'Bajas']].map(x=>`<div class="album-stat"><strong>${x[0]} ${x[1]}</strong><small>${esc(x[2])}</small></div>`).join('');
+ $('#albumRegions').innerHTML=Object.keys(CATALOG).map(r=>{let z=ZONES.filter(z=>z.region===r),n=z.filter(x=>zoneData(x.id).status==='captured').length,goals=regionBossIndices(r);return `<div class="album-region"><strong>${esc(CATALOG[r].name.split(' · ')[0])}</strong><div class="progress-track"><span style="width:${z.length?Math.round(n/z.length*100):0}%"></span></div><small>${n}/${z.length} zonas · ${goals.filter(i=>run.bosses.includes(i)).length}/${goals.length} objetivos</small></div>`}).join('');
+ let captured=[...run.mons].reverse();
+ $('#albumCaptures').innerHTML=captured.length?captured.map(m=>`<button type="button" class="album-mon" data-album-mon="${esc(m.id)}" title="Abrir ficha de ${esc(m.nickname||m.name)}"><span class="album-mon-sprite">${pokePicture(m)}</span><strong>${esc(m.nickname||m.name)}</strong><small>${esc(m.name)}${m.isShiny?' ✨':''}${m.status==='baja'?' 💀':''}</small></button>`).join(''):'<div class="empty">Todavía no hay capturas.</div>';
+ $$('[data-album-mon]').forEach(b=>b.onclick=()=>{monSelected=b.dataset.albumMon;tab='equipo';let m=run.mons.find(x=>x.id===monSelected);if(m)refreshSelectedMBox(m);render()});
+ const entries=[...run.journal].filter(e=>e.featured).reverse();
+ $('#albumHighlights').innerHTML=entries.length?entries.map(e=>`<div class="album-highlight"><span>⭐ ${esc(formatDate(e.date))}</span><p>${esc(e.message)}</p></div>`).join(''):'<div class="empty">En el Diario, pulsa ☆ Destacar en los momentos que quieras guardar aquí.</div>';
+ $('#albumVictories').innerHTML=wins.length?[...wins].reverse().map(f=>{let mvp=f.participants?.find(p=>p.id===f.mvpId);return `<div class="album-victory"><div class="between"><strong>🏆 ${esc(bossDisplay(f.boss))}</strong><span class="tiny">${esc(formatDate(f.date))}</span></div><small>${esc(CATALOG[objectiveRegion(f.boss)]?.name||'Paldea')}</small><div class="battle-squad">${(f.participants||[]).map(p=>`<div class="mini-poke ${p.id===f.mvpId?'is-mvp':''}" title="${esc(p.nickname||p.name)} · Nv. ${esc(p.level||'?')}">${pokePicture(p)}<small>${p.id===f.mvpId?'⭐ ':''}${esc(p.nickname||p.name)}${p.fallen?' 💀':''}</small></div>`).join('')}</div>${mvp?`<div class="battle-mvp">⭐ MVP: ${esc(mvp.nickname||mvp.name)}</div>`:''}${f.notes?`<p class="tiny">${esc(f.notes)}</p>`:''}</div>`}).join(''):'<div class="empty">Las victorias con equipo registrado aparecerán aquí como recuerdos de vuestro Salón de la Fama.</div>';
+ $('#albumMemorial').innerHTML=dead.length?dead.map(m=>`<div class="album-death">${pokePicture(m)}<div><strong>💀 ${esc(m.nickname||m.name)}</strong><small>${esc(m.name)} · ${esc(m.death?.killer?'Derrotado por '+m.death.killer:'Causa sin registrar')}</small><small>${esc(m.death?.context||'')}${m.death?.lastWords?' · «'+esc(m.death.lastWords)+'»':''}</small></div></div>`).join(''):'<div class="empty">Por suerte, aún no tenéis bajas que recordar.</div>';
+}
+
+function recordMonEvent(m,kind,message,date=stamp()){
+ if(!m)return;
+ if(!Array.isArray(m.life))m.life=[];
+ m.life.push({id:newId('life'),date,kind,message});
+ if(m.life.length>300)m.life=m.life.slice(-300);
+}
+function pokemonLife(m){
+ const entries=[];
+ // Existing saved games may have no date of capture; never invent one.
+ const startName=m.starter?'Se unió como inicial':'Se unió a la aventura';
+ entries.push({id:'origin-'+m.id,date:m.createdAt||null,kind:'origen',message:startName+' · '+displayOrigin(m)+(m.captureSpecies?' · '+m.captureSpecies:'')});
+ for(let ev of (Array.isArray(m.life)?m.life:[]))entries.push(ev);
+ for(let b of run.battles){const snap=(b.participants||[]).find(p=>p.id===m.id);if(!snap)continue;
+  const how=b.result==='victoria'?'Victoria':'Derrota';
+  entries.push({id:b.id,date:b.date||null,kind:'combate',message:`⚔️ ${how} contra ${bossDisplay(b.boss)} · Nv. ${snap.level||'?'}${b.mvpId===m.id?' · ⭐ MVP':''}${snap.fallen?' · 💀 Cayó en combate':''}${b.notes?' · '+b.notes:''}`});
+ }
+ if(m.death&&!m.death.corrected){
+  const d=m.death;
+  entries.push({id:'death-'+m.id,date:d.date||null,kind:'baja',message:'💀 Baja'+(d.killer?' · Derrotado por '+d.killer:'')+(d.context?' · '+d.context:'')+(d.lastWords?' · Últimas palabras: «'+d.lastWords+'»':'')});
+ }
+ const known=entries.filter(x=>x.date).sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+ const unknown=entries.filter(x=>!x.date);
+ return [...unknown,...known];
+}
+function renderMonBiography(m){
+ const events=pokemonLife(m),battles=run.battles.filter(b=>(b.participants||[]).some(p=>p.id===m.id)),wins=battles.filter(b=>b.result==='victoria'),mvps=battles.filter(b=>b.mvpId===m.id);
+ const el=$('#monBiography');if(!el)return;
+ el.innerHTML=`<div class="bio-heading"><h3>📖 Biografía de ${esc(m.nickname||m.name)}</h3><span class="badge">${battles.length} combates · ${wins.length} victorias · ${mvps.length} MVP</span></div>
+ <p class="hint">Su historia se construye con capturas, evoluciones, cambios de equipo, combates y recuerdos personales. Los datos antiguos sin fecha se muestran como «Fecha no registrada».</p>
+ <div class="bio-timeline">${events.map(e=>`<div class="bio-event"><div><span class="bio-marker">${e.kind==='baja'?'💀':e.kind==='combate'?'⚔️':e.kind==='evolucion'?'🔄':e.kind==='recuerdo'?'📝':e.kind==='equipo'?'📦':'✨'}</span><time>${e.date?esc(formatDate(e.date)):'Fecha no registrada'}</time></div><p>${esc(e.message||'')}</p>${e.kind==='recuerdo'?`<button class="ghost danger" data-biodel="${esc(e.id)}">Eliminar recuerdo</button>`:''}</div>`).join('')}</div>
+ <div class="bio-add"><label class="field-label">Añadir un recuerdo de este Pokémon</label><textarea id="bioNote" placeholder="Su primera hazaña, cómo se ganó el apodo, una anécdota…"></textarea><button type="button" class="primary" id="bioAdd">＋ Añadir a su biografía</button></div>`;
+ $('#bioAdd').onclick=()=>{let txt=$('#bioNote').value.trim();if(!txt)return;recordMonEvent(m,'recuerdo',txt);pushJournal(`📝 ${m.nickname||m.name}: ${txt}`,'pokemon');save();renderMons();};
+ $$('#monBiography [data-biodel]').forEach(btn=>btn.onclick=()=>{if(!confirm('¿Eliminar este recuerdo de la biografía?'))return;m.life=m.life.filter(x=>x.id!==btn.dataset.biodel);save();renderMons();});
+}
+function getAchievements(){
+ const battles=run.battles,win=battles.filter(b=>b.result==='victoria'),shiny=run.mons.filter(m=>m.isShiny),mvp=new Map(),counts=new Map();
+ for(let b of battles){if(b.mvpId)mvp.set(b.mvpId,(mvp.get(b.mvpId)||0)+1);for(let p of b.participants||[])counts.set(p.id,(counts.get(p.id)||0)+1)}
+ const stats=[
+ ['starter',TYPE_EMOJI,'Primer compañero','Comenzaste la aventura con tu inicial.',run.mons.some(m=>m.starter)],
+ ['capture','🎒','Primera captura','Registra un Pokémon que no sea tu inicial.',run.mons.some(m=>!m.starter)],
+ ['squad','⚔️','Equipo completo','Ten 6 Pokémon en el equipo.',run.mons.filter(m=>m.status==='equipo').length===6],
+ ['win','🏆','Primera victoria','Supera tu primer objetivo con un combate registrado.',win.length>=1],
+ ['mvp','⭐','Una estrella nace','Elige tu primer MVP.',battles.some(b=>b.mvpId)],
+ ['mvp3','🌟','Ídolo de masas','El mismo Pokémon ha conseguido 3 MVP.',[...mvp.values()].some(v=>v>=3)],
+ ['shiny','✨','¡Brilla!','Registra tu primer Pokémon shiny.',shiny.length>=1],
+ ['shiny3','💎','Colección brillante','Registra 3 Pokémon shiny.',shiny.length>=3],
+ ['battle5','🥊','Noches de combate','Registra 5 combates.',battles.length>=5],
+ ['battle15','🥇','Maratón de retos','Registra 15 combates.',battles.length>=15],
+ ['veteran','🛡️','Veterano','Un Pokémon participa en 5 combates.',[...counts.values()].some(v=>v>=5)],
+ ['diary','📖','Cronista','Tu diario alcanza 10 entradas.',run.journal.length>=10],
+ ['noroteo','🍃','Rumbo a Noroteo','Completa un objetivo del primer DLC.',win.some(b=>objectiveRegion(b.boss)==='kitakami')||run.bosses.some(i=>objectiveRegion(i)==='kitakami')],
+ ['biodomo','🌊','Intercambio épico','Completa un objetivo de la Academia Arándano.',win.some(b=>objectiveRegion(b.boss)==='terra')||run.bosses.some(i=>objectiveRegion(i)==='terra')],
+ ['paldea','👑','Leyenda de Paldea','Completa los 18 objetivos principales de Paldea.',regionBossIndices('paldea').every(i=>run.bosses.includes(i))],
+ ['memorial','🕯️','Nunca olvidados','Conserva la memoria de una baja.',run.mons.some(m=>m.status==='baja')],
+ ];
+ return stats.map(([id,icon,name,description,unlocked])=>({id,icon,name,description,unlocked}));
+}
+function topPokemon(counts){let best=[...counts.entries()].sort((a,b)=>b[1]-a[1])[0];if(!best)return null;let m=run.mons.find(m=>m.id===best[0]);return {name:m?.nickname||m?.name||'Pokémon anterior',number:best[1]}}
+function getRecords(){
+ let fights=new Map(),wins=new Map(),mvp=new Map();let streak=0,best=0;
+ for(let b of run.battles){
+  if(b.result==='victoria'){streak++;best=Math.max(best,streak)}else streak=0;
+  if(b.mvpId)mvp.set(b.mvpId,(mvp.get(b.mvpId)||0)+1);
+  for(let p of (b.participants||[])){
+   fights.set(p.id,(fights.get(p.id)||0)+1);
+   if(b.result==='victoria')wins.set(p.id,(wins.get(p.id)||0)+1);
+  }
+ }
+ const veteran=topPokemon(fights),hero=topPokemon(wins),star=topPokemon(mvp),maxLevel=[...run.mons].sort((a,b)=>(Number(b.level)||0)-(Number(a.level)||0))[0];
+ return [
+ ['⚔️','Más combates',veteran?`${veteran.name} · ${veteran.number}`:'Sin combates'],
+ ['🏆','Más victorias',hero?`${hero.name} · ${hero.number}`:'Sin victorias'],
+ ['⭐','Más MVP',star?`${star.name} · ${star.number}`:'Sin MVP'],
+ ['🏅','Mejor racha',best?`${best} victoria${best>1?'s':''} consecutiva${best>1?'s':''}`:'Sin victorias'],
+ ['📈','Mayor nivel',maxLevel?`${maxLevel.nickname||maxLevel.name} · Nv. ${maxLevel.level}`:'Sin datos'],
+ ['✨','Shinies encontrados',String(run.mons.filter(m=>m.isShiny).length)],
+ ['💀','Bajas registradas',String(run.mons.filter(m=>m.status==='baja').length)],
+ ['🌍','Zonas completadas',String(Object.values(run.zones).filter(z=>z.status==='captured').length)+' / '+ZONES.length]
+ ];
+}
+function renderAchievements(){
+ const items=getAchievements(),done=items.filter(x=>x.unlocked).length;
+ $('#achievementCount').textContent=`${done}/${items.length} desbloqueados`;
+ $('#achievementTrack').style.width=(100*done/items.length).toFixed(0)+'%';
+ $('#achievementGrid').innerHTML=items.map(a=>`<div class="achievement ${a.unlocked?'unlocked':'locked'}"><div class="achievement-icon">${a.unlocked?a.icon:'🔒'}</div><div><strong>${esc(a.name)}</strong><p>${esc(a.description)}</p><small>${a.unlocked?'✓ Desbloqueado':'Pendiente'}</small></div></div>`).join('');
+ $('#recordsGrid').innerHTML=getRecords().map(([icon,name,value])=>`<div class="record"><span>${icon}</span><div><small>${esc(name)}</small><strong>${esc(value)}</strong></div></div>`).join('');
+}
+
+function renderRules(){const rules=[[`Reto tipo ${TYPE_NAME}`,`Regla base del reto: Pokémon de tipo ${TYPE_NAME} y sus preevoluciones admitidas según vuestras reglas. Registro abierto para excepciones (shiny, incursiones, regalos).`],['Inicial','Elige tu primer Pokémon manualmente; no consume captura de zona.'],['Capturas por zona','Una captura por cada zona que hayáis acordado; los Pokémon especiales pueden registrarse sin ocupar zona.'],['Sin duplicados','Una captura de cada línea evolutiva.'],['Muerte permanente','Los Pokémon debilitados pasan a «Baja».'],['Rotación tras jefe','Cambiar un Pokémon activo por otro de la reserva.'],['Tope de nivel','No superar el nivel del siguiente jefe elegido.'],['Combate','Sin curaciones de mochila; teracristalización permitida.'],['Contenido ampliado','Los tres mapas están disponibles: Paldea, Noroteo y Biodomo.']];$('#rulesList').innerHTML=rules.map(r=>`<div class="rule"><strong>${r[0]}</strong><span>${r[1]}</span></div>`).join('')}
+function render(){ensureBoxes();if(!addMonExpanded)$('#addMonPanel').hidden=true;renderStats();renderMap();renderZones();renderMons();renderBosses();renderJournal();renderAlbum();renderAchievements();renderRules();$$('.pane').forEach(n=>n.classList.toggle('on',n.id===tab));$$('[data-tab]').forEach(n=>{n.classList.toggle('on',n.dataset.tab===tab);n.setAttribute('aria-selected',String(n.dataset.tab===tab))});}
+$$('[data-region]').forEach(b=>b.onclick=()=>setRegion(b.dataset.region));$$('[data-tab]').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;render()});$('#zoneSearch').addEventListener('input',renderZones);$('#zoneFilter').addEventListener('change',renderZones);$('#onlyShiny').addEventListener('change',renderMons);$('#toggleAddMon').onclick=()=>{addMonExpanded=!addMonExpanded;renderAddForm();if(addMonExpanded)$('#addSpecies')?.focus()};$('#mapZoom').addEventListener('change',e=>{mapZoom=Number(e.target.value)||100;renderMap()});$('#addJournal').onclick=()=>{let txt=$('#journalText').value.trim();if(!txt){alert('Escribe tu recuerdo antes de guardarlo.');return}pushJournal(txt,'manual',$('#journalFeatured').checked);$('#journalText').value='';$('#journalFeatured').checked=false;save();renderJournal()};
+$('#exportBtn').onclick=()=>{let data={app:'Locke '+TYPE_NAME+' Pokémon Escarlata + DLC',type:RUN_TYPE,version:4,exportedAt:stamp(),run:store[RUN_TYPE]};let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='Locke_'+TYPE_NAME+'_Escarlata_DLC_'+stamp().slice(0,10)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),3000)};
+$('#importBtn').onclick=()=>$('#importFile').click();$('#importFile').onchange=async e=>{let file=e.target.files[0];if(!file)return;try{let data=JSON.parse(await file.text()),r=data.run;if(data.type!==RUN_TYPE||!r||!Array.isArray(r.mons)||!Array.isArray(r.bosses)||!r.zones||typeof r.zones!=='object')throw Error('El JSON no corresponde a esta run de tipo '+TYPE_NAME);if(confirm('¿Reemplazar el progreso actual por el del archivo? Es recomendable exportar antes una copia.')){store[RUN_TYPE]=r;run=store[RUN_TYPE];run.journal=Array.isArray(run.journal)?run.journal:[];run.rotations=Number(run.rotations)||0;run.battles=Array.isArray(run.battles)?run.battles:[];run.mons.forEach(m=>{m.life=Array.isArray(m.life)?m.life:[]});run.boxNames=run.boxNames&&typeof run.boxNames==='object'?run.boxNames:{};run.mons.forEach(m=>{m.isShiny=Boolean(m.isShiny??m.shiny??false);m.captureSpecies=m.captureSpecies||run.zones[m.zone]?.pokemon||m.name;m.life=Array.isArray(m.life)?m.life:[]});region='paldea';selected='sur1';monSelected='starter';boxPage=0;movingMonId=null;battleParticipants=new Set(run.mons.filter(m=>m.status==='equipo').map(m=>m.id));ensureBoxes();save();render()}}catch(err){alert('No se ha podido importar: '+err.message)}e.target.value=''};
+$('#resetBtn').onclick=()=>{if(confirm('¿Reiniciar toda la partida y las tres regiones? Si quieres conservarla, exporta el JSON antes.')){store[RUN_TYPE]=makeRun();run=store[RUN_TYPE];region='paldea';selected='sur1';monSelected='starter';boxPage=0;movingMonId=null;save();render()}};
+$('#genericStartBtn').onclick=()=>{tab='equipo';addMonExpanded=true;render();renderAddForm();$('#addSpecies')?.focus()};
+ensureBoxes();render();
+
+</script>
+<script id="poke-access-js">
+(function(){
+"use strict";
+const ENDPOINT="https://bxcfirzcudwanttkqnfh.supabase.co/functions/v1/pokelocke-sync";
+const gate=document.getElementById("pokeGate");
+const input=document.getElementById("pgaInput");
+const form=document.getElementById("pgaForm");
+const errorBox=document.getElementById("pgaError");
+const button=document.getElementById("pgaButton");
+const content=document.querySelector("body > .shell")||document.querySelector("body > main");
+const storageKey="pokelockes-shared-access-session";
+if(content)content.inert=true;
+let accessCode="";
+let unlock;
+const ready=new Promise(r=>{unlock=r});
+async function raw(action,code,payload){
+  const resp=await fetch(ENDPOINT,{method:"POST",cache:"no-store",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({action,code},payload||{}))});
+  let body={};try{body=await resp.json()}catch(_){}
+  if(!resp.ok){const e=new Error(body.error||"No se pudo conectar con Supabase");e.code=body.code||String(resp.status);throw e}
+  return body;
+}
+async function authenticate(candidate){
+  button.disabled=true;button.textContent="Comprobando acceso…";errorBox.textContent="";
+  try{
+    await raw("auth",candidate);
+    accessCode=candidate;
+    try{sessionStorage.setItem(storageKey,candidate)}catch(_){}
+    document.documentElement.classList.add("poke-authorized");
+    if(content)content.inert=false;
+    gate.hidden=true;
+    if(location.hash.startsWith("#edit=")){history.replaceState(null,"",location.pathname+location.search)}
+    unlock();
+  }catch(e){
+    try{sessionStorage.removeItem(storageKey)}catch(_){}
+    errorBox.textContent=e.message;
+    input.value="";input.focus();
+  }finally{button.disabled=false;button.textContent="Entrar a PokéLockes →"}
+}
+form.addEventListener("submit",function(e){
+  e.preventDefault();
+  const value=input.value.trim();
+  if(!value){input.focus();return}
+  authenticate(value);
+});
+window.PokeAccess={
+ ready,
+ request:async(action,data)=>{await ready;return raw(action,accessCode,data||{})},
+ logout:()=>{
+   try{sessionStorage.removeItem(storageKey)}catch(_){}
+   location.reload();
+ },
+};
+let saved="";try{saved=sessionStorage.getItem(storageKey)||""}catch(_){}
+if(saved){authenticate(saved)}else{input.focus()}
+})();
+</script><script id="poke-shared-sync-js">
+(function(){
+"use strict";
+const TYPE=RUN_TYPE;
+const info=document.getElementById("cloudTitle");
+const detail=document.getElementById("cloudSubtitle");
+const loadButton=document.getElementById("cloudPull");
+const pushButton=document.getElementById("cloudPush");
+const actions=document.querySelector("#cloudBox .cloud-actions");
+if(pushButton)pushButton.hidden=false;
+let ready=false,paused=false,dirty=false,busy=false,polling=false,version=0,remote=null,timer=null;
+const show=(title,sub)=>{if(info)info.textContent=title;if(detail)detail.textContent=sub};
+const valid=r=>!!(r&&typeof r==="object"&&!Array.isArray(r)&&Array.isArray(r.mons)&&Array.isArray(r.bosses)&&r.zones&&typeof r.zones==="object"&&!Array.isArray(r.zones));
+const progressed=r=>!!(valid(r)&&(r.mons.some(m=>m.id!=="starter"||m.nickname||m.level>5||m.isShiny||m.status!=="equipo")||r.bosses.length||(r.battles||[]).length||(r.journal||[]).length||Object.keys(r.zones).length||r.notes||r.rotations));
+const readCloud=()=>PokeAccess.request("read",{run:TYPE});
+function applyCloud(state){
+ if(!valid(state))return false;
+ store[TYPE]=JSON.parse(JSON.stringify(state));run=store[TYPE];
+ run.journal=Array.isArray(run.journal)?run.journal:[];
+ run.battles=Array.isArray(run.battles)?run.battles:[];
+ run.boxNames=run.boxNames&&typeof run.boxNames==="object"?run.boxNames:{};
+ run.mons.forEach(m=>{
+   m.life=Array.isArray(m.life)?m.life:[];
+   m.isShiny=Boolean(m.isShiny??m.shiny??false);
+   m.captureSpecies=m.captureSpecies||(run.zones[m.zone]||{}).pokemon||m.name;
+ });
+ try{localStorage.setItem(KEY,JSON.stringify(store))}catch(_){}
+ if(!run.mons.some(m=>m.id===monSelected))monSelected=run.mons[0]?run.mons[0].id:"";
+ movingMonId=null;boxPage=0;battleParticipants=new Set();
+ ensureBoxes();render();return true;
+}
+function queueSave(){
+ if(!ready)return;
+ if(paused){show("⚠️ Guardado solo en este navegador","La sincronización está detenida. Exporta una copia JSON antes de resolver el conflicto.");return}
+ dirty=true;clearTimeout(timer);timer=setTimeout(flush,850);
+ show("☁️ Guardando cambios…","Enviando la partida compartida a Supabase.");
+}
+async function flush(){
+ if(!ready||paused||!dirty||busy)return;
+ busy=true;dirty=false;
+ const text=JSON.stringify(run);
+ try{
+  const result=await PokeAccess.request("write",{run:TYPE,version,state:JSON.parse(text)});
+  version=result.version;remote=JSON.parse(text);
+  if(JSON.stringify(run)!==text)dirty=true;
+  show("☁️ Cambios sincronizados","Guardado correctamente. Los demás verán el progreso.");
+ }catch(e){
+  dirty=true;
+  if(e.code==="conflict"||e.code==="409"||e.code==="401"||e.code==="403"){
+    paused=true;
+    show("⚠️ Guardado en la nube detenido",e.message+" · Puedes exportar un JSON o cargar la nube.");
+  }else show("⚠️ Sin conexión con Supabase","Tu progreso sigue guardado en este navegador. Se reintentará el envío.");
+ }finally{
+  busy=false;
+  if(dirty&&!paused){clearTimeout(timer);timer=setTimeout(flush,7000)}
+ }
+}
+const beforeSave=save;
+save=function(){beforeSave();if(ready)queueSave()};
+async function startup(){
+ await PokeAccess.ready;
+ try{
+  const data=await readCloud();
+  version=data.version;
+  remote=data.state;
+  if(valid(data.state)){
+    if(progressed(run)&&JSON.stringify(run)!==JSON.stringify(data.state)){
+      if(confirm("Hay progreso diferente en este navegador.\n\nAceptar: cargar la partida compartida desde Supabase.\nCancelar: mantener la copia local, sin sobrescribir la nube (podrás subirla manualmente).")){
+       applyCloud(data.state);
+      }else{
+       paused=true;
+       show("⚠️ Progreso local diferente","Tu copia local se conserva. Exporta un JSON antes de sustituir la partida compartida.");
+      }
+    }else applyCloud(data.state);
+  }else if(progressed(run)){
+    paused=true;
+    show("☁️ La partida en la nube está vacía","Conservamos tu progreso local. Usa «Subir progreso local» para publicarlo.");
+  }else dirty=true;
+  ready=true;
+  if(!paused)show("☁️ Edición compartida activada","Todos los cambios se guardan automáticamente en Supabase.");
+  if(dirty)flush();
+ }catch(e){
+  paused=true;ready=true;
+  show("⚠️ Sin conexión con Supabase","Puedes continuar localmente, pero tendrás que subir el progreso después. "+e.message);
+ }
+}
+if(loadButton)loadButton.addEventListener("click",async()=>{
+ if(progressed(run)&&!confirm("Esto sustituirá la copia local por la nube. Puedes exportar antes el JSON. ¿Continuar?"))return;
+ try{
+  const data=await readCloud();version=data.version;remote=data.state;
+  if(valid(data.state)){applyCloud(data.state);dirty=false;paused=false;ready=true;show("☁️ Nube cargada","Ahora puedes editar y guardar esta partida.");}
+  else alert("Todavía no hay progreso compartido para esta run.");
+ }catch(e){show("⚠️ No se pudo cargar",e.message)}
+});
+if(pushButton)pushButton.addEventListener("click",async()=>{
+ if(!confirm("¿Publicar esta copia local en Supabase? Sobrescribirá el progreso compartido de esta run. Exporta un JSON si quieres conservar una copia."))return;
+ try{
+  const data=await readCloud();version=data.version;remote=data.state;
+  paused=false;ready=true;dirty=true;
+  await flush();
+ }catch(e){show("⚠️ No se pudo subir",e.message)}
+});
+if(actions){
+ const leave=document.createElement("button");
+ leave.type="button";leave.textContent="Cerrar sesión";
+ leave.onclick=()=>PokeAccess.logout();
+ actions.appendChild(leave);
+}
+setInterval(async()=>{
+ if(!ready||paused||busy||dirty||polling)return;
+ polling=true;
+ try{
+  const data=await readCloud();
+  if(data.version!==version){
+   version=data.version;remote=data.state;
+   if(valid(data.state))applyCloud(data.state);
+   show("☁️ Partida actualizada","Se ha recibido progreso guardado desde otro dispositivo.");
+  }
+ }catch(_e){}finally{polling=false}
+},18000);
+startup();
+})();
+</script></body></html>
