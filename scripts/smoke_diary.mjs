@@ -76,20 +76,36 @@ async function testFile(file,type){
   assert.ok(w.document.querySelector("#trainerHero h2"),"Trainer title exists");
   assert.equal(w.document.querySelectorAll("#teamShowcase [data-team-id]").length,2,"Team cards");
 
-  assert.ok(w.PokeTrainerAvatars?.list.length>=30,"Trainer and meme avatar catalog loaded");
+  assert.ok(w.PokeTrainerAvatars?.list.length>=65,"Trainer, Pokémon and meme avatar catalog loaded");
+  assert.ok(w.PokeTrainerAvatars.list.filter(x=>x.category==="pokemon").length>=15,"Paldea Pokémon art gallery populated");
+  assert.ok(w.PokeTrainerAvatars.list.filter(x=>x.category==="trainer").every(x=>x.src.includes("bulbagarden.net")),"Trainer artwork sources replaced");
   assert.ok(w.document.querySelector('#trainerHero img.tc-trainer-image'),"Trainer card now uses an image, not a vector avatar");
   assert.equal(w.PokeTrainerAvatars.legacy["🥷"],"koga","Previous ninja emoji maps to a real trainer");
   w.document.getElementById("trainerEditBtn").click();
   assert.ok(!w.document.getElementById("pokeUpgradeModal").hidden,"Trainer modal opened");
   assert.ok(w.document.querySelectorAll(".poke-avatar-tile").length>=30,"Real trainer and meme gallery rendered");
   assert.ok(w.document.querySelector('[data-pu-avatar="merequetengue"]'),"Merequetengue gallery option available");
+  assert.ok(w.document.querySelector('[data-pu-avatar="meme-fuecoco"]'),"Absurd original memes available");
+  const category=w.document.querySelector('[data-avatar-category="pokemon"]');
+  category.click();
+  assert.ok(w.document.querySelector('[data-pu-avatar="pokemon-tinkaton"]'),"Pokémon filter works");
+  assert.equal(w.document.querySelector('[data-pu-avatar="cynthia"]'),null,"Trainer hidden in Pokémon filter");
+  w.document.querySelector('[data-avatar-category="all"]').click();
+  w.document.getElementById("puAvatarSearch").value="Cintia";
+  w.document.getElementById("puAvatarSearch").dispatchEvent(new w.Event("input",{bubbles:true}));
+  assert.equal(w.document.querySelectorAll(".poke-avatar-tile").length,1,"Avatar search filters matches");
+  w.document.getElementById("puAvatarSearch").value="";
+  w.document.getElementById("puAvatarSearch").dispatchEvent(new w.Event("input",{bubbles:true}));
+  w.document.querySelector('[data-pu-fav="cynthia"]').click();
+  assert.ok(w.document.querySelector('[data-pu-fav="cynthia"]').classList.contains("is-favorite"),"Favorites can be saved locally");
   w.document.querySelector('[data-pu-avatar="cynthia"]').click();
   assert.equal(w.document.querySelector('[data-pu-avatar="cynthia"]').getAttribute("aria-pressed"),"true","Cynthia selected");
   w.document.getElementById("puTrainerName").value="Entrenadora de prueba";
   w.document.getElementById("puTrainerMotto").value="PokéLockes es genial";
   w.document.getElementById("puTrainerForm").dispatchEvent(new w.Event("submit",{bubbles:true,cancelable:true}));
   assert.ok(w.document.querySelector("#trainerHero h2").textContent.includes("Entrenadora de prueba"),"Trainer updated");
-  assert.equal(w.document.querySelector('#trainerHero img.tc-trainer-image')?.getAttribute('src'),'https://play.pokemonshowdown.com/sprites/trainers/cynthia-gen4.png',"Trainer sprite appears on the card");
+  assert.equal(w.document.querySelector('#trainerHero img.tc-trainer-image')?.getAttribute('src'),w.PokeTrainerAvatars.get("cynthia").src,"Trainer artwork appears on the card");
+  assert.equal(w.document.querySelector('#trainerHero img.tc-trainer-image')?.getAttribute('data-avatar-image'),"cynthia","Stable cloud avatar ID used in card");
 
   const down=w.document.querySelector('#teamShowcase [data-team-move="starter"][data-step="1"]');
   assert.ok(down,"Team move button found");
