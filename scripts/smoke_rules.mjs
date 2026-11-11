@@ -64,6 +64,8 @@ async function check(file,type){
    const key=Object.keys(w.localStorage).find(k=>k.startsWith("locke-"));
    return JSON.parse(w.localStorage.getItem(key))[type];
  };
+ // Open the boss entry, which initializes the roster to the main team.
+ d.querySelector('[data-fight="0"]').click();
  // Mandatory MVP when the first new objective is completed.
  assert.equal(d.querySelector("#fightResult").value,"victoria");
  const firstButton=d.getElementById("saveBattle");
