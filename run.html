@@ -127,16 +127,16 @@ html:not(.poke-authorized) body>.shell,html:not(.poke-authorized) body>main{visi
 #pokeGate button:disabled{opacity:.55;cursor:wait}
 #pokeGate .pga-error{color:#ffb1a6;font-size:13px;margin-top:11px;min-height:16px;line-height:1.3}
 #pokeGate .pga-footer{font-size:12px;color:#9fb0c9;margin-top:19px}
-</style><script src="./types.js"></script><script src="./verified-encounters.js"></script><style id="game-edition-style">.toptools .game-edition{display:inline-flex;align-items:center;gap:3px;border:1px solid #677792;background:#132338;padding:3px;border-radius:12px}.game-edition button{font:inherit;font-weight:750;font-size:12px;border:1px solid transparent;background:transparent;color:#ccd7ea;padding:9px 11px;border-radius:9px;cursor:pointer;white-space:nowrap}.game-edition button:hover{background:#30415f}.game-edition button[data-game-edition="escarlata"].active{background:#8b323c;color:#fff;border-color:#dd6672}.game-edition button[data-game-edition="purpura"].active{background:#6245a0;color:#fff;border-color:#b297f2}.game-edition button:focus-visible{outline:2px solid #fff;outline-offset:2px}@media(max-width:620px){.toptools .game-edition{width:100%;justify-content:center}.game-edition button{flex:1}}</style></head>
+</style><script src="./types.js"></script><script src="./verified-encounters.js"></script><style id="game-edition-style">.toptools .game-edition{display:inline-flex;align-items:center;gap:3px;border:1px solid #677792;background:#132338;padding:3px;border-radius:12px}.game-edition button{font:inherit;font-weight:750;font-size:12px;border:1px solid transparent;background:transparent;color:#ccd7ea;padding:9px 11px;border-radius:9px;cursor:pointer;white-space:nowrap}.game-edition button:hover{background:#30415f}.game-edition button[data-game-edition="escarlata"].active{background:#8b323c;color:#fff;border-color:#dd6672}.game-edition button[data-game-edition="purpura"].active{background:#6245a0;color:#fff;border-color:#b297f2}.game-edition button:focus-visible{outline:2px solid #fff;outline-offset:2px}@media(max-width:620px){.toptools .game-edition{width:100%;justify-content:center}.game-edition button{flex:1}}</style><link rel="stylesheet" href="./diary-upgrades.css"></head>
 <body><div id="pokeGate" role="dialog" aria-modal="true" aria-labelledby="pgaTitle"><div class="pga-card"><div class="pga-eyebrow">🌈 &nbsp; PokéLockes · 18 tipos</div><h2 id="pgaTitle">Código de acceso</h2><p>Introduce el código compartido para acceder a las 18 aventuras y guardar cambios.</p><form id="pgaForm" autocomplete="off"><label for="pgaInput">Código</label><input id="pgaInput" type="password" placeholder="Introduce el código" required autocomplete="off" maxlength="80"><button id="pgaButton" type="submit">Entrar a PokéLockes →</button><div id="pgaError" class="pga-error" aria-live="polite"></div></form><div class="pga-footer">La sesión se mantiene mientras tengas abierto el navegador. Sin cuentas de usuario.</div></div></div><div class="shell"><header class="top"><div><div class="eyebrow">Pokémon Escarlata · Diario monotipo</div><h1 id="genericTitle">Locke monotipo <span>🎮</span></h1><p class="subtitle">Paldea, Noroteo y Biodomo · Capturas, encuentros, equipo y recuerdos de tu aventura</p></div><div class="toptools"><div class="game-edition" role="group" aria-label="Versión del juego"><button type="button" data-game-edition="escarlata" aria-pressed="true" title="Ver encuentros de Pokémon Escarlata">🔴 Escarlata</button><button type="button" data-game-edition="purpura" aria-pressed="false" title="Ver encuentros de Pokémon Púrpura">🟣 Púrpura</button></div><button id="exportBtn">↓ Exportar JSON</button><button id="importBtn">↑ Importar partida</button><input id="importFile" type="file" accept=".json,application/json" hidden><button id="resetBtn" class="danger">↺ Reiniciar</button></div></header><div class="cloud-box" id="cloudBox" role="status" aria-live="polite"><div><strong id="cloudTitle">☁️ Conectando a Supabase…</strong><small id="cloudSubtitle">El código de acceso habilita la edición compartida.</small></div><div class="cloud-actions"><button type="button" id="cloudPull">↓ Cargar nube</button><button type="button" id="cloudPush">↑ Subir progreso local</button><a href="./index.html">⌂ Portada</a></div></div>
-<section id="genericStarterHint" class="cloud-box" style="margin-bottom:15px;display:flex;gap:12px;align-items:center;justify-content:space-between"><div><strong>🧭 Elige el primer Pokémon de tu run </strong><small>No hay inicial fijo para este tipo. Puedes registrar el primer compañero desde «Pokémon» y definir vosotros las reglas.</small></div><button type="button" id="genericStartBtn" class="primary">＋ Elegir primer Pokémon</button></section><section id="stats" class="stats" aria-label="Estadísticas de la partida"></section>
+<section id="genericStarterHint" class="cloud-box" style="margin-bottom:15px;display:flex;gap:12px;align-items:center;justify-content:space-between"><div><strong>🧭 Elige el primer Pokémon de tu run </strong><small>No hay inicial fijo para este tipo. Puedes registrar el primer compañero desde «Pokémon» y definir vosotros las reglas.</small></div><button type="button" id="genericStartBtn" class="primary">＋ Elegir primer Pokémon</button></section><section class="trainer-banner" id="trainerHero" aria-label="Tarjeta de entrenador"></section><section id="stats" class="stats" aria-label="Estadísticas de la partida"></section>
 <div class="regions" id="regions"><h2>Explorar región</h2><button class="region-btn active" data-region="paldea">🗺️ Paldea <small>Base</small></button><button class="region-btn" data-region="kitakami">🍃 Noroteo <small>DLC 1</small></button><button class="region-btn" data-region="terra">🌐 Biodomo <small>DLC 2</small></button></div>
 <nav class="tabs" aria-label="Secciones"><button class="on" data-tab="mapa">🗺️ Mapa</button><button data-tab="zonas">📍 Zonas</button><button data-tab="equipo">🎒 Pokémon</button><button data-tab="objetivos">🏆 Objetivos</button><button data-tab="diario">📖 Diario</button><button data-tab="album">📸 Álbum</button><button data-tab="logros">🏅 Logros</button><button data-tab="reglas">📜 Reglas</button></nav>
 <section class="pane on" id="mapa"><div class="grid2"><article class="panel"><div class="between"><h2 id="mapTitle">Mapa de Paldea</h2><span id="mapProgress" class="badge"></span></div><p id="mapHelp" class="hint">Pulsa los marcadores para ver las capturas de tipo Fuego y registrar la zona.</p><div class="map-controls"><span class="tiny">Los números corresponden a la lista de zonas</span><div class="row"><label for="mapZoom" class="tiny">Zoom</label><select id="mapZoom" style="width:100px" aria-label="Zoom del mapa"><option value="100">100 %</option><option value="135">135 %</option><option value="170">170 %</option></select></div></div><div class="mapviewport" id="mapViewport"><div id="mapBox"></div></div><div class="legend"><span><i class="dot" style="background:#8b9eaa"></i>Pendiente</span><span><i class="dot" style="background:#ebc76b"></i>Visitada</span><span><i class="dot" style="background:#4ddaab"></i>Capturada</span><span><i class="dot" style="background:#ed9299"></i>Fallida</span></div><p class="mapcredit" id="mapCredit"></p></article><article id="mapEditor" class="panel" aria-label="Ficha de la zona"></article></div></section>
 <section class="pane" id="zonas"><div class="grid2"><article class="panel"><div class="between"><h2>📍 Zonas de <span id="zoneRegionName">Paldea</span></h2><span class="badge" id="zoneProgress"></span></div><p class="hint">Las subzonas opcionales se indican. Decide con tu grupo cuáles cuentan como encuentro independiente.</p><div class="filters"><input class="input" id="zoneSearch" placeholder="Buscar zona o Pokémon…"><select id="zoneFilter"><option value="all">Todas las zonas</option><option value="todo">Pendientes</option><option value="visited">Visitadas</option><option value="captured">Capturadas</option><option value="lost">Fallidas</option></select></div><div id="zoneList" class="zone-list"></div></article><article id="zoneEditor" class="panel"></article></div></section>
 <section class="pane" id="equipo">
  <div class="between" style="margin-bottom:12px"><div><h2 style="margin:0">🎒 Tus Pokémon</h2><p class="hint" style="margin:4px 0">Cajas de Escarlata, equipo y memorial. Se admite cualquier especie, también incursiones y shinies.</p></div><button class="primary" id="toggleAddMon">＋ Registrar Pokémon</button></div>
- <div class="add-mon" id="addMonPanel" hidden></div>
+ <div class="add-mon" id="addMonPanel" hidden></div><section class="team-showcase" id="teamShowcase" aria-label="Equipo titular detallado"></section>
  <div class="grid2">
   <article class="panel">
    <div class="between"><h2>📦 Cajas Pokémon</h2><span class="badge" id="monProgress"></span></div>
@@ -404,7 +404,7 @@ let dex=Number($('#addDex').value)||null;
 let m={id:newId('mon'),name:species,captureSpecies:species,nickname:$('#addNickname').value.trim(),level:Math.max(1,Math.min(100,Number($('#addLevel').value)||1)),zone:'',origin:$('#addOrigin').value,originDetail:$('#addOriginDetail').value.trim(),notes:$('#addNotes').value.trim(),status,isShiny:$('#addShiny').checked,starter:run.mons.length===0&&$('#addOrigin').value==='Inicial',dexNumber:dex,death:status==='baja'?{killer:$('#addDeathKiller').value.trim(),lastWords:$('#addDeathWords').value.trim(),context:'',date:stamp()}:null};
 run.mons.push(m);if(isStored(m)&&!putInBox(m,boxPage)){run.mons.pop();alert('Las 32 cajas están llenas.');return}
 pushJournal(`📥 Añadido ${formatMon(m)} · ${displayOrigin(m)}.`);m.createdAt=m.createdAt||stamp();monSelected=m.id;addMonExpanded=false;save();render();resolveDex(m)};}
-function renderMons(){let hint=$('#genericStarterHint');if(hint)hint.hidden=run.mons.length>0;ensureBoxes();let shinyOnly=$('#onlyShiny').checked;let storage=run.mons.filter(isStored),team=run.mons.filter(m=>m.status==='equipo'),dead=run.mons.filter(m=>m.status==='baja');
+function renderMons(){let hint=$('#genericStarterHint');if(hint)hint.hidden=run.mons.length>0;ensureBoxes();let shinyOnly=$('#onlyShiny').checked;let storage=run.mons.filter(isStored),team=run.mons.filter(m=>m.status==='equipo').sort((a,b)=>{const order=Array.isArray(run.teamOrder)?run.teamOrder:[];const i=order.indexOf(a.id),j=order.indexOf(b.id);return (i<0?999:i)-(j<0?999:j)}),dead=run.mons.filter(m=>m.status==='baja');
 $('#monProgress').textContent=`${run.mons.length} Pokémon · ${run.mons.filter(m=>m.isShiny).length} ✨`;
 $('#teamCount').textContent=`${team.length}/6`;
 $('#teamSlots').innerHTML=Array.from({length:6},(_,i)=>{let m=team[i];return `<button type="button" class="team-slot ${m?'':'empty'} ${m?.id===monSelected?'selected':''}" ${m?`data-mon="${esc(m.id)}"`: 'disabled'} title="${m?esc(formatMon(m)):'Hueco libre'}">${m?pokeSlot(m):'<span class="box-empty-icon">＋</span>'}</button>`}).join('');
@@ -619,7 +619,7 @@ $('#genericStartBtn').onclick=()=>{tab='equipo';addMonExpanded=true;render();ren
 ensureBoxes();render();
 
 </script>
-<script src="./edition-switch.js"></script><script id="poke-access-js">
+<div class="poke-upgrade-backdrop" id="pokeUpgradeModal" hidden></div><script src="./edition-switch.js"></script><script id="poke-access-js">
 (function(){
 "use strict";
 const ENDPOINT="https://bxcfirzcudwanttkqnfh.supabase.co/functions/v1/pokelocke-sync";
@@ -794,6 +794,28 @@ setInterval(async()=>{
   }
  }catch(_e){}finally{polling=false}
 },18000);
+
+window.PokeDiarySync={
+  status:()=>({ready,paused,dirty,busy,version}),
+  restore:async(snapshotVersion)=>{
+    if(!ready||paused||dirty||busy)throw Error("Hay cambios sin sincronizar o existe un conflicto. Resuélvelo antes de restaurar.");
+    busy=true;
+    try{
+      const result=await PokeAccess.request("restore",{run:TYPE,expectedVersion:version,snapshotVersion});
+      if(!result?.state||!valid(result.state))throw Error("La copia restaurada tiene un formato no válido.");
+      version=result.version;remote=result.state;dirty=false;paused=false;
+      applyCloud(result.state);
+      show("☁️ Versión recuperada","El historial ha restaurado la versión #"+snapshotVersion+" y creado una nueva versión #"+version+".");
+      return result;
+    }catch(e){
+      if(e.code==="409"||e.code==="conflict"){
+        paused=true;
+        show("⚠️ Conflicto al restaurar",e.message);
+      }
+      throw e;
+    }finally{busy=false}
+  },
+};
 startup();
 })();
-</script></body></html>
+</script><script src="./diary-upgrades.js"></script></body></html>
