@@ -187,27 +187,47 @@ function draw(){
 function showVictory(id){
  if(document.getElementById("tcVictoryShade"))return;
  const fight=[...(run.battles||[])].reverse().find(b=>Number(b.boss)===id&&b.result==="victoria");
- const name=bossDetails(id);
- const mvp=fight?.mvpId?run.mons.find(m=>m.id===fight.mvpId):null;
+ const name=bossDetails(id),mvp=fight?.mvpId?run.mons.find(m=>m.id===fight.mvpId):null;
  const fallen=fight?.participants?.filter(p=>p.fallen)||[];
  const currentLock=locks().find(x=>x.id===fight?.mvpId);
+ const cap=credits();
  const overlay=document.createElement("div");overlay.id="tcVictoryShade";overlay.className="tc-victory-shade";
  overlay.innerHTML='<div class="tc-victory-modal" role="dialog" aria-modal="true" aria-labelledby="tcVictoryTitle">'+
- '<div class="tc-victory-kicker">✦ OBJETIVO SUPERADO ✦</div><h2 id="tcVictoryTitle">🏆 '+esc(name.name)+'</h2>'+
- '<p>Has conseguido otra victoria en tu reto monotipo '+esc(TYPE_NAME)+'.</p>'+
- '<div class="tc-victory-facts">'+
- '<div><strong>'+esc(mvp?.nickname||mvp?.name||"Sin MVP")+'</strong><small>⭐ MVP de la victoria</small></div>'+
- '<div><strong>'+fallen.length+' bajas</strong><small>💀 Durante el combate</small></div>'+
- '<div><strong>'+(currentLock?'En reserva':'Sin bloqueo')+'</strong><small>🔒 Rotación del MVP</small></div>'+
- '<div><strong>+1 bono</strong><small>💎 Captura extra de teratipo</small></div></div>'+
- '<button type="button" id="tcVictoryClose">Continuar aventura →</button></div>';
+  '<div class="tc-victory-kicker">✦ OBJETIVO SUPERADO ✦</div><h2 id="tcVictoryTitle">🏆 '+esc(name.name)+'</h2>'+
+  '<p>Victoria registrada. Estos son los pasos para preparar el siguiente combate:</p>'+
+  '<div class="tc-victory-facts">'+
+   '<div><strong>'+esc(mvp?.nickname||mvp?.name||"Sin MVP")+'</strong><small>⭐ MVP de la victoria</small></div>'+
+   '<div><strong>'+fallen.length+' bajas</strong><small>💀 Durante el combate</small></div>'+
+   '<div><strong>'+(currentLock?'En reserva':'Revisar')+'</strong><small>🔒 Rotación del MVP</small></div>'+
+   '<div><strong>+'+cap.available+' disponibles</strong><small>💎 Teracapturas extra</small></div></div>'+
+  '<div class="tc-victory-next-steps">'+
+   '<div><b>1</b><span><strong>Rotación del MVP</strong><small>'+(currentLock?esc(currentLock.mon.nickname||currentLock.mon.name)+' ya está bloqueado en reserva.':'Comprueba la rotación obligatoria del MVP.')+'</small></span></div>'+
+   '<div><b>2</b><span><strong>Completar el equipo</strong><small>'+team().length+'/6 Pokémon titulares. Puedes elegir un sustituto desde las cajas.</small></span></div>'+
+   '<div><b>3</b><span><strong>Captura extra de teratipo</strong><small>Úsala ahora o acumúlala para más adelante.</small></span></div></div>'+
+  '<div class="tc-victory-actions"><button type="button" id="tcVictoryTeam">📦 Elegir sustituto</button>'+
+   '<button type="button" id="tcVictoryTera" '+(cap.available<1?'disabled':'')+'>💎 Teracaptura</button>'+
+   '<button type="button" id="tcVictoryClose">Continuar aventura →</button></div></div>';
  document.body.appendChild(overlay);
- const close=()=>overlay.remove();
- document.getElementById("tcVictoryClose").onclick=close;
+ const key=e=>{if(e.key==="Escape")close()};
+ const close=()=>{overlay.remove();document.removeEventListener("keydown",key)};
+ const jump=(target)=>{close();tab=target;render();document.getElementById(target)?.scrollIntoView({behavior:"smooth",block:"start"})};
+ document.getElementById("tcVictoryTeam").onclick=()=>jump("equipo");
+ document.getElementById("tcVictoryTera").onclick=()=>{
+   close();
+   const button=document.getElementById("registerTeraBonus");
+   if(button&&!button.disabled)button.click();
+   else jump("objetivos");
+ };
+ document.getElementById("tcVictoryClose").onclick=()=>{
+   close();tab="objetivos";const next=nextGoal();
+   if(next>=0&&typeof objectiveRegion==="function")region=objectiveRegion(next);
+   render();
+   if(next>=0&&typeof openFightBoss==="function")openFightBoss(next);
+   document.getElementById("objetivos")?.scrollIntoView({behavior:"smooth",block:"start"});
+ };
  overlay.addEventListener("click",e=>{if(e.target===overlay)close()});
- const key=e=>{if(e.key==="Escape"){close();document.removeEventListener("keydown",key)}};
  document.addEventListener("keydown",key);
- document.getElementById("tcVictoryClose").focus();
+ document.getElementById("tcVictoryTeam").focus();
 }
 function drawCanvasPortrait(ctx,x,y,w,h){
  const idx=Math.max(0,avatars.indexOf(trainer().avatar));
