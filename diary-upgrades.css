@@ -1,0 +1,86 @@
+/* PokéLockes 2026: trainer card, detailed team and backup history. */
+.trainer-banner{
+  --trainer-accent:#f6b979;
+  margin:14px 0 22px;
+  padding:19px 21px;
+  border:1px solid color-mix(in srgb,var(--trainer-accent) 44%,#44536a);
+  border-radius:19px;
+  background:radial-gradient(ellipse at 14% 15%,color-mix(in srgb,var(--trainer-accent) 24%,#192238),transparent 52%),linear-gradient(125deg,#22334b,#131d2f 73%);
+  display:flex;gap:18px;align-items:center;flex-wrap:wrap;
+  box-shadow:0 14px 35px #0002;
+}
+.trainer-avatar{
+  width:88px;height:88px;display:flex;justify-content:center;align-items:center;
+  border:2px solid color-mix(in srgb,var(--trainer-accent) 55%,#fff);
+  background:#16243b;border-radius:18px;
+  box-shadow:inset 0 0 28px #fff1;
+  font-size:49px;flex:none;
+}
+.trainer-main{flex:1;min-width:220px;display:flex;flex-direction:column;gap:5px}
+.trainer-eyebrow{font-size:10px;text-transform:uppercase;color:var(--trainer-accent);font-weight:900;letter-spacing:.14em}
+.trainer-banner h2{font-size:clamp(20px,3vw,30px);letter-spacing:-.025em;margin:0;font-weight:900;line-height:1.18}
+.trainer-motto{color:#c2d3eb;font-size:13px;margin:1px 0 2px;line-height:1.45}
+.trainer-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.trainer-tag{padding:5px 8px;border-radius:50px;border:1px solid #6682a6;font-size:11px;font-weight:800;color:#dbe9f7;background:#15243a}
+.trainer-stats{display:grid;grid-template-columns:repeat(2,minmax(80px,1fr));gap:8px;flex:0 0 220px}
+.trainer-stat{background:#0d192ba8;border:1px solid #435875;border-radius:10px;padding:10px}
+.trainer-stat strong{display:block;color:#fff;font-size:23px;font-variant-numeric:tabular-nums;line-height:1.1}
+.trainer-stat small{display:block;color:#b2c7dc;font-size:10px;margin-top:4px}
+.trainer-actions{display:flex;flex-direction:column;gap:8px;align-self:center}
+.trainer-actions button{font:inherit;font-size:12px;font-weight:800;background:#263a57;border:1px solid #6684ac;border-radius:10px;color:#f2f7ff;padding:10px 13px;cursor:pointer;white-space:nowrap}
+.trainer-actions button:hover{background:#385579}
+.trainer-banner .trainer-actions button:first-child{background:var(--trainer-accent);color:#0b1626;border-color:transparent}
+
+.team-showcase{margin:0 0 17px;border:1px solid #3a5270;border-radius:17px;padding:16px;background:linear-gradient(110deg,#1c2b42,#111b2b)}
+.team-showcase-title{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.team-showcase-title h3{margin:0;font-size:18px;letter-spacing:-.015em}
+.team-showcase-title small{color:#a9bfd9;font-size:12px}
+.team-card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}
+.team-showcase-card{
+  min-width:0;display:flex;align-items:center;gap:12px;border:1px solid #4c6381;border-radius:13px;
+  background:linear-gradient(125deg,#273a53,#172439);padding:12px;color:#eaf2ff;position:relative;
+  transition:transform .1s,border-color .1s,background .1s;
+}
+.team-showcase-card.is-selected{border-color:#f3cf7a;box-shadow:0 0 0 1px #f3cf7a70}
+.team-showcase-card.is-dragging{opacity:.5}
+.team-showcase-card.is-over{border-color:#64c6ee;box-shadow:0 0 0 2px #64c6ee55}
+.team-showcase-card.is-empty{opacity:.6;border-style:dashed;min-height:94px;justify-content:center;color:#aabbd0}
+.team-showcase-card[draggable=true]{cursor:grab}
+.team-showcase-card[draggable=true]:active{cursor:grabbing}
+.team-card-sprite{width:67px;height:70px;flex:0 0 67px;display:flex;align-items:center;justify-content:center;border-radius:12px;background:radial-gradient(circle,#5d7ca044,#0f1b2c 76%)}
+.team-card-sprite img{width:62px;height:62px;object-fit:contain;image-rendering:pixelated}
+.team-card-detail{min-width:0;flex:1}
+.team-card-name{font-size:14px;font-weight:900;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.team-card-species{font-size:11px;color:#b3c7dd;display:block;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.team-card-level{display:inline-flex;align-items:center;margin-top:6px;font-size:11px;background:#0d1a2b;padding:4px 7px;border-radius:7px;color:#e5eefa;font-weight:850}
+.team-card-actions{display:flex;align-items:center;gap:3px;position:absolute;right:8px;top:6px}
+.team-card-actions button{padding:2px 5px;background:#15243b;border:1px solid #4f6580;color:#d8e9ff;border-radius:6px;font-size:12px;cursor:pointer;line-height:1.4}
+.team-card-actions button:disabled{opacity:.3;cursor:not-allowed}
+.team-card-open{position:absolute;inset:0;border:0;background:transparent;cursor:pointer;z-index:0}
+.team-card-sprite,.team-card-detail{position:relative;pointer-events:none;z-index:1}
+.team-card-actions{z-index:2}
+.team-card-empty-icon{font-size:24px}
+.poke-upgrade-backdrop{position:fixed;inset:0;z-index:1200;background:#070e1cd9;display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto}
+.poke-upgrade-backdrop[hidden]{display:none!important}
+.poke-upgrade-dialog{position:relative;width:min(100%,520px);max-height:calc(100dvh - 32px);overflow:auto;background:#172338;color:#eaf3ff;border:1px solid #6683a7;border-radius:19px;padding:23px;box-shadow:0 30px 100px #0009}
+.poke-upgrade-dialog h2{font-size:22px;margin:0 35px 8px 0}
+.poke-upgrade-dialog p{font-size:13px;color:#bed0e6;margin:0 0 16px;line-height:1.55}
+.poke-upgrade-dialog label{font-size:12px;font-weight:800;display:block;margin:14px 0 6px}
+.poke-upgrade-dialog input,.poke-upgrade-dialog textarea{width:100%;box-sizing:border-box;background:#0e1a2c;border:1px solid #5a7291;border-radius:9px;padding:11px 12px;color:#fff;font:inherit;font-size:14px}
+.poke-upgrade-dialog textarea{min-height:75px;resize:vertical}
+.poke-upgrade-dialog button{font:inherit;cursor:pointer}
+.poke-upgrade-dialog .pu-close{position:absolute;right:18px;top:17px;border:1px solid #647b9e;border-radius:9px;background:#263c59;color:#fff;padding:5px 11px}
+.poke-upgrade-actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:17px}
+.poke-upgrade-actions button{border-radius:10px;border:1px solid #6c86a7;background:#263c56;color:#fff;padding:10px 14px;font-weight:800}
+.poke-upgrade-actions button.pu-primary{background:#e8c777;color:#141c28;border:0}
+.poke-avatars{display:flex;flex-wrap:wrap;gap:7px}
+.poke-avatars button{width:46px;height:46px;border-radius:10px;background:#142439;border:1px solid #4f698a;font-size:26px}
+.poke-avatars button[aria-pressed=true]{border-color:#f8d38b;box-shadow:0 0 0 2px #e8ca7c66;background:#35415a}
+.poke-history-row{border:1px solid #455a77;border-radius:10px;background:#102036;display:flex;gap:10px;justify-content:space-between;align-items:center;margin:9px 0;padding:12px}
+.poke-history-row strong{font-size:13px}
+.poke-history-row small{display:block;font-size:11px;color:#abc0d8;margin-top:4px}
+.poke-history-row button{font-size:12px;background:#e6c57d;color:#1c2534;border:0;border-radius:8px;padding:9px 10px;font-weight:800;white-space:nowrap}
+.poke-history-empty{padding:17px;border:1px dashed #55718f;border-radius:12px;color:#bdccdc;font-size:13px}
+.pu-status{margin:12px 0;color:#bed1e6;font-size:12px;min-height:17px}
+@media(max-width:1000px){.trainer-stats{flex:1 1 190px}.team-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.trainer-banner{padding:15px;gap:12px}.trainer-avatar{width:66px;height:66px;font-size:39px}.trainer-main{min-width:calc(100% - 85px)}.trainer-stats{flex-basis:100%;grid-template-columns:repeat(4,minmax(0,1fr))}.trainer-stat{padding:8px}.trainer-stat strong{font-size:19px}.trainer-stat small{font-size:9px}.trainer-actions{flex-direction:row;width:100%;justify-content:stretch}.trainer-actions button{flex:1}.team-card-grid{grid-template-columns:1fr}.team-showcase{padding:12px}.poke-upgrade-dialog{padding:18px}}
