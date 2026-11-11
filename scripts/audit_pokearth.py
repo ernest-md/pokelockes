@@ -121,7 +121,11 @@ def main():
                         if typ not in valid:valid[typ]=names[evolved]
             valid.update(extra)
             if n=='Charcadet':valid.pop('fantasma',None) # Ceruledge is Violet-only
-            if n=='Basculin' and reg!='kitakami':valid.pop('fantasma',None) # only White-Striped Basculin becomes Basculegion
+            if n=='Basculin':
+                if reg=='kitakami' and zone=='k_soto':
+                    display='Basculin (raya blanca)'  # Timeless Woods exclusive; Basculegion valid Ghost evolution
+                else:
+                    valid.pop('fantasma',None)  # Standard Basculin cannot evolve into Basculegion
             if n=='Oricorio':valid={t:v for t,v in valid.items() if t=='volador'} # area-specific form unknown
             if n=='Rotom':valid={t:v for t,v in valid.items() if t in {'fantasma','electrico'}} # appliance forms aren't evo
             for typ,ev in valid.items():
