@@ -75,7 +75,7 @@ def area_read(row):
     try:
         soup=BeautifulSoup(get(url),'html.parser')
         table=soup.select_one('#pokefilter')
-        if table is None:raise ValueError('Missing Pokéarth #pokefilter')
+        if table is None:return (region,zone,url,[],None) # no wild Pokémon listed for this area
         pokemon=[]
         for a in table.select('a[onclick*="pokeToggle"]'):
             n=a.get_text(' ',strip=True)
