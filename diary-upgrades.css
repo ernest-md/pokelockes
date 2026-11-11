@@ -139,3 +139,7 @@
 .poke-avatar-tile:focus-visible,.poke-avatar-fav:focus-visible,.poke-avatar-filters button:focus-visible{outline:3px solid #ffdf99;outline-offset:2px}
 @media(max-width:790px){.poke-avatar-picker-layout{grid-template-columns:minmax(0,1fr) 145px}.poke-avatar-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:580px){.poke-upgrade-dialog{padding:15px}.poke-avatar-picker-layout{grid-template-columns:1fr}.poke-avatar-preview{position:static;display:grid;grid-template-columns:86px 1fr;grid-template-rows:auto auto auto;gap:2px 12px;text-align:left;align-items:center;order:-1}.poke-avatar-preview>small{grid-column:1/-1;margin:0}.poke-avatar-preview-image{grid-column:1;grid-row:2/6;margin:0}.poke-avatar-preview strong,.poke-avatar-preview p,.poke-avatar-preview em,.poke-avatar-count{grid-column:2;margin:0}.poke-avatar-grid{grid-template-columns:repeat(3,minmax(0,1fr));max-height:350px}.poke-avatar-frame{height:85px}.poke-avatar-tools button{font-size:11px;padding:8px}.poke-avatar-stamp{font-size:8px}}
+
+
+/* Broken external artwork must not obscure the fallback placeholder. */
+.poke-avatar-frame img[hidden],#trainerHero.trainer-pro .tc-portrait img[hidden]{display:none!important}
