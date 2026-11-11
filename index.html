@@ -1,5 +1,61 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101625"><title>Pokelockes — Tres caminos, una aventura</title><style>
-:root{color-scheme:dark;font-family:system-ui,-apple-system,Segoe UI,sans-serif}*{box-sizing:border-box}body{margin:0;color:#eef5ff;background:radial-gradient(ellipse at 10% 0,#3d2541,transparent 45%),radial-gradient(ellipse at 95% 10%,#143f4d,transparent 40%),#0b111c}main{max-width:1180px;margin:auto;padding:50px 22px 80px}.eyebrow{letter-spacing:.2em;text-transform:uppercase;color:#9caac2;font-weight:800;font-size:12px}h1{font-size:clamp(40px,7vw,80px);margin:12px 0 8px;line-height:1.02;letter-spacing:-.05em}h1 span{color:#f9d27d}p{color:#acbdd0;line-height:1.6}.lead{font-size:18px;max-width:700px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:35px 0}.card{position:relative;border:1px solid #34445d;background:#141f30;border-radius:22px;overflow:hidden;min-width:0}.banner{height:185px;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,#58332d,#2a1e29)}.banner img{height:155px;max-width:90%;object-fit:contain;filter:drop-shadow(0 14px 15px #0006)}.planta .banner{background:radial-gradient(circle,#2e644b,#192d30)}.agua .banner{background:radial-gradient(circle,#275b85,#1a283d)}.body{padding:24px}.type{font-size:12px;text-transform:uppercase;letter-spacing:.14em;font-weight:900;color:#ffb58e}.planta .type{color:#80e6b0}.agua .type{color:#83c6ff}h2{font-size:29px;margin:7px 0}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:20px 0}.stat{border:1px solid #334357;background:#0f1928;padding:11px;border-radius:11px}.stat strong{display:block;font-size:23px}.stat small{color:#aab8c9;font-size:12px}.go{display:block;text-align:center;text-decoration:none;border-radius:12px;padding:13px;background:#f6a979;color:#1c1820;font-weight:900}.planta .go{background:#86deb1}.agua .go{background:#8bc9f5}.note{border:1px solid #334357;background:#141e2b;border-radius:16px;padding:18px 22px;margin-top:25px}.note strong{color:#f7d28b}footer{margin-top:38px;color:#8395a8;font-size:13px}@media(max-width:840px){.grid{grid-template-columns:1fr}.banner{height:145px}.banner img{height:125px}main{padding-top:32px}}</style><style id="cloud-home-style">.live-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:25px 0 5px}.live-stats>div{padding:14px;background:#172338;border:1px solid #3a4e67;border-radius:13px}.live-stats strong{display:block;font-size:25px}.live-label{font-size:10px;letter-spacing:.08em;font-weight:800;color:#9cb6d4}@media(max-width:600px){.live-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}</style><style id="poke-access-css">
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101625"><meta name="description" content="PokéLockes: 18 desafíos Pokémon Escarlata, uno para cada tipo, con sincronización compartida."><title>PokéLockes · 18 tipos, 18 aventuras</title><style>
+:root{color-scheme:dark;--bg:#08101e;--card:#152238;--line:#314660;--muted:#a9bed5;--text:#f1f6ff}
+*{box-sizing:border-box}
+html:not(.poke-authorized) main{visibility:hidden}
+body{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:radial-gradient(ellipse at 15% 0%,#263c60 0%,transparent 46%),radial-gradient(ellipse at 95% 32%,#172f3f 0%,transparent 47%),var(--bg);color:var(--text);margin:0;min-height:100vh}
+a{color:inherit}button,input{font:inherit}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #b8d5f6;outline-offset:3px}
+.shell{max-width:1400px;margin:auto;padding:34px 23px 64px}
+.top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:18px;align-items:start;margin-bottom:30px}
+.eyebrow{font-size:11px;color:#9cb6e4;font-weight:850;letter-spacing:.2em;text-transform:uppercase}
+h1{font-size:clamp(42px,6vw,76px);letter-spacing:-.055em;line-height:1.02;margin:6px 0 12px}
+h1 span{color:#f8ca79}
+.lead{margin:0;color:var(--muted);max-width:820px;font-size:clamp(15px,2.1vw,19px);line-height:1.6}
+.tools{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:6px}
+.btn{border:1px solid #637a9b;background:#233751;color:#dfeaff;padding:10px 13px;border-radius:10px;font-size:13px;font-weight:750;cursor:pointer;text-decoration:none}
+.btn:hover{background:#314a6b}
+.sectionHead{margin:30px 0 15px;display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap}
+.sectionHead h2{margin:0;font-size:19px;letter-spacing:-.02em}
+.sectionHead small{color:var(--muted);font-size:12px}
+.totals{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:26px 0}
+.metric{padding:17px;background:#152239d9;border:1px solid var(--line);border-radius:15px}
+.metric strong{font-size:27px;line-height:1.25;display:block;font-variant-numeric:tabular-nums}
+.metric small{color:var(--muted);font-size:12px;display:block;margin-top:3px}
+.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.search{background:#111d31;border:1px solid #425976;color:#f3f7ff;border-radius:10px;padding:10px 12px;min-width:min(260px,100%);flex:1}
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.filters button{background:#1b2a43;border:1px solid #3a4d69;color:#c5d5eb;border-radius:100px;font-weight:700;font-size:12px;padding:9px 12px;cursor:pointer}
+.filters button[aria-pressed=true]{background:#385477;color:#fff;border-color:#8da8d5}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin-top:17px}
+.card{--accent:#ccc;min-width:0;border:1px solid #3c4f6a;border-radius:18px;background:linear-gradient(165deg,#1d2d47,#111b2e);overflow:hidden;display:flex;flex-direction:column;box-shadow:0 8px 20px #0003;position:relative}
+.card::before{content:"";height:4px;background:var(--accent)}
+.visual{height:132px;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at center,color-mix(in srgb,var(--accent) 26%,#122039),#121c2d 75%)}
+.visual img{height:112px;width:118px;max-width:95%;object-fit:contain;filter:drop-shadow(0 8px 7px #0004)}
+.visual .emoji{position:absolute;top:13px;right:13px;font-size:25px}
+.cardBody{padding:17px 17px 12px;flex:1}
+.cardKicker{text-transform:uppercase;font-size:10px;letter-spacing:.12em;font-weight:800;color:var(--accent)}
+.card h3{font-size:24px;letter-spacing:-.02em;margin:3px 0 6px}
+.card .subtitle{font-size:12px;line-height:1.5;color:#b5c6da;margin:0 0 14px;min-height:36px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}
+.stat{background:#101b2d;border:1px solid #334761;padding:9px 10px;border-radius:9px}
+.stat strong{font-size:19px;display:block;line-height:1.2}
+.stat small{font-size:10px;color:#b1c4dd}
+.progressHeader{display:flex;justify-content:space-between;gap:10px;margin:13px 0 6px;color:#b6c8de;font-size:11px}
+.bar{height:7px;background:#29394d;border-radius:99px;overflow:hidden}
+.bar>span{height:100%;display:block;background:var(--accent);width:0;transition:width .18s}
+.enter{display:block;margin:11px 17px 17px;padding:11px 12px;text-align:center;background:var(--accent);color:#111927;border-radius:9px;font-size:13px;font-weight:850;text-decoration:none}
+.enter:hover{filter:brightness(1.09);transform:translateY(-1px)}
+.state{border:1px solid #455e7d;color:#b6cdeb;background:#23334b;padding:4px 7px;border-radius:99px;font-size:10px;font-weight:780}
+.state.started{color:#9ae4b8;background:#1d463b;border-color:#447963}
+.notice{border:1px solid var(--line);background:#16243a;padding:18px 20px;border-radius:14px;margin:25px 0;color:#b9cbde;font-size:13px;line-height:1.65}
+.notice strong{color:#fff}.notice a{color:#c4defb}
+.empty{grid-column:1/-1;text-align:center;border:1px dashed #607895;background:#17263c;padding:25px;border-radius:12px;color:#bcd0e4}
+footer{margin-top:25px;border-top:1px solid #314660;padding-top:18px;color:#8197b2;font-size:12px}
+@media(max-width:1160px){.cards{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:900px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.totals{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:570px){.shell{padding:22px 12px 48px}.cards{grid-template-columns:1fr}.visual{height:120px}.totals{grid-template-columns:repeat(2,1fr)}.controls{flex-direction:column;align-items:stretch}.search{width:100%;min-width:0}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style><style id="poke-access-css">
 html:not(.poke-authorized) body>.shell,html:not(.poke-authorized) body>main{visibility:hidden}
 #pokeGate{position:fixed;z-index:2147483647;inset:0;display:grid;place-items:center;background:linear-gradient(135deg,#08101ceF,#101c33fB);padding:18px;color:#f5f8ff;font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;overflow:auto}
 #pokeGate[hidden]{display:none!important}
@@ -14,11 +70,21 @@ html:not(.poke-authorized) body>.shell,html:not(.poke-authorized) body>main{visi
 #pokeGate button:disabled{opacity:.55;cursor:wait}
 #pokeGate .pga-error{color:#ffb1a6;font-size:13px;margin-top:11px;min-height:16px;line-height:1.3}
 #pokeGate .pga-footer{font-size:12px;color:#9fb0c9;margin-top:19px}
-</style></head><body><div id="pokeGate" role="dialog" aria-modal="true" aria-labelledby="pgaTitle"><div class="pga-card"><div class="pga-eyebrow">🔥 🌿 💧 &nbsp; PokéLockes</div><h2 id="pgaTitle">Código de acceso</h2><p>Introduce el código compartido para acceder a las tres aventuras y poder guardar cambios.</p><form id="pgaForm" autocomplete="off"><label for="pgaInput">Código</label><input id="pgaInput" type="password" placeholder="Introduce el código" required autocomplete="off" maxlength="80"><button id="pgaButton" type="submit">Entrar a PokéLockes →</button><div id="pgaError" class="pga-error" aria-live="polite"></div></form><div class="pga-footer">La sesión se mantiene mientras tengas abierto el navegador. Sin cuentas de usuario.</div></div></div><main><div class="eyebrow">Pokémon Escarlata · Monotype Challenge</div><h1>Tres tipos.<br><span>Tres leyendas.</span></h1><p class="lead">Fuego, Planta y Agua. Tres diarios independientes, tres aventuras por Paldea, Noroteo y el Biodomo. Entra en tu run y registra cada captura, victoria y baja.</p><section class="live-stats" id="liveStats" aria-live="polite"><div><span class="live-label">PARTIDAS EN LA NUBE</span><strong id="liveRuns">—</strong></div><div><span class="live-label">POKÉMON REGISTRADOS</span><strong id="liveMons">—</strong></div><div><span class="live-label">OBJETIVOS SUPERADOS</span><strong id="liveGoals">—</strong></div><div><span class="live-label">SHINIES</span><strong id="liveShiny">—</strong></div></section><div class="grid" id="runs"></div><div class="note"><strong>Acceso compartido con código</strong><p id="cloudHomeNote">☁️ Consultando el progreso de las tres runs en Supabase…</p><p>La portada y los tres diarios requieren el mismo código. Una vez dentro podréis editar las tres runs. Los cambios se guardan en Supabase.</p><button id="pokeLogout" type="button" style="padding:9px 14px;background:#243a51;color:#eaf4ff;border:1px solid #6981a4;border-radius:10px;font:inherit;font-size:13px;cursor:pointer">Cerrar sesión</button></div><footer>Pokelockes · Diarios independientes · Sin cuentas</footer></main><script>
-const runs=[{id:'fuego',name:'Fuego',starter:'Fuecoco',dex:909,key:'locke-fuego-purpura-individual-v1'},{id:'planta',name:'Planta',starter:'Sprigatito',dex:906,key:'locke-planta-escarlata-individual-v1'},{id:'agua',name:'Agua',starter:'Quaxly',dex:912,key:'locke-agua-escarlata-individual-v1'}];
-function summary(x){let s;try{s=JSON.parse(localStorage.getItem(x.key))}catch{}let r=s&&s[x.id];if(!r||!Array.isArray(r.mons))return null;return {captures:r.mons.length,shiny:r.mons.filter(m=>m.isShiny||m.shiny).length,losses:r.mons.filter(m=>m.status==='baja').length,goals:Array.isArray(r.bosses)?new Set(r.bosses).size:Object.values(r.bosses||{}).filter(v=>v===true||v&&v.done).length}}
-document.getElementById('runs').innerHTML=runs.map(x=>{const s=summary(x);const vals=s||{captures:'—',shiny:'—',losses:'—',goals:'—'};return '<article class="card '+x.id+'"><div class="banner"><img alt="'+x.starter+'" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/'+x.dex+'.png"></div><div class="body"><div class="type">Run '+x.name+'</div><h2>'+x.starter+'</h2><p>'+(s?'Progreso local detectado':'Sin progreso en este navegador')+'</p><div class="stats">'+[['Capturas',vals.captures],['Shinies',vals.shiny],['Bajas',vals.losses],['Objetivos',vals.goals]].map(v=>'<div class="stat"><strong>'+v[1]+'</strong><small>'+v[0]+'</small></div>').join('')+'</div><a class="go" href="'+x.id+'.html">Abrir diario '+x.name+' →</a></div></article>'}).join('');
-</script><script id="poke-access-js">
+</style><script src="./types.js"></script></head><body><div id="pokeGate" role="dialog" aria-modal="true" aria-labelledby="pgaTitle"><div class="pga-card"><div class="pga-eyebrow">🔥 🌿 💧 &nbsp; PokéLockes</div><h2 id="pgaTitle">Código de acceso</h2><p>Introduce el código compartido para acceder a las tres aventuras y poder guardar cambios.</p><form id="pgaForm" autocomplete="off"><label for="pgaInput">Código</label><input id="pgaInput" type="password" placeholder="Introduce el código" required autocomplete="off" maxlength="80"><button id="pgaButton" type="submit">Entrar a PokéLockes →</button><div id="pgaError" class="pga-error" aria-live="polite"></div></form><div class="pga-footer">La sesión se mantiene mientras tengas abierto el navegador. Sin cuentas de usuario.</div></div></div><main class="shell">
+<header class="top"><div><div class="eyebrow">Pokémon Escarlata + DLC · 18 retos monotipo</div><h1>Poké<span>Lockes</span> ✦</h1><p class="lead">Una aventura para cada tipo. Captura Pokémon, registra combates, desbloquea logros y conserva tus recuerdos de Paldea, Noroteo y el Biodomo. Cada tipo mantiene su propio diario compartido.</p></div><div class="tools"><button class="btn" id="refresh" type="button">↻ Actualizar</button><button class="btn" id="logout" type="button">Cerrar sesión</button></div></header>
+<section class="totals" aria-label="Resumen de todas las runs">
+<div class="metric"><strong id="totalTypes">18</strong><small>Tipos disponibles</small></div>
+<div class="metric"><strong id="totalStarted">—</strong><small>Runs empezadas</small></div>
+<div class="metric"><strong id="totalMons">—</strong><small>Pokémon registrados</small></div>
+<div class="metric"><strong id="totalBosses">—</strong><small>Objetivos superados</small></div>
+<div class="metric"><strong id="totalShinies">—</strong><small>Shinies ✨</small></div>
+</section>
+<div class="sectionHead"><h2>Elige tu desafío <small id="showing">18 runs</small></h2><small id="connection">☁️ Conectando con Supabase…</small></div>
+<div class="controls"><input class="search" id="typeSearch" placeholder="Buscar tipo o Pokémon… (ej. Dragón)" aria-label="Buscar por tipo o especie"><div class="filters" role="group" aria-label="Filtrar runs"><button type="button" data-filter="all" aria-pressed="true">Todos</button><button type="button" data-filter="started" aria-pressed="false">En marcha</button><button type="button" data-filter="new" aria-pressed="false">Sin empezar</button></div></div>
+<section class="cards" id="runCards" aria-live="polite"></section>
+<div class="notice"><strong>🔐 Acceso compartido:</strong> entra con vuestro código habitual. Todos los jugadores que lo conozcan pueden ver y editar cualquiera de las 18 runs. Los datos se sincronizan en Supabase; la portada se actualiza al consultar el progreso. Las nuevas runs no tienen inicial fijo: elige el primer Pokémon al comenzar. <strong>Encuentros por zona:</strong> son listas orientativas, no exhaustivas; comprueba la guía de cada área antes de capturar.</div>
+<footer>Proyecto no oficial PokéLockes · Pokémon Escarlata + El tesoro oculto del Área Cero · <a href="https://github.com/ernest-md/pokelockes" target="_blank" rel="noopener">Repositorio</a></footer>
+</main><script id="poke-access-js">
 (function(){
 "use strict";
 const ENDPOINT="https://bxcfirzcudwanttkqnfh.supabase.co/functions/v1/pokelocke-sync";
@@ -73,49 +139,60 @@ window.PokeAccess={
 let saved="";try{saved=sessionStorage.getItem(storageKey)||""}catch(_){}
 if(saved){authenticate(saved)}else{input.focus()}
 })();
-</script><script id="poke-shared-home-js">
+</script><script id="pokelockes-home-all">
 (function(){
 "use strict";
-const ids=["fuego","planta","agua"];
-const set=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=value};
-let active=false;
-async function update(){
- if(active)return;active=true;
- let ok=0,runsWithData=0,mons=0,goals=0,shinies=0;
- await Promise.all(ids.map(async id=>{
-  try{
-   const result=await PokeAccess.request("read",{run:id});
-   ok++;
-   const run=result.state;
-   const card=document.querySelector(".card."+id);
-   if(!card)return;
-   const figures=card.querySelectorAll(".stat strong");
-   const status=card.querySelector(".body > p");
-   if(!run||!Array.isArray(run.mons)){
-     figures.forEach(el=>el.textContent="0");
-     if(status)status.textContent="Partida todavía sin publicar en la nube";
-     return;
-   }
-   runsWithData++;
-   const all=run.mons;
-   const shiny=all.filter(m=>m.isShiny||m.shiny).length;
-   const dead=all.filter(m=>m.status==="baja").length;
-   const done=new Set((run.bosses||[]).filter(x=>x!==null&&x!==false)).size;
-   [all.length,shiny,dead,done].forEach((v,i)=>{if(figures[i])figures[i].textContent=String(v)});
-   mons+=all.length;goals+=done;shinies+=shiny;
-   if(status)status.textContent="☁️ Progreso compartido · "+done+" de 39 objetivos";
-  }catch(_e){}
- }));
- if(ok){
-  set("liveRuns",runsWithData+" / 3");set("liveMons",mons);set("liveGoals",goals);set("liveShiny",shinies);
-  set("cloudHomeNote",ok===3?"☁️ Resumen compartido actualizado desde Supabase. Entra en una run para consultar y editar.":"⚠️ No se pudieron consultar todas las partidas.");
- }else set("cloudHomeNote","⚠️ Sin conexión con Supabase. Vuelve a intentarlo en unos instantes.");
- active=false;
+const builtIn=[
+ {id:"fuego",name:"Fuego",emoji:"🔥",color:"#f59d6a",dex:909,sample:"Fuecoco",initial:"Fuecoco"},
+ {id:"planta",name:"Planta",emoji:"🌿",color:"#7fd5a1",dex:906,sample:"Sprigatito",initial:"Sprigatito"},
+ {id:"agua",name:"Agua",emoji:"💧",color:"#78b9f9",dex:912,sample:"Quaxly",initial:"Quaxly"}
+];
+const others=Object.values(window.POKE_TYPES?.meta||{});
+const types=[...builtIn,...others];
+const stats={};
+let filter="all",fetching=false;
+const byId=id=>document.getElementById(id);
+const info=byId("connection"),cards=byId("runCards");
+function card(type){
+ const stat=stats[type.id],started=!!stat?.initialized;
+ const url=["fuego","agua","planta"].includes(type.id)?"./"+type.id+".html":"./run.html?tipo="+encodeURIComponent(type.id);
+ const c=stat?.captures??0,goals=stat?.goals??0,shiny=stat?.shinies??0,deaths=stat?.deaths??0;
+ return `<article class="card" style="--accent:${type.color}" data-type="${type.id}">
+ <div class="visual"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${type.dex}.png" alt="" loading="lazy" onerror="this.style.display='none'"><span class="emoji">${type.emoji}</span></div>
+ <div class="cardBody"><div style="display:flex;align-items:center;justify-content:space-between;gap:7px"><span class="cardKicker">Reto de tipo</span><span class="state ${started?'started':''}">${started?'● En marcha':'○ Sin empezar'}</span></div>
+ <h3>${type.name}</h3>
+ <p class="subtitle">${type.initial?'Inicial: '+type.initial:'Inicio libre · Sugerencia: '+type.sample}</p>
+ <div class="stats"><div class="stat"><strong>${c}</strong><small>Pokémon</small></div><div class="stat"><strong>${shiny}</strong><small>Shinies</small></div><div class="stat"><strong>${goals}</strong><small>Objetivos</small></div><div class="stat"><strong>${deaths}</strong><small>Bajas</small></div></div>
+ <div class="progressHeader"><span>Progreso</span><strong>${goals}/39 objetivos</strong></div><div class="bar"><span style="width:${Math.max(0,Math.min(100,goals/39*100))}%"></span></div></div>
+ <a class="enter" href="${url}">${started?'Continuar':'Empezar'} run ${type.name} →</a></article>`;
 }
-const logout=document.getElementById("pokeLogout");if(logout)logout.addEventListener("click",()=>PokeAccess.logout());
-PokeAccess.ready.then(update);
-window.addEventListener("pageshow",()=>{if(document.documentElement.classList.contains("poke-authorized"))update()});
-document.addEventListener("visibilitychange",()=>{if(!document.hidden&&document.documentElement.classList.contains("poke-authorized"))update()});
-setInterval(()=>{if(document.documentElement.classList.contains("poke-authorized"))update()},22000);
+function render(){
+ const q=byId("typeSearch").value.trim().toLocaleLowerCase();
+ const match=types.filter(t=>(filter==="all"||(filter==="started"&&stats[t.id]?.initialized)||(filter==="new"&&!stats[t.id]?.initialized))&&(t.name+" "+t.id+" "+t.sample).toLocaleLowerCase().includes(q));
+ cards.innerHTML=match.length?match.map(card).join(""):'<div class="empty">No hay runs que coincidan. Cambia los filtros para ver los demás tipos.</div>';
+ byId("showing").textContent=match.length+" de "+types.length+" runs";
+}
+async function refresh(){
+ if(fetching)return;fetching=true;info.textContent="☁️ Actualizando progreso…";
+ try {
+  const result=await window.PokeAccess.request("summary",{});
+  if(!Array.isArray(result.runs))throw new Error("La respuesta de la nube es inválida");
+  result.runs.forEach(x=>{stats[x.run]=x});
+  byId("totalStarted").textContent=result.runs.filter(x=>x.initialized).length+" / 18";
+  byId("totalMons").textContent=result.runs.reduce((n,x)=>n+x.captures,0);
+  byId("totalBosses").textContent=result.runs.reduce((n,x)=>n+x.goals,0);
+  byId("totalShinies").textContent=result.runs.reduce((n,x)=>n+x.shinies,0);
+  info.textContent="☁️ Progreso sincronizado con Supabase";
+ }catch(e){info.textContent="⚠️ No se pudo consultar la nube: "+e.message}finally{fetching=false;render()}
+}
+byId("typeSearch").addEventListener("input",render);
+document.querySelectorAll("[data-filter]").forEach(b=>b.addEventListener("click",()=>{filter=b.dataset.filter;document.querySelectorAll("[data-filter]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));render()}));
+byId("refresh").onclick=refresh;
+byId("logout").onclick=()=>window.PokeAccess.logout();
+window.PokeAccess.ready.then(refresh);
+window.addEventListener("pageshow",()=>{if(document.documentElement.classList.contains("poke-authorized"))refresh()});
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&document.documentElement.classList.contains("poke-authorized"))refresh()});
+setInterval(()=>{if(document.documentElement.classList.contains("poke-authorized"))refresh()},30000);
+render();
 })();
 </script></body></html>
