@@ -76,7 +76,7 @@ const bossDetails=id=>{
  if(id<0)return {name:"Todos los objetivos superados",category:"¡Campeón!",level:null,region:"Todas"};
  const b=B[id]||[];
  const regionName=typeof objectiveRegion==="function"?({paldea:"Paldea",kitakami:"Noroteo",terra:"Biodomo"}[objectiveRegion(id)]||"Paldea"):"Paldea";
- return {name:String(b[0]||"Objetivo"),category:String(b[1]||"Jefe"),level:Number.isFinite(b[3])?b[3]:null,region:regionName};
+ return {name:id===12?(run.gameVersion==="purpura"?"Ferrodada":"Colmilargo"):String(b[0]||"Objetivo"),category:String(b[1]||"Jefe"),level:Number.isFinite(b[3])?b[3]:null,region:regionName};
 };
 function draw(){
  const total=B.length,done=goals().size;
@@ -148,6 +148,13 @@ function draw(){
      '<strong>'+esc(r.name)+'</strong></div><small>'+r.wins+' MVP</small></div>';
  }).join(""):'<div class="tc-empty">Todavía no hay victorias con MVP.</div>';
  const recent=achievements().filter(a=>a.unlocked).slice(-8).reverse();
+ const recentMon=[...run.mons].reverse()[0];
+ const recentDead=[...run.mons].reverse().find(m=>m.status==="baja");
+ const recentGoal=[...run.battles].reverse().find(b=>b.result==="victoria"&&goals().has(Number(b.boss)));
+ const moments='<div class="tc-moments">'+
+  '<div>🎒 Última captura <strong>'+esc(recentMon?recentMon.nickname||recentMon.name:"Ninguna")+'</strong></div>'+
+  '<div>💀 Última baja <strong>'+esc(recentDead?recentDead.nickname||recentDead.name:"Ninguna")+'</strong></div>'+
+  '<div>🏆 Última victoria <strong>'+esc(recentGoal?bossDetails(Number(recentGoal.boss)).name:"Ninguna registrada")+'</strong></div></div>';
  const medalRows=recent.length?recent.map(a=>
    '<div class="tc-mini-medal" title="'+esc(a.name)+' · '+esc(a.description)+'"><span>'+esc(a.icon)+'</span><small>✓</small></div>').join("")+
    Array.from({length:Math.max(0,5-recent.length)},()=>'<div class="tc-mini-medal locked" title="Logro pendiente"><span>🏅</span><small>🔒</small></div>').join(""):
@@ -155,7 +162,7 @@ function draw(){
  panel.innerHTML='<article class="tc-extra-panel"><h3>🌟 Ranking de MVP de la run</h3>'+
    mvpRows+'<p class="tc-hint">Se contabilizan los MVP de victorias registradas. Las rotaciones obligatorias no suman MVP adicionales.</p></article>'+
    '<article class="tc-extra-panel"><h3>🏅 Vitrina de logros</h3><div class="tc-mini-medals">'+medalRows+'</div>'+
-   '<p class="tc-hint">'+unlocked+' de '+achievements().length+' logros desbloqueados. '+(next<0?'¡Ya has completado todos los objetivos!':'Siguiente objetivo sugerido: '+esc(objective.name)+'.')+'</p>'+
+   '<p class="tc-hint">'+unlocked+' de '+achievements().length+' logros desbloqueados. '+(next<0?'¡Ya has completado todos los objetivos!':'Siguiente objetivo sugerido: '+esc(objective.name)+'.')+'</p>'+moments+
    '<button type="button" id="trainerNextObjective" class="ghost">🏆 Ver próximo objetivo</button></article>';
  document.getElementById("trainerNextObjective").onclick=()=>{
    tab="objetivos";
