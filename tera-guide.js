@@ -80,7 +80,7 @@ function draw(){
  }).join("")+'</div>':
  '<div class="tera-guide-empty"><strong>No hay encuentros en este filtro.</strong><p>Prueba otra región o registra manualmente un Pokémon válido.</p></div>')+
  '<p class="tera-guide-source">Datos orientativos de <a href="'+catalog.source+'" target="_blank" rel="noopener noreferrer">Serebii: Wild Tera Type Pokémon</a>. '+
- 'Consulta también <a href="'+catalog.alternative+'" target="_blank" rel="noopener noreferrer">Game8</a>. No se garantiza que la lista sea exhaustiva; los DLC tienen requisitos de acceso. No se valida una captura por su zona de origen.</p>';
+ 'Consulta también <a href="'+catalog.alternative+'" target="_blank" rel="noopener noreferrer">Game8</a>. Listado orientativo, no exhaustivo. Los niveles de Noroteo pueden variar según tu progreso y algunas apariciones de los DLC requieren desbloqueos. Confirma los datos en el juego: ninguna zona limita tu bono.</p>';
  $("teraSearch").oninput=e=>{query=e.target.value.trim().toLocaleLowerCase("es");draw();const input=$("teraSearch");input.focus();input.setSelectionRange(input.value.length,input.value.length)};
  $("teraRegion").onchange=e=>{filter=e.target.value;draw()};
  $("teraManual").onclick=()=>beginCapture(null);
