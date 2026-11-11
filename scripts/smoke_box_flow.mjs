@@ -132,23 +132,23 @@ async function test(file,type){
  assert.equal(state.mons.find(m=>m.id==="third").status,"reserva");
  assert.equal(state.mons.find(m=>m.id==="stored2").status,"equipo");
  assert.ok(w.document.querySelector("#rotationSummary").textContent.includes("Tadbulb"));
- // 6: explicitly no rotation after the second gym, never increments counter.
+ // 6: the new rules forbid "No hubo rotación": MVP benching is mandatory.
  w.PokeBoxFlow.openRotation({battleId:"victory-2"});
  const noModal=w.document.querySelector(".pc-flow-dialog");
- noModal.querySelector("#pcNoRotation").click();
+ assert.ok(noModal,"Legacy rotation editor remains available for optional swaps");
+ assert.equal(noModal.querySelector("#pcNoRotation"),null,"Cannot claim no rotation under mandatory MVP rules");
+ noModal.querySelector("[data-close-pc]").click();
  state=stateFor(w.localStorage,type);
  assert.equal(state.rotations,2);
- assert.equal(state.rotationsLog.length,2);
- assert.equal(state.rotationsLog[1].kind,"none");
- assert.equal(state.rotationsLog[1].battleId,"victory-2");
+ assert.equal(state.rotationsLog.length,1);
  // 7: old counter remains historical and cloud sync sees the same state.
  await sleep(1450);
  assert.equal(shared.rotations,2);
- assert.equal(shared.rotationsLog.length,2);
+ assert.equal(shared.rotationsLog.length,1);
  assert.equal(shared.mons.find(m=>m.id==="stored2").status,"equipo");
  assert.equal(w.PokeDiarySync.status().dirty,false);
  if(errors.length)throw Error("Browser errors "+errors.join(" | "));
- console.log("PASS BOX FLOW",type,"saved="+writes,"legacy=1","new=1","no=1");
+ console.log("PASS BOX FLOW",type,"saved="+writes,"legacy=1","optionalSwap=1","mandatoryMvpNoSkip=1");
  w.close();
 }
 for(const [file,type] of [["fuego.html","fuego"],["planta.html","planta"],["agua.html","agua"],["run.html","hada"]])await test(file,type);
