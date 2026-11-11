@@ -1,0 +1,25 @@
+name: Verify MVP and tera bonus rules
+on:
+  push:
+    paths:
+      - scripts/smoke_rules.mjs
+      - .github/workflows/rules-smoke.yml
+      - locke-rules.js
+      - box-flow.js
+      - fuego.html
+      - planta.html
+      - agua.html
+      - run.html
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  rules:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save --no-package-lock jsdom@26.1.0
+      - run: node scripts/smoke_rules.mjs
