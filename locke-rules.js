@@ -54,7 +54,8 @@
       deny(event,"Selecciona un MVP que esté actualmente en el equipo principal. Tras esta victoria irá a una caja hasta completar otro objetivo.");
       return;
     }
-    if(document.querySelector('#casualtiesList .casualty-row[data-id="'+CSS.escape(id)+'"] input[type="checkbox"]:checked')){
+    if([...document.querySelectorAll("#casualtiesList .casualty-row")].some(el=>
+      el.dataset.id===id && el.querySelector('input[type="checkbox"]')?.checked)){
       deny(event,"El MVP elegido está marcado como baja en este combate. Elige un Pokémon del equipo que haya sobrevivido.");
       return;
     }
