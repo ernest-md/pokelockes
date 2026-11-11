@@ -75,6 +75,16 @@ async function testFile(file,type){
   assert.equal(w.PokeDiarySync?.status().ready,true,"Cloud startup "+file);
   assert.ok(w.document.querySelector("#trainerHero h2"),"Trainer title exists");
   assert.equal(w.document.querySelectorAll("#teamShowcase [data-team-id]").length,2,"Team cards");
+  assert.ok(w.document.querySelector('[data-nav-group="inicio"]'),"V2 navigation loaded");
+  assert.equal(w.document.querySelector('[data-nav-group="inicio"]')?.getAttribute("aria-pressed"),"true","Dashboard selected by default");
+  assert.ok(w.document.getElementById("inicio")?.classList.contains("on"),"Home dashboard visible");
+  w.document.querySelector('[data-nav-group="capturas"]').click();
+  assert.ok(w.document.getElementById("mapa")?.classList.contains("on"),"Captures map navigates");
+  assert.equal(w.document.querySelector('[data-tab="objetivos"]').hidden,true,"Unrelated secondary tab hidden");
+  w.document.querySelector('[data-nav-group="historia"]').click();
+  assert.ok(w.document.getElementById("diario")?.classList.contains("on"),"History group shows diary");
+  w.document.querySelector('[data-nav-group="inicio"]').click();
+
 
   assert.ok(w.PokeTrainerAvatars?.list.length>=65,"Trainer, Pokémon and meme avatar catalog loaded");
   assert.ok(w.PokeTrainerAvatars.list.filter(x=>x.category==="pokemon").length>=15,"Paldea Pokémon art gallery populated");
