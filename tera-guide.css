@@ -1,0 +1,41 @@
+/* Wild Tera guide — curated suggestions; never enforce region or consume a normal encounter */
+#teracapturas.pane{padding-bottom:20px}
+.tera-guide-heading{display:flex;align-items:stretch;justify-content:space-between;gap:15px;padding:23px;background:linear-gradient(115deg,#223759,#121e33);border:1px solid #4d6c93;border-radius:18px;margin-bottom:13px}
+.tera-guide-heading>div:first-child{min-width:0}
+.tera-guide-eyebrow{font-size:11px;font-weight:900;letter-spacing:.08em;color:#91d8ff}
+.tera-guide-heading h2{font-size:clamp(19px,3vw,27px);margin:7px 0 10px}
+.tera-guide-heading p{font-size:13px;line-height:1.55;color:#d0deee;margin:7px 0;max-width:780px}
+.tera-guide-heading p strong{color:#f9d78c}
+.tera-guide-balance{flex:0 0 160px;min-height:132px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border-radius:14px;background:#101d33;border:1px solid #6180a8;padding:12px}
+.tera-guide-balance small{font-size:10px;color:#b7cee6;text-transform:uppercase;letter-spacing:.07em}
+.tera-guide-balance strong{color:#fce49c;font-weight:950;font-size:40px;line-height:1.2}
+.tera-guide-balance span{font-size:11px;color:#afc2dc;text-align:center}
+.tera-guide-toolbar{display:flex;gap:9px;flex-wrap:wrap;align-items:end;padding:14px;border:1px solid #334963;background:#141f30;border-radius:14px}
+.tera-guide-toolbar label{display:grid;gap:6px;flex:1 1 215px;color:#bbcfe6;font-size:12px}
+.tera-guide-toolbar label:nth-child(2){flex:0 1 210px}
+.tera-guide-toolbar input,.tera-guide-toolbar select{width:100%;padding:11px 12px;background:#0c192b;color:#f1f7ff;border:1px solid #516b8a;border-radius:9px}
+.tera-guide-toolbar #teraManual{background:#f3d086;border-color:#f3d086;color:#1b2941;padding:11px 15px;font-weight:850}
+.tera-guide-toolbar #teraManual:disabled{cursor:not-allowed;opacity:.55}
+.tera-guide-info{font-size:12px;color:#bed1e6;margin:13px 2px}
+.tera-guide-info strong{color:#f7d590}
+.tera-guide-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}
+.tera-guide-card{display:flex;min-height:160px;gap:10px;border:1px solid #39516e;border-radius:14px;background:#17253a;padding:13px}
+.tera-guide-visual{width:100px;height:120px;flex:0 0 100px;display:grid;place-items:center;align-self:center;background:radial-gradient(ellipse at 50% 50%,#3c5475,#132039 75%);border-radius:11px;overflow:hidden}
+.tera-guide-visual img{display:block;width:100%;height:100%;object-fit:contain}
+.tera-guide-fallback{font-size:35px}
+.tera-guide-detail{display:flex;flex-direction:column;align-items:flex-start;min-width:0;gap:6px;flex:1}
+.tera-guide-detail small{font-size:10px;font-weight:850;text-transform:uppercase;color:#93c8ff;letter-spacing:.05em}
+.tera-guide-detail strong{font-size:17px;line-height:1.1;overflow-wrap:anywhere}
+.tera-guide-detail span{font-size:11px;color:#f3d28e;font-weight:700}
+.tera-guide-detail p{font-size:11px;color:#b5c9e3;line-height:1.4;margin:2px 0 5px}
+.tera-guide-detail button{margin-top:auto;width:100%;padding:8px 6px;background:#294969;border-color:#577c9d;color:#f5f9ff;border-radius:9px;font-size:11px;line-height:1.25;font-weight:800}
+.tera-guide-detail button:hover:not(:disabled){background:#34618b;border-color:#a3c7ed}
+.tera-guide-detail button:disabled{opacity:.5;cursor:not-allowed}
+.tera-guide-source{font-size:12px;color:#b4c8dd;line-height:1.5;margin:18px 2px 4px}
+.tera-guide-source a{color:#9bd4ff}
+.tera-guide-empty{background:#132237;border:1px dashed #587392;border-radius:15px;text-align:center;padding:35px 14px;color:#e0eeff}
+.tera-guide-empty p{font-size:12px;color:#b3c7dd}
+.tera-suggestion-note{margin:12px 0 0;background:#233950;border-left:3px solid #9dc8ed;padding:9px;color:#d5e6f5;font-size:12px}
+@media(max-width:1240px){.tera-guide-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:720px){.tera-guide-heading{padding:16px}.tera-guide-balance{flex:0 0 108px;min-height:110px;padding:8px}.tera-guide-balance strong{font-size:30px}.tera-guide-grid{grid-template-columns:1fr}.tera-guide-card{min-height:135px}.tera-guide-visual{height:108px;width:95px;flex-basis:95px}}
+@media(max-width:450px){.tera-guide-heading{display:block}.tera-guide-balance{margin-top:12px;flex-direction:row;min-height:0;justify-content:space-between}.tera-guide-balance strong{font-size:24px}.tera-guide-toolbar label{flex:1 1 100%}.tera-guide-toolbar #teraManual{width:100%}.tera-guide-card{padding:10px}.tera-guide-visual{height:102px;width:85px;flex-basis:85px}}
