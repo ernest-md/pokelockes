@@ -135,7 +135,8 @@ async function check(file,type){
  assert.equal(run.mons.find(m=>m.id==="second").status,"reserva");
  assert.equal(w.PokeLockeRules.moveToTeam,undefined,"movers belong to PC");
  assert.equal(w.PokeLockeRules.isLocked("starter"),false,"first MVP can now return");
- assert.equal(w.PokeBoxFlow.moveToTeam(run.mons.find(m=>m.id==="starter")),true,"unlocked MVP can rejoin");
+ d.querySelector('#boxGrid [data-mon="starter"]').click();
+ d.querySelector('#pcFlowQuick [data-pc-action="team"]').click();
  run=read();
  assert.equal(run.mons.find(m=>m.id==="starter").status,"equipo");
  assert.deepEqual(JSON.parse(JSON.stringify(w.PokeLockeRules.credits())),{earned:2,used:1,available:1});
