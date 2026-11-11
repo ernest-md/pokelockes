@@ -45,6 +45,10 @@ async function testFile(file,type){
       win.HTMLElement.prototype.scrollIntoView=function(){};
       win.sessionStorage.setItem("pokelockes-shared-access-session","smoke-test");
       win.fetch=async(url,opts)=>{
+        if(String(url).startsWith("https://pokeapi.co/api/v2/pokemon-species/662/"))
+          return {ok:true,json:async()=>({id:662,name:"fletchinder",evolution_chain:{url:"https://pokeapi.co/api/v2/evolution-chain/250/"}})};
+        if(String(url).startsWith("https://pokeapi.co/api/v2/evolution-chain/250/"))
+          return {ok:true,json:async()=>({chain:{species:{name:"fletchling",url:"https://pokeapi.co/api/v2/pokemon-species/661/"},evolves_to:[{species:{name:"fletchinder",url:"https://pokeapi.co/api/v2/pokemon-species/662/"},evolves_to:[{species:{name:"talonflame",url:"https://pokeapi.co/api/v2/pokemon-species/663/"},evolution_details:[{min_level:35,trigger:{name:"level-up"}}],evolves_to:[]}]}]}})};
         if(!String(url).includes("/pokelocke-sync"))throw new Error("Unexpected fetch "+url);
         const body=JSON.parse(opts.body);
         const output=(status,json)=>({ok:status===200,status,json:async()=>json});
@@ -138,6 +142,33 @@ async function testFile(file,type){
   assert.ok(!saved.trainer,"Restore previous trainer state");
   assert.ok(!w.document.querySelector("#trainerHero h2").textContent.includes("Entrenadora de prueba"),"Restored UI updated");
   assert.equal(w.PokeDiarySync.status().dirty,false,"No lingering dirty state");
+  // Manual evolution name edits must not retain the previous species' sprite.
+  w.document.querySelector('#teamSlots [data-mon="second"]').click();
+  assert.ok(w.document.getElementById("evolveMon"),"Evolution button visible on Pokémon editor");
+  w.document.getElementById("editName").value="Fletchinder";
+  w.document.getElementById("editName").dispatchEvent(new w.Event("input",{bubbles:true}));
+  assert.equal(w.document.getElementById("editDex").value,"662","Species changes update Dex before save");
+  w.document.getElementById("saveMon").click();
+  assert.equal(w.document.getElementById("editName").value,"Fletchinder","Manual species change saved");
+  assert.ok(w.document.querySelector('#teamSlots [data-mon="second"] img')?.src.endsWith("/662.png"),"Fletchinder sprite 662 shown");
+
+  // The guided evolution uses the immediately next stage, not an arbitrary species.
+  w.document.getElementById("evolveMon").click();
+  for(let tries=0;tries<80&&!w.document.querySelector('[data-evolve-id="663"]');tries++)await sleep(25);
+  assert.ok(w.document.querySelector('[data-evolve-id="663"]'),"Talonflame available in evolution picker");
+  assert.equal(w.document.querySelector('[data-evolve-id="662"]'),null,"Current species not offered as evolution");
+  w.document.querySelector('[data-evolve-id="663"]').click();
+  assert.equal(w.document.getElementById("editName").value,"Talonflame","Evolution updates the species");
+  assert.ok(w.document.querySelector('#teamSlots [data-mon="second"] img')?.src.endsWith("/663.png"),"Evolution changes sprite");
+  await sleep(1200);
+  const changed=saved.mons.find(mon=>mon.id==="second");
+  assert.equal(changed?.name,"Talonflame","Evolution persisted to shared cloud state");
+  assert.equal(changed?.dexNumber,663,"Pokédex number persisted");
+  assert.equal(changed?.nickname,"Rayito","Nickname survived evolution");
+  assert.equal(changed?.status,"equipo","Team status survived evolution");
+  assert.equal(changed?.captureSpecies,"Pawmi","Original capture species preserved");
+  assert.equal(changed?.zone,"sur1","Capture zone preserved");
+
   if(errors.length)throw new Error("Browser errors: "+errors.join("; "));
   console.log("PASS",type,"writes="+writes,"restores="+restores,"version="+version);
   w.close();
