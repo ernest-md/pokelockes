@@ -69,7 +69,16 @@ const face=()=>{
  '<circle cx="111" cy="130" r="4" fill="'+accent+'" stroke="#263549" stroke-width="2"/>'+
  '</svg>';
 };
-const avatarMarkup=()=>face();
+const selectedAvatar=()=>{
+ const catalog=window.PokeTrainerAvatars||{list:[],legacy:{}};
+ const chosen=catalog.legacy?.[trainer().avatar]||trainer().avatar;
+ return catalog.list.find(item=>item.id===chosen)||catalog.list[0]||null;
+};
+const avatarMarkup=()=>{
+ const item=selectedAvatar();
+ return item?'<img class="tc-trainer-image" src="'+esc(item.src)+'" alt="'+esc(item.label)+'" loading="eager" referrerpolicy="no-referrer">':
+   '<span class="tc-trainer-fallback">POKÉ</span>';
+};
 const sprite=mon=>mon&&typeof pokemonSprite==="function"?pokemonSprite(mon):null;
 const edition=()=>run.gameVersion==="purpura"?"Púrpura":"Escarlata";
 const bossDetails=id=>{
@@ -228,7 +237,18 @@ async function exportCard(){
    const panel=(x,y,w,h)=>{ctx.fillStyle="#1b2b43";ctx.beginPath();ctx.roundRect(x,y,w,h,13);ctx.fill()};
    const bg=ctx.createLinearGradient(0,0,1200,675);bg.addColorStop(0,"#253c55");bg.addColorStop(1,"#0d172b");
    fill(0,0,1200,675,bg);fill(0,0,1200,12,accent);
-   drawCanvasPortrait(ctx,55,83,185,235);
+   const picture=await fetchSprite(selectedAvatar()?.src);
+   if(picture){
+     fill(55,83,185,235,"#17304a");
+     const ratio=Math.min(180/picture.width,224/picture.height);
+     const w=picture.width*ratio,h=picture.height*ratio;
+     ctx.imageSmoothingEnabled=false;
+     ctx.drawImage(picture,55+(185-w)/2,83+(235-h)/2,w,h);
+     ctx.imageSmoothingEnabled=true;
+   }else{
+     fill(55,83,185,235,accent);
+     words(trainerName().slice(0,1).toUpperCase(),110,212,60,"#fff","900");
+   }
    words(TYPE_EMOJI+" RETO MONOTIPO "+TYPE_NAME.toUpperCase(),270,105,17,light,"900");
    words(trainerName().slice(0,23),270,166,43,"#ffffff","900");
    words(motto().slice(0,55),272,205,17,"#b6c9dd","500");
