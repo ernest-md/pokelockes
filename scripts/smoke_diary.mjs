@@ -76,12 +76,21 @@ async function testFile(file,type){
   assert.ok(w.document.querySelector("#trainerHero h2"),"Trainer title exists");
   assert.equal(w.document.querySelectorAll("#teamShowcase [data-team-id]").length,2,"Team cards");
 
+  assert.ok(w.PokeTrainerAvatars?.list.length>=30,"Trainer and meme avatar catalog loaded");
+  assert.ok(w.document.querySelector('#trainerHero img.tc-trainer-image'),"Trainer card now uses an image, not a vector avatar");
+  assert.equal(w.PokeTrainerAvatars.legacy["🥷"],"koga","Previous ninja emoji maps to a real trainer");
   w.document.getElementById("trainerEditBtn").click();
   assert.ok(!w.document.getElementById("pokeUpgradeModal").hidden,"Trainer modal opened");
+  assert.ok(w.document.querySelectorAll(".poke-avatar-tile").length>=30,"Real trainer and meme gallery rendered");
+  assert.ok(w.document.querySelector('[data-pu-avatar="merequetengue"]'),"Merequetengue gallery option available");
+  w.document.querySelector('[data-pu-avatar="cynthia"]').click();
+  assert.equal(w.document.querySelector('[data-pu-avatar="cynthia"]').getAttribute("aria-pressed"),"true","Cynthia selected");
   w.document.getElementById("puTrainerName").value="Entrenadora de prueba";
   w.document.getElementById("puTrainerMotto").value="PokéLockes es genial";
   w.document.getElementById("puTrainerForm").dispatchEvent(new w.Event("submit",{bubbles:true,cancelable:true}));
   assert.ok(w.document.querySelector("#trainerHero h2").textContent.includes("Entrenadora de prueba"),"Trainer updated");
+  assert.equal(w.document.querySelector('#trainerHero img.tc-trainer-image')?.getAttribute('src'),'https://play.pokemonshowdown.com/sprites/trainers/cynthia-gen4.png',"Trainer sprite appears on the card");
+
   const down=w.document.querySelector('#teamShowcase [data-team-move="starter"][data-step="1"]');
   assert.ok(down,"Team move button found");
   down.click();
@@ -89,6 +98,8 @@ async function testFile(file,type){
   await sleep(1100);
   assert.ok(writes>=1,"Saved changes to cloud");
   assert.equal(saved.trainer.name,"Entrenadora de prueba","Trainer in cloud");
+  assert.equal(saved.trainer.avatar,"cynthia","New avatar ID persists in cloud");
+
   assert.deepEqual(saved.teamOrder,["second","starter"],"Reorder in cloud");
 
   w.document.getElementById("trainerHistoryBtn").click();
