@@ -10,14 +10,17 @@
     (location.pathname.match(/(?:^|\/)(fuego|planta|agua)\.html$/)?.[1] || "fuego");
   const typeColor = (window.POKE_TYPES?.meta?.[type]?.color ||
     { fuego:"#ff965b",planta:"#7fd5a1",agua:"#78b9f9" }[type] || "#d3b3ff");
-  const avatars = ["🧢","🎒","⚔️","🏆","👑","🧙","🧑‍🚀","🥷","🐉","🦊","🌟","🎮"];
+  const avatarData=window.PokeTrainerAvatars||{list:[],legacy:{},defaultId:"red"};
+  const avatars=avatarData.list;
+  const getAvatar=id=>avatars.find(item=>item.id===id)||avatars.find(item=>item.id===avatarData.legacy?.[id])||avatars[0];
+
   let dialogOpener = null;
   let dragId = null;
 
   const safe = value => String(value ?? "").replace(/[&<>"']/g,
     c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
   const getTrainer = () => (run && run.trainer && typeof run.trainer === "object") ? run.trainer : {};
-  const chosenAvatar = () => avatars.includes(getTrainer().avatar) ? getTrainer().avatar : "🧢";
+  const chosenAvatar = () => getAvatar(getTrainer().avatar)?.id || "red";
   const currentEdition = () => run.gameVersion === "purpura" ? "Púrpura" : "Escarlata";
 
   function orderedTeam() {
@@ -156,10 +159,17 @@
       '<input id="puTrainerName" maxlength="40" placeholder="Ej.: Entrenador Escarlata" value="'+safe(trainer.name||"")+'">'+
       '<label for="puTrainerMotto">Frase de la aventura</label>'+
       '<textarea id="puTrainerMotto" maxlength="120" placeholder="¡A por la Liga Pokémon!">'+safe(trainer.motto||"")+'</textarea>'+
-      '<label>Avatar del entrenador</label>'+
-      '<div class="poke-avatars" id="puTrainerAvatars">'+avatars.map(x=>
-        '<button type="button" data-pu-avatar="'+safe(x)+'" aria-label="Elegir '+safe(x)+'" aria-pressed="'+(x===avatar?'true':'false')+'">'+safe(x)+'</button>'
+      '<label>Elige un entrenador o un meme</label>'+
+      '<div class="poke-avatars" id="puTrainerAvatars">'+
+      [{category:"trainer",label:"🧑‍🏫 Entrenadores legendarios"},{category:"meme",label:"🎮 Memes del competitivo"}].map(group=>
+       '<div class="poke-avatar-group"><strong>'+safe(group.label)+'</strong>'+
+       '<div class="poke-avatar-grid">'+avatars.filter(x=>x.category===group.category).map(x=>
+         '<button type="button" class="poke-avatar-tile" data-pu-avatar="'+safe(x.id)+'"'+
+         ' aria-label="Elegir '+safe(x.label)+'" title="'+safe(x.label)+'" aria-pressed="'+(x.id===avatar?'true':'false')+'">'+
+         '<img src="'+safe(x.src)+'" loading="lazy" alt=""><span>'+safe(x.label)+'</span></button>'
+       ).join("")+'</div></div>'
       ).join("")+'</div>'+
+      '<p class="poke-avatar-credits">Entrenadores: <a href="https://play.pokemonshowdown.com/sprites/trainers/" target="_blank" rel="noopener noreferrer">Pokémon Showdown (créditos de los artistas)</a>. Los memes incluyen imágenes de PokéAPI y referencias externas de sus creadores; se muestran sin modificar.</p>'+
       '<div class="poke-upgrade-actions"><button type="button" data-pu-close>Cancelar</button>'+
       '<button type="submit" class="pu-primary">Guardar tarjeta</button></div></form>');
     overlay.querySelectorAll("[data-pu-avatar]").forEach(b=>b.onclick=()=>{
