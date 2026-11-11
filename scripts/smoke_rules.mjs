@@ -65,7 +65,7 @@ async function check(file,type){
  assert.ok(d.getElementById("trainerShareBtn"),"PNG export button");
  assert.ok(d.getElementById("trainerNextObjective"),"next objective button");
  assert.ok(d.querySelector(".tc-mini-medals"),"medal showcase");
- assert.ok(d.querySelector(".tc-mvp-row"),"MVP leaderboard section");
+ assert.ok(d.querySelector(".tc-extra-panel"),"MVP leaderboard section");
 
  assert.deepEqual(JSON.parse(JSON.stringify(w.PokeLockeRules.credits())),{earned:0,used:0,available:0});
  const read=()=>{
