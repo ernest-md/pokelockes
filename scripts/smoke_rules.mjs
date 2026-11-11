@@ -101,6 +101,22 @@ async function check(file,type){
  assert.equal(run.rotationsLog[0].kind,"mvp");
  assert.equal(run.rotations,1,"mandatory rotation counted");
  assert.deepEqual(JSON.parse(JSON.stringify(w.PokeLockeRules.credits())),{earned:1,used:0,available:1});
+ // Tera guide provides optional references, not an area or species whitelist.
+ assert.equal(w.PokeTeraWildGuide.data.length,91,"wild Tera reference dataset loaded");
+ assert.ok(w.PokeTeraGuide.candidates().length>=3,"current monotype has recommended wild Tera encounters");
+ assert.ok(w.PokeTeraGuide.candidates().every(x=>x.tera===type),"guide filters by the current teratype");
+ assert.ok(d.querySelector('[data-tab="teracapturas"]'),"guide tab integrated into captures");
+ d.getElementById("openTeraGuide").click();
+ assert.ok(d.getElementById("teracapturas").classList.contains("on"),"guide opened from rules");
+ assert.ok(d.getElementById("teracapturas").textContent.includes("Sin restricciones por zona"),"no zone constraint advertised");
+ assert.ok(d.querySelector("[data-tera-pick]"),"recommendations offer direct registration");
+ d.querySelector("[data-tera-pick]").click();
+ assert.equal(d.getElementById("addOrigin").value,"Captura extra teratipo","recommended capture enters bonus workflow");
+ assert.ok(d.getElementById("addSpecies").value.length>0,"suggestion prefills editable species");
+ d.getElementById("addOriginDetail").value="Zona cualquiera, incluso usada";
+ d.getElementById("addSpecies").value="Pikachu";
+ d.getElementById("closeAddMon").click();
+
  assert.equal(w.PokeBoxFlow.moveToTeam(run.mons.find(m=>m.id==="starter")),false,"MVP cannot rejoin"); // persisted m also has same ID
  assert.ok(alerts.pop()?.includes("bloqueado"),"locked feedback");
  assert.equal(read().mons.find(m=>m.id==="starter").status,"reserva");
