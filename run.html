@@ -300,6 +300,7 @@ const TYPE_NAME=RUN_CONFIG.name, TYPE_EMOJI=RUN_CONFIG.emoji;
 document.title='Locke '+TYPE_NAME+' — Diario Pokémon Escarlata + DLC';
 document.querySelector('.top h1').innerHTML='Locke '+TYPE_NAME+' <span>'+TYPE_EMOJI+'</span>';
 document.querySelector('.top .eyebrow').textContent='Pokémon Escarlata · Diario monotipo '+TYPE_NAME.toLowerCase();
+const introTitle=document.querySelector('#genericStarterHint strong');if(introTitle)introTitle.textContent='🧭 Elige el primer Pokémon de tu run '+TYPE_NAME;
 document.documentElement.style.setProperty('--accent',RUN_CONFIG.color);
 const BOX_COUNT=32, BOX_SIZE=30;
 // Generador multitemático: una tirada puede ser cualquier categoría, sin sesgo a comida.
