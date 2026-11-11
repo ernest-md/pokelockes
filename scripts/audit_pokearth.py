@@ -27,3 +27,11 @@ for i,a in enumerate(els[:3]):
         e=e.parent
     print('PSYDUCK NODE',i,str(path)[:2500])
     print('PSYDUCK PARENT HTML',str(a.parent.parent)[:2700])
+
+for region in ['paldea','kitakami','terarium']:
+  u=f'https://www.serebii.net/pokearth/{region}/'
+  r=requests.get(u,timeout=20,headers={'User-Agent':'Mozilla/5.0'})
+  bs=BeautifulSoup(r.content,'html.parser')
+  opts=[(o.get_text(' ',strip=True),o.get('value')) for o in bs.select('option') if o.get('value') and ('shtml' in o.get('value') or 'php' in o.get('value'))]
+  hrefs=[(a.get_text(' ',strip=True),a.get('href')) for a in bs.select('a[href]') if '/pokearth/'+region+'/' in a['href'] or (a['href'].endswith('.shtml') and '../' not in a['href'])]
+  print('INDEX',region,r.status_code,'selects',len(opts),'sample',opts[:80],'links',hrefs[:70])
